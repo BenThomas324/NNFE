@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Operator-Learning"
+version = "0.0.1"
+requires-python = ">=3.9"
+authors = [
+  {name = "Benjamin Thomas", email = "bjt3241203@gmail.com"}
+]
+description = "A framework for learning operators"
+readme = "README.md"
+license = {file = "LICENSE"}
+keywords = [
+
+]
+classifiers = [
+
+]
+
+[tool.setuptools]
+packages = ["op_learn"]
