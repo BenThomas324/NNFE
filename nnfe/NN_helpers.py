@@ -4,8 +4,8 @@ import optax
 import jax
 import jax.numpy as np
 import numpy as onp
-import nnfe.networks as networks
-from .plotting import *
+import networks as networks
+from plotting import *
 
 def trunc_weight(weight: jax.Array, key: jax.random.PRNGKey) -> jax.Array:
   out, in_ = weight.shape
