@@ -8,6 +8,10 @@ import yaml
 import equinox as eqx
 import os
 
+problem = sys.argv[1]
+print(problem)
+exit()
+
 parent = os.path.dirname(__file__)
 sys.path.append(os.path.dirname(parent) + "/src")
 

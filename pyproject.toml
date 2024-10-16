@@ -3,7 +3,7 @@ requires = ["setuptools>=64", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "Operator-Learning"
+name = "Cardiac_NNFE"
 version = "0.0.1"
 requires-python = ">=3.9"
 authors = [
@@ -20,4 +20,4 @@ classifiers = [
 ]
 
 [tool.setuptools]
-packages = ["op_learn"]
+packages = ["nnfe"]

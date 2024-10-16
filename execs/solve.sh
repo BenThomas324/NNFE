@@ -8,16 +8,12 @@ python_conda="/home/bthomas/anaconda3/envs/sciml/bin/python"
 
 # Reads in main scripts from the specified problem
 prob="$(bash get_problem.sh $problem)"
-main="$(dirname $(pwd))/nnfe/main.py"
-check="$(bash get_problem.sh $problem)/check.py"
+solve="$(dirname $(pwd))/nnfe/solve.py"
 
 echo $prob
-echo "$(dirname $(pwd))"
-$prob2="$(realpath --relative-to="$prob" "$(dirname $(pwd))")"
-echo $prob2
+echo $solve
 exit
 
-$python_conda $main $prob > temp.txt
+$python_conda $solve $prob > temp.txt
 file="$(tail -n1 temp.txt)"
 echo $file
-$python_conda $check $file

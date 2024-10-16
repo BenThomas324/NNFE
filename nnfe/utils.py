@@ -3,9 +3,7 @@ import os
 import yaml
 import numpy as onp
 
-def setup_dirs(params, parent):
-    results_dir = os.path.dirname(parent) + params["Project"]["save_dir"]
-
+def setup_dirs(params, results_dir):
     temp_key = onp.random.randint(1e5)
     while os.path.exists(results_dir + f"/{temp_key}"):
         temp_key = onp.random.randint(1e5)
@@ -22,7 +20,9 @@ def setup_dirs(params, parent):
 
     return results_dir, temp_key
 
-
+def prob_setup(prob_dir):
+    
+    return
 
 
 

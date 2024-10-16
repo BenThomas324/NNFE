@@ -8,17 +8,20 @@ import time
 import yaml
 import equinox as eqx
 import os
-from nnfe.FE_helpers import *
-from nnfe.NN_helpers import *
-from nnfe.problem_setup import *
-from nnfe.utils import *
 
-parent = os.path.dirname(__file__)
+# FE_helpers should be in CARDIAX "hopefully"
+from FE_helpers import *
+from NN_helpers import *
+from utils import *
+
+# prob_dir = sys.argv[1]
+prob_dir = "/home/bthomas/Desktop/Research/Cardiac_NNFE/NNFE/problems/Dirichlet"
+results_dir = prob_dir.replace("problems", "results")
 
 jax.config.update("jax_enable_x64", True)
 XLA_PYTHON_CLIENT_PREALLOCATE=False
 
-param_file = parent + "/params.yaml"
+param_file = prob_dir + "/params.yaml"
 with open(param_file, 'r') as f:
     params = yaml.safe_load(f)
 
@@ -27,15 +30,16 @@ NN_params = params["Network"]
 FE_params = params["FE"]
 data_params = params["Data"]
 
-results_dir, key = setup_dirs(params, parent)
+results_dir, key = setup_dirs(params, results_dir)
+FE_setup, X = prob_setup(prob_dir)
 
-problem, fibers, normals = LV_test(FE_params)
+problem, internval_vars, internval_vars_surface = FE_setup(FE_params)
 
-ps = np.linspace(0, 10., 5)
-TCas = np.linspace(0, 30., 5)
-param_vecs = np.meshgrid(ps, TCas)
-param_vecs = [p.ravel() for p in param_vecs]
-X = np.vstack(param_vecs).T
+# ps = np.linspace(0, 10., 5)
+# TCas = np.linspace(0, 30., 5)
+# param_vecs = np.meshgrid(ps, TCas)
+# param_vecs = [p.ravel() for p in param_vecs]
+# X = np.vstack(param_vecs).T
 
 if NN_params["kwargs"]["out_size"] == "dofs":
     NN_params["kwargs"]["out_size"] = problem.fes[0].num_total_dofs
@@ -50,6 +54,9 @@ elif opt_params["batch_size"] < 1.:
     batch_size = int(X.shape[0] * opt_params["batch_size"])
 else:
     batch_size = int(opt_params["batch_size"])
+
+### Determine here out to split between natural and essential BCs ###
+### Currently assuming only natural ###
 
 # Calculate residual
 @jax.vmap
@@ -112,30 +119,4 @@ plot_loss(loss_vec, results_dir)
 os.remove(results_dir + "/running.txt")
 print("Saved to :", results_dir)
 print("Finished")
-
-# ### Check model
-# inds = onp.random.permutation(X.shape[0])[:5]
-
-# for i in inds:
-#     i = 8
-#     dofs = model(X[i])
-#     dofs = assign_bc(dofs, problem)
-#     sol_list = problem.unflatten_fn_sol_list(dofs)
-#     save_sol(problem.fes[0], sol_list[0], results_dir + f"/vtus/NNFE_{i}.vtu")
-
-#     problem.internal_vars = [X[i, 2] * onp.ones((fiber_dirs[0].shape[0], fiber_dirs[0].shape[1])), *fiber_dirs]
-#     pressures = [X[i, 0] * onp.ones((len(normals[0]), 1, 1)), X[i, 1] * onp.ones((len(normals[1]), 1, 1))]
-#     problem.internal_vars_surfaces = [[normals[0], pressures[0]], [normals[1], pressures[1]]]
-
-#     sol = solver(problem, initial_guess=sol_list[0], line_search_flag=True)
-#     save_sol(problem.fes[0], sol[0], results_dir + f"/vtus/FE_{i}.vtu")
-#     exit()
-# print("Saved to :", results_dir)
-
-
-
-
-
-
-
 
