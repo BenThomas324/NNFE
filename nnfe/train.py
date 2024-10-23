@@ -8,38 +8,34 @@ import time
 import yaml
 import equinox as eqx
 import os
+import importlib
 
 # FE_helpers should be in CARDIAX "hopefully"
-from FE_helpers import *
 from NN_helpers import *
 from utils import *
 
 # prob_dir = sys.argv[1]
-prob_dir = "/home/bthomas/Desktop/Research/Cardiac_NNFE/NNFE/problems/Dirichlet"
+prob_dir = "/home/bthomas/Desktop/Research/NNFE/NNFE/problems/Neumann"
+sys.path.append(prob_dir)
 results_dir = prob_dir.replace("problems", "results")
 
-jax.config.update("jax_enable_x64", True)
-XLA_PYTHON_CLIENT_PREALLOCATE=False
+# jax.config.update("jax_enable_x64", True)
+# XLA_PYTHON_CLIENT_PREALLOCATE=False
 
-param_file = prob_dir + "/params.yaml"
+param_file = prob_dir.replace("problems", "nnfe/templates")
+param_file += ".yaml"
 with open(param_file, 'r') as f:
     params = yaml.safe_load(f)
 
 opt_params = params["Optimizer"]
 NN_params = params["Network"]
-FE_params = params["FE"]
 data_params = params["Data"]
 
 results_dir, key = setup_dirs(params, results_dir)
-FE_setup, X = prob_setup(prob_dir)
+prob_module = importlib.import_module("setup")
 
-problem, internval_vars, internval_vars_surface = FE_setup(FE_params)
-
-# ps = np.linspace(0, 10., 5)
-# TCas = np.linspace(0, 30., 5)
-# param_vecs = np.meshgrid(ps, TCas)
-# param_vecs = [p.ravel() for p in param_vecs]
-# X = np.vstack(param_vecs).T
+problem, internal_vars, internal_vars_surface = prob_module.fe_setup()
+X, IV_index, IVS_index = prob_module.get_data()
 
 if NN_params["kwargs"]["out_size"] == "dofs":
     NN_params["kwargs"]["out_size"] = problem.fes[0].num_total_dofs
@@ -57,24 +53,25 @@ else:
 
 ### Determine here out to split between natural and essential BCs ###
 ### Currently assuming only natural ###
+    
+# Custom compute res with internal vars changing
+def compute_residual_vars(global_dofs, internal_vars, internal_vars_surfaces):
+    cells_dof_list = [fe.local_to_cell_dofs(problem.global_to_local_dofs(global_dofs, fe_index)) for fe_index, fe in enumerate(problem.fes)]
+    #each entry in cells_sol_list has shape (num_cells,num_bases_per_cell,vec)
+    weak_form_flat = problem.split_and_compute_cell(cells_dof_list, np, False, internal_vars)
+    weak_form_face_flat = problem.compute_face(cells_dof_list, np, False, internal_vars_surfaces)  # [(num_selected_faces, num_nodes*vec + ...), ...]
 
-# Calculate residual
-@jax.vmap
-def calc_res(dofs, TCa, pressure): #internal_vars, internal_vars_surface):
-    sol_list = problem.unflatten_fn_sol_list(dofs)
-    internal_vars = [TCa * np.ones_like(fibers[0])[:, :, :1], *fibers]
-    pressures = pressure * np.ones_like(normals)[:, :, :, :1]
-    internal_vars_surfaces = [[normals, pressures]]
-    res_list = problem.compute_residual_vars(sol_list, internal_vars, internal_vars_surfaces)
-    res_vec = jax.flatten_util.ravel_pytree(res_list)[0]
-    res_vec = apply_bc_vec(res_vec, dofs, problem)
-    return res_vec
+    return problem.compute_residual_vars_helper(weak_form_flat, weak_form_face_flat)
+
+# Calc residual
+calc_res = prob_module.get_res(problem, compute_residual_vars, 
+                               internal_vars, internal_vars_surface)
 
 # Create error funct and get value_and_grad
 @eqx.filter_value_and_grad
 def error(model, X):
     dofs = jax.vmap(model)(X)
-    res_vec = calc_res(dofs, X[:, 1], X[:, 0])
+    res_vec = jax.vmap(calc_res)(dofs, X)
     ind_loss = np.linalg.norm(res_vec, axis=1, ord=2)
     return ind_loss.mean()
 
