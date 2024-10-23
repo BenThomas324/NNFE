@@ -9,6 +9,8 @@ problem=$1
 
 if [[ $problem == "Dirichlet" ]]; then
     parent+="/Dirichlet"
+elif [[ $problem == "Neumann" ]]; then
+    parent+="/Neumann"    
 elif [[ $problem == "PS" ]]; then
     parent+="/PS"
 elif [[ $problem == "LV" ]]; then

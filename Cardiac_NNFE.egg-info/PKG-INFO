@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: Cardiac_NNFE
+Version: 0.0.1
+Summary: A framework for learning operators
+Author-email: Benjamin Thomas <bjt3241203@gmail.com>
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown

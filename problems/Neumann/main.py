@@ -9,10 +9,10 @@ import equinox as eqx
 import os
 
 parent = os.path.dirname(__file__)
-from NNFE.FE_helpers import *
-from NNFE.NN_helpers import *
-from NNFE.problem_setup import *
-from NNFE.utils import *
+from nnfe.FE_helpers import *
+from nnfe.NN_helpers import *
+from nnfe.problem_setup import *
+from nnfe.utils import *
 
 jax.config.update("jax_enable_x64", True)
 XLA_PYTHON_CLIENT_PREALLOCATE=False
