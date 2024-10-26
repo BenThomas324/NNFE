@@ -27,4 +27,3 @@ def plot_learning_rate(scheduler, epochs, results_dir):
     plt.savefig(results_dir + "/plots/LR_plot.png")
     
     return
-

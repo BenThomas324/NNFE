@@ -12,17 +12,19 @@ Network:
   kwargs:
     in_size: 1
     out_size: "dofs" # Can be specified or "dofs" if NNFE
-    width_size: 2048
+    width_size: 256
     depth: 4
     activation: "elu"
+    use_bias: False
+    use_final_bias: False
 
   load_model:
 
 Optimizer:
   name: "adam"
   learning_rate: 1.0e-3
-  epochs: 2.5e+4
-  batch_size: "full"
+  epochs: 1.0e+4
+  batch_size: 5
   #epochs: 2.5e+3
 
   scheduler:
@@ -31,9 +33,9 @@ Optimizer:
     list:
       s1:
         name: "exponential_decay"
-        init_value: 1.0e-4
+        init_value: 1.0e-3
         decay_rate: 1.0e-2
-        transition_steps: 2.5e+4
+        transition_steps: 1.0e+4
 
   options:
     learning_rate:

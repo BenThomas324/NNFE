@@ -13,9 +13,10 @@ import importlib
 # FE_helpers should be in CARDIAX "hopefully"
 from NN_helpers import *
 from utils import *
+from jax_fem.solver_abc import apply_bc_vec
 
 # prob_dir = sys.argv[1]
-prob_dir = "/home/bthomas/Desktop/Research/NNFE/NNFE/problems/Neumann"
+prob_dir = "/home/bthomas/Desktop/Research/NNFE/NNFE/problems/PS"
 sys.path.append(prob_dir)
 results_dir = prob_dir.replace("problems", "results")
 
@@ -32,10 +33,11 @@ NN_params = params["Network"]
 data_params = params["Data"]
 
 results_dir, key = setup_dirs(params, results_dir)
-prob_module = importlib.import_module("setup")
+from setup import FE_data
 
-problem, internal_vars, internal_vars_surface = prob_module.fe_setup()
-X, IV_index, IVS_index = prob_module.get_data()
+fe_data = FE_data()
+problem, internal_vars, internal_vars_surfaces = fe_data.fe_setup()
+X = fe_data.get_training_data()
 
 if NN_params["kwargs"]["out_size"] == "dofs":
     NN_params["kwargs"]["out_size"] = problem.fes[0].num_total_dofs
@@ -54,24 +56,14 @@ else:
 ### Determine here out to split between natural and essential BCs ###
 ### Currently assuming only natural ###
     
-# Custom compute res with internal vars changing
-def compute_residual_vars(global_dofs, internal_vars, internal_vars_surfaces):
-    cells_dof_list = [fe.local_to_cell_dofs(problem.global_to_local_dofs(global_dofs, fe_index)) for fe_index, fe in enumerate(problem.fes)]
-    #each entry in cells_sol_list has shape (num_cells,num_bases_per_cell,vec)
-    weak_form_flat = problem.split_and_compute_cell(cells_dof_list, np, False, internal_vars)
-    weak_form_face_flat = problem.compute_face(cells_dof_list, np, False, internal_vars_surfaces)  # [(num_selected_faces, num_nodes*vec + ...), ...]
-
-    return problem.compute_residual_vars_helper(weak_form_flat, weak_form_face_flat)
-
 # Calc residual
-calc_res = prob_module.get_res(problem, compute_residual_vars, 
-                               internal_vars, internal_vars_surface)
+calc_res = jax.vmap(fe_data.get_res(problem, internal_vars, internal_vars_surfaces))
 
 # Create error funct and get value_and_grad
 @eqx.filter_value_and_grad
 def error(model, X):
     dofs = jax.vmap(model)(X)
-    res_vec = jax.vmap(calc_res)(dofs, X)
+    res_vec = calc_res(dofs, X)
     ind_loss = np.linalg.norm(res_vec, axis=1, ord=2)
     return ind_loss.mean()
 
@@ -79,18 +71,22 @@ def error(model, X):
 @eqx.filter_jit
 def make_step(model, X, opt_state):
     loss, grads = error(model, X)
+
     updates, opt_state = optimizer.update(grads, opt_state, model)
     # Use below if using a "w" optimizer    
     # updates, opt_state = optimizer.update(grads, opt_state, model)
     model = eqx.apply_updates(model, updates)
+
     return loss, model, opt_state
 
 # Make initial step to see jit compile time
+print("Jit compile")
 toc = time.time()
 loss, model, opt_state = make_step(model, X[:batch_size], opt_state)
 tic = time.time()
 jit_time = tic - toc
-print("Initial loss: ", loss)
+print("Initial Loss: ", loss)
+print("Jit time: ", tic - toc)
 
 loss_vec = onp.zeros((epochs))
 toc = time.time()
@@ -116,4 +112,3 @@ plot_loss(loss_vec, results_dir)
 os.remove(results_dir + "/running.txt")
 print("Saved to :", results_dir)
 print("Finished")
-
