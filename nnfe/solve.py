@@ -1,5 +1,6 @@
 
 import sys
+import importlib
 
 from jax_fem.solver_abc import solver
 from jax_fem.plotting import visualize
@@ -7,9 +8,9 @@ from jax_fem.utils import save_sol
 
 sys.path.append(sys.argv[1])
 
-from setup import setup
+prob_module = importlib.import_module("setup")
 
-problem, internal_vars, internal_vars_surfaces = setup()
+problem, internal_vars, internal_vars_surfaces = prob_module.fe_setup()
 if internal_vars is not None:
     problem.internal_vars = internal_vars
 if internal_vars_surfaces is not None:

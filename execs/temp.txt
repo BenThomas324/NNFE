@@ -1,0 +1,42 @@
+Info    : Meshing 1D...
+Info    : [  0%] Meshing curve 1 (Extruded)
+Info    : [ 10%] Meshing curve 2 (Extruded)
+Info    : [ 20%] Meshing curve 3 (Extruded)
+Info    : [ 30%] Meshing curve 4 (Extruded)
+Info    : [ 40%] Meshing curve 7 (Extruded)
+Info    : [ 50%] Meshing curve 8 (Extruded)
+Info    : [ 50%] Meshing curve 9 (Extruded)
+Info    : [ 60%] Meshing curve 10 (Extruded)
+Info    : [ 70%] Meshing curve 12 (Extruded)
+Info    : [ 80%] Meshing curve 13 (Extruded)
+Info    : [ 90%] Meshing curve 17 (Extruded)
+Info    : [100%] Meshing curve 21 (Extruded)
+Info    : Done meshing 1D (Wall 0.00108227s, CPU 0.000767s)
+Info    : Meshing 2D...
+Info    : [  0%] Meshing surface 5 (Extruded)
+Info    : [ 20%] Meshing surface 14 (Extruded)
+Info    : [ 40%] Meshing surface 18 (Extruded)
+Info    : [ 50%] Meshing surface 22 (Extruded)
+Info    : [ 70%] Meshing surface 26 (Extruded)
+Info    : [ 90%] Meshing surface 27 (Extruded)
+Info    : Done meshing 2D (Wall 0.00103432s, CPU 0.001029s)
+Info    : Meshing 3D...
+Info    : Meshing volume 1 (Extruded)
+Info    : Done meshing 3D (Wall 0.0014866s, CPU 0.001486s)
+Info    : Optimizing mesh...
+Info    : Done optimizing mesh (Wall 6.7614e-06s, CPU 7e-06s)
+Info    : 512 nodes 729 elements
+Info    : Writing 'mesh/msh/box.msh'...
+Info    : Done writing 'mesh/msh/box.msh'
+       __       ___      ___   ___                _______  _______ .___  ___. 
+      |  |     /   \     \  \ /  /               |   ____||   ____||   \/   | 
+      |  |    /  ^  \     \  V  /      ______    |  |__   |  |__   |  \  /  | 
+.--.  |  |   /  /_\  \     >   <      |______|   |   __|  |   __|  |  |\/|  | 
+|  `--'  |  /  _____  \   /  .  \                |  |     |  |____ |  |  |  | 
+ \______/  /__/     \__\ /__/ \__\               |__|     |_______||__|  |__| 
+                                                                              
+
+
+i = 0, res_norm = 0.01607643357653388, res_norm_half = 0.06992700855299636
+i = 0, res_norm = 0.00011346256596024349, res_norm_half = 0.008052095509299194
+i = 0, res_norm = 1.5789250240680515e-08, res_norm_half = 5.673153937903625e-05

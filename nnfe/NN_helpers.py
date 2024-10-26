@@ -9,31 +9,34 @@ from plotting import *
 
 def trunc_weight(weight: jax.Array, key: jax.random.PRNGKey) -> jax.Array:
   out, in_ = weight.shape
-  stddev = 1e-6
+  stddev = 1e-2
   return stddev * jax.random.truncated_normal(key, shape=(out, in_), lower=-1, upper=1)
 
 def trunc_bias(bias: jax.Array, key: jax.random.PRNGKey) -> jax.Array:
   out = bias.shape
-  stddev = 1e-6
+  stddev = 1e-2
   return stddev * jax.random.truncated_normal(key, shape=(out), lower=-1, upper=1)
 
 def init_linear_weight(model, key):
-  is_linear = lambda x: isinstance(x, eqx.nn.Linear)
-  get_weights = lambda m: [x.weight
-                           for x in jax.tree_util.tree_leaves(m, is_leaf=is_linear)
-                           if is_linear(x)]
-  get_biases = lambda m: [x.bias
-                           for x in jax.tree_util.tree_leaves(m, is_leaf=is_linear)
-                           if is_linear(x)]
-  weights = get_weights(model)
-  biases = get_biases(model)
-  new_weights = [trunc_weight(weight, subkey)
-                 for weight, subkey in zip(weights, jax.random.split(key, len(weights)))]
-  new_biases = [trunc_bias(bias, subkey)
-                 for bias, subkey in zip(biases, jax.random.split(key, len(biases)))]
-  new_model = eqx.tree_at(get_weights, model, new_weights)
-  new_model = eqx.tree_at(get_biases, new_model, new_biases)
-  return new_model
+    is_linear = lambda x: isinstance(x, eqx.nn.Linear)
+    get_weights = lambda m: [x.weight
+                            for x in jax.tree_util.tree_leaves(m, is_leaf=is_linear)
+                            if is_linear(x)]
+    try:
+        get_biases = lambda m: [x.bias
+                                for x in jax.tree_util.tree_leaves(m, is_leaf=is_linear)
+                                if is_linear(x)]
+        biases = get_biases(model)
+        new_biases = [trunc_bias(bias, subkey)
+                    for bias, subkey in zip(biases, jax.random.split(key, len(biases)))]
+        new_model = eqx.tree_at(get_biases, new_model, new_biases)
+    except:
+        pass
+    weights = get_weights(model)
+    new_weights = [trunc_weight(weight, subkey)
+                    for weight, subkey in zip(weights, jax.random.split(key, len(weights)))]
+    new_model = eqx.tree_at(get_weights, model, new_weights)
+    return new_model
 
 def create_network(params, key):
     key = jax.random.PRNGKey(key)
@@ -47,6 +50,9 @@ def create_network(params, key):
     else:
         model = eqx.tree_deserialise_leaves(params["load_model"], model)
 
+    model_num = jax.tree.leaves(eqx.filter(model, eqx.is_array))
+    model_num = [len(np.ravel(a)) for a in model_num]
+    print("Number of parameters: ", sum(model_num))
     return model
 
 

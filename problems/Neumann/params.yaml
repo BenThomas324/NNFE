@@ -19,7 +19,7 @@ Network:
 Optimizer:
   name: "adam"
   learning_rate: 1.0e-3
-  epochs: 2.5e+4
+  epochs: 2.5e+3
   batch_size: "full"
   #epochs: 2.5e+3
 

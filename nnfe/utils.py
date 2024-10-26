@@ -19,12 +19,3 @@ def setup_dirs(params, results_dir):
     onp.savetxt(results_dir + "/running.txt", onp.array([0]))
 
     return results_dir, temp_key
-
-def prob_setup(prob_dir):
-    
-    return
-
-
-
-
-
