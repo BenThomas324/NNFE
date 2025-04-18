@@ -9,8 +9,8 @@ import equinox as eqx
 import os
 
 parent = os.path.dirname(__file__)
-from nnfe.FE_helpers import *
-from nnfe.NN_helpers import *
+from NNFE.nnfe.models import *
+from NNFE.nnfe.ml import *
 from nnfe.problem_setup import *
 from nnfe.utils import *
 

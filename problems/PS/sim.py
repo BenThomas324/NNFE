@@ -7,28 +7,26 @@ import numpy as np
 
 parent = os.path.dirname(__file__)
 
-from nnfe.problem_setup import LV_test
-from nnfe.env_var import path
+from setup import FE_data
 
-from jax_fem.solver import solver
+from jax_fem.solver import Newton_Solver
 from jax_fem.utils import save_sol
+from jax_fem.plotting import visualize_sol
 
-param_file = parent + "/params.yaml"
-with open(param_file, 'r') as f:
-    params = yaml.safe_load(f)
+# param_file = parent + "/params.yaml"
+# with open(param_file, 'r') as f:
+#     params = yaml.safe_load(f)
 
-p, TCa = 10., 30.
+fe_class = FE_data()
+problem, internal_vars, internal_vars_surfaces = fe_class.fe_setup()
+problem.internal_vars = internal_vars
+problem.internal_vars_surfaces = internal_vars_surfaces
 
-problem, fibers, normals = PS_test(params["FE"])
-problem.internal_vars = [TCa * np.ones_like(fibers[0])[:, :, :1], *fibers]
-pressures = p * np.ones_like(normals)[:, :, :, :1]
+solver = Newton_Solver(problem, np.zeros_like(problem.fes[0].mesh.points))
+sol, info = solver.solve()
+save_sol(problem.fes[0], sol.reshape(-1, 3), "Sim.vtu")
 
-problem.internal_vars_surfaces = [[normals, pressures]]
-
-sol = solver(problem, line_search_flag=True)
-save_sol(problem.fes[0], sol[0], "vtus/Sim.vtu")
-
-
+visualize_sol(problem.fes[0], sol, "test.png")
 
 
 

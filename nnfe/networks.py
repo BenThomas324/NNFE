@@ -1,3 +1,6 @@
+"""
+This file contains custom NN architectures to be used for NNFE
+"""
 
 import equinox as eqx
 import jax
@@ -77,7 +80,7 @@ class DNN(eqx.Module, strict=True):
         Likewise `out_size` can also be a string `"scalar"`, in which case the
         output from the module will have shape `()`.
         """
-        dtype = jax.numpy.float32 if dtype is None else dtype
+        dtype = jax.numpy.float64 if dtype is None else dtype
         keys = jrandom.split(key, len(hidden_layers) + 1)
         layers = []
         if len(hidden_layers) == 0:
@@ -197,7 +200,7 @@ class ResNet(eqx.Module, strict=True):
         Likewise `out_size` can also be a string `"scalar"`, in which case the
         output from the module will have shape `()`.
         """
-        dtype = jax.numpy.float32 if dtype is None else dtype
+        dtype = jax.numpy.float64 if dtype is None else dtype
         keys = jrandom.split(key, depth + 1)
         layers = []
         if depth == 0:
@@ -328,7 +331,7 @@ class DenseNet(eqx.Module, strict=True):
         Likewise `out_size` can also be a string `"scalar"`, in which case the
         output from the module will have shape `()`.
         """
-        dtype = jax.numpy.float32 if dtype is None else dtype
+        dtype = jax.numpy.float64 if dtype is None else dtype
         num_keys = int((depth + 1) * (depth + 2) / 2)
         keys = jrandom.split(key, num_keys)
         layers = []

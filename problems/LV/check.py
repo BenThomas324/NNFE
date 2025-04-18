@@ -8,9 +8,9 @@ import sys
 import yaml
 import matplotlib.pyplot as plt
 
-from nnfe.FE_helpers import *
+from NNFE.nnfe.models import *
 from nnfe.problem_setup import *
-from nnfe.NN_helpers import *
+from NNFE.nnfe.ml import *
 
 sys.path.append("/home/bthomas/Desktop/Research/JAXFEM_temp/jax-fem-NNFE")
 from jax_fem.solver import solver, assign_bc, apply_bc_vec

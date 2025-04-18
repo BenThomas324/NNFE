@@ -3,7 +3,9 @@ import numpy as onp
 import jax.numpy as np
 import jax
 import sys
-from jax_fem.problem import Problem
+from cardiax.problem import Problem
+
+# Move this to CARDIAX
 
 class VHL_Fung(Problem):
 
@@ -301,60 +303,4 @@ class Pressure_cube(Problem):
         self.internal_vars_surfaces = [[normals, pressures]]
 
         return
-
-# def get_normals(fe_prob, boundary_inds):
-
-#     physical_coos = onp.take(fe_prob.points, fe_prob.cells, axis=0)
-#     selected_coos = physical_coos[boundary_inds[:, 0]]  # (num_selected_faces, num_nodes, dim)
-#     selected_face_shape_vals = fe_prob.face_shape_vals[boundary_inds[:, 1]]  # (num_selected_faces, num_face_quads, num_nodes)
-#     # (num_selected_faces, num_face_quads, num_nodes, 1) * (num_selected_faces, 1, num_nodes, dim) -> (num_selected_faces, num_face_quads, dim)
-#     physical_surface_quad_points = onp.sum(selected_face_shape_vals[:, :, :, None] * selected_coos[:, None, :, :], axis=2)
-
-#     selected_f_shape_grads_ref = fe_prob.face_shape_grads_ref[boundary_inds[:, 1]]  # (num_selected_faces, num_face_quads, num_nodes, dim)
-#     selected_f_normals = fe_prob.face_normals[boundary_inds[:, 1]]  # (num_selected_faces, dim)
-#     jacobian_dx_deta = onp.sum(selected_coos[:, None, :, :, None] * selected_f_shape_grads_ref[:, :, :, None, :], axis=2)
-#     jacobian_det = onp.linalg.det(jacobian_dx_deta)  # (num_selected_faces, num_face_quads)
-#     jacobian_deta_dx = onp.linalg.inv(jacobian_dx_deta)  # (num_selected_faces, num_face_quads, dim, dim)
-
-#     nanson_scale = selected_f_normals[:, None, None, :] @ jacobian_deta_dx
-
-#     normals = nanson_scale / np.linalg.norm(nanson_scale, axis=-1)[:, :, :, None]
-#     return normals
-
-
-# def get_faces_and_normals(fe_prob, boundary_inds, boundary_pts):
-    
-#     physical_coos = onp.take(fe_prob.points, fe_prob.cells, axis=0)
-#     selected_coos = physical_coos[boundary_inds[:, 0]]  # (num_selected_faces, num_nodes, dim)
-#     selected_face_shape_vals = fe_prob.face_shape_vals[boundary_inds[:, 1]]  # (num_selected_faces, num_face_quads, num_nodes)
-
-#     faces = np.zeros((len(selected_coos), 4), dtype=bool)
-#     for b in boundary_pts:
-#         faces += (b == selected_coos).all(axis=-1)
-#     isface = faces.sum(axis=1) == 3
-
-#     for i, f in enumerate(faces):
-#         if f.sum() == 3:
-#             continue
-#         else:
-#             faces = faces.at[i].set(np.zeros_like(f))
-
-#     faces = selected_coos[faces].reshape(-1, 3, 3)
-
-#     selected_f_shape_grads_ref = fe_prob.face_shape_grads_ref[boundary_inds[:, 1]]  # (num_selected_faces, num_face_quads, num_nodes, dim)
-#     selected_f_normals = fe_prob.face_normals[boundary_inds[:, 1]]  # (num_selected_faces, dim)
-#     jacobian_dx_deta = onp.sum(selected_coos[:, None, :, :, None] * selected_f_shape_grads_ref[:, :, :, None, :], axis=2)
-#     jacobian_det = onp.linalg.det(jacobian_dx_deta)  # (num_selected_faces, num_face_quads)
-#     jacobian_deta_dx = onp.linalg.inv(jacobian_dx_deta)  # (num_selected_faces, num_face_quads, dim, dim)
-
-#     nanson_scale = selected_f_normals[:, None, None, :] @ jacobian_deta_dx
-
-#     normals = nanson_scale.reshape(-1, 3) / np.linalg.norm(nanson_scale.reshape(-1, 3), axis=1)[:, None]
-#     return faces, normals[isface]
-
-
-
-
-
-
 

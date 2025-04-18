@@ -1,0 +1,53 @@
+Data:
+  PV_file: /home/bthomas/Desktop/Research/JAXFEM_temp/NNFE/nnfe-scratch-rewrite/data/VHL-PV-loop-data.txt
+  T_Ca_file: /home/bthomas/Desktop/Research/JAXFEM_temp/NNFE/nnfe-scratch-rewrite/data/T_Ca_vals.txt
+FE:
+  constants:
+    A1: 12.0
+    A2: 8.0
+    A3: 26.0
+    K: 1000000.0
+    alpha: 2.125
+    beta: 1.4
+    c: 15220.83
+Network:
+  kwargs:
+    activation: elu
+    depth: 5
+    in_size: 2
+    out_size: dofs
+    use_bias: true
+    use_final_bias: true
+    width_size: 256
+  load_model: null
+  name: MLP
+Optimizer:
+  batch_size: 0.4
+  epochs: 25000.0
+  learning_rate: 0.001
+  name: adam
+  options:
+    learning_rate: null
+  scheduler:
+    boundaries: []
+    list:
+      s1:
+        kwargs:
+          decay_rate: 0.01
+          init_value: 0.001
+          transition_steps: 25000.0
+        name: exponential_decay
+    toggle: true
+Plotting:
+  loss: null
+Project:
+  name: Hyper_test
+  save_dir: /results/PS
+  saveat: 10000.0
+Sampling:
+  adaptive:
+    fixed: null
+    frequency: null
+    keep: null
+    samples: null
+  constant: true

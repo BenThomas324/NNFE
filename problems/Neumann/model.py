@@ -2,10 +2,10 @@
 import jax.numpy as np
 import jax
 
-from jax_fem.problem_abc import Problem
-from jax_fem.generate_mesh import box_mesh
-from jax_fem.fe_abc import FiniteElement
-from jax_fem.solver_abc import apply_bc_vec
+from cardiax.problem import Problem
+from cardiax.generate_mesh import box_mesh
+from cardiax.fe import FiniteElement
+# from cardiax.solver import apply_bc_vec
 from nnfe.FE_base import FE_Base
 
 class HyperElasticity(Problem):
@@ -73,11 +73,11 @@ class FE_data(FE_Base):
         def zero_bc(point):
             return 0.
 
-        dirichlet_bc_info = [[left] * 3, [0, 1, 2],
-                            [zero_bc] * 3]
+        dirichlet_bc_info = [[[left] * 3, [0, 1, 2],
+                            [zero_bc] * 3]]
 
         fe = FiniteElement(mesh, vec = 3, dim = 3, ele_type = ele_type, gauss_order = 3)
-        problem = HyperElasticity(fe, dirichlet_bc_info=dirichlet_bc_info, location_fns=[right])
+        problem = HyperElasticity(fe, dirichlet_bc_info=dirichlet_bc_info, location_fns = [[right]])
 
         right_normals = problem.fes[0].get_surface_normals(right)
         pressures = np.ones_like(right_normals)[:, :, :1]

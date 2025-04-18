@@ -1,0 +1,92 @@
+
+Project:
+  name: Hyper_test
+  # Where to save runs of models
+  save_dir: "/results/PS"
+  # When to save the parameters and update plots
+  saveat: 1.0e+4 
+
+Network:
+  # Which model to use, based on "networks.py"
+  name: "MLP"
+  kwargs:
+    in_size: 2
+    out_size: "dofs" # Can be specified or "dofs" if NNFE
+    width_size: 256
+    depth: 5
+    activation: "elu"
+    use_bias: True
+    use_final_bias: True
+
+  load_model:
+
+Optimizer:
+  name: "sgd"
+  learning_rate: 1.0e-3
+  epochs: 2.5e+4
+  batch_size: .4
+
+  scheduler:
+    toggle: True
+    boundaries: []
+    list:
+      s1:
+        name: "exponential_decay"
+        kwargs:
+          init_value: 1.0e-2
+          decay_rate: 1.0e-2
+          transition_steps: 2.5e+4
+      # s1:
+      #   name: "warmup_cosine_decay_schedule"
+      #   init_value: 1.0e-4
+      #   peak_value: 2.5e-4
+      #   warmup_steps: 5.0e+3
+      #   decay_steps: 1.0e+4
+      #   end_value: 1.0e-5
+      # s2:
+      #   name: "warmup_cosine_decay_schedule"
+      #   init_value: 1.0e-5
+      #   peak_value: 5.0e-5
+      #   warmup_steps: 5.0e+3
+      #   decay_steps: 1.0e+4
+      #   end_value: 1.0e-6
+      # s3:
+      #   name: "constant_schedule"
+      #   value: 5.0e-6
+
+  options:
+    learning_rate:
+
+FE:
+  constants:
+    A1: 12.0
+    A2: 8.0
+    A3: 26.0
+    K: 1.0e+6
+    c: 15220.83
+    alpha: 2.125
+    beta: 1.4
+
+Data:
+  PV_file: "/home/bthomas/Desktop/Research/JAXFEM_temp/NNFE/nnfe-scratch-rewrite/data/VHL-PV-loop-data.txt"
+  T_Ca_file: "/home/bthomas/Desktop/Research/JAXFEM_temp/NNFE/nnfe-scratch-rewrite/data/T_Ca_vals.txt"
+
+Plotting:
+  loss:
+  
+Sampling:
+  constant: True
+  adaptive:
+    frequency: # How often to generate new samples
+    samples: # Number of samples to check against
+    keep: # Number or percentage of samples to keep
+    fixed: # If any samples are fixed ie corners or boundaries
+
+
+
+
+
+
+
+
+

@@ -4,9 +4,8 @@ import jax.numpy as np
 import numpy as onp
 import jax
 
-from jax_fem.problem_abc import Problem
-from jax_fem.fe_abc import FiniteElement
-from jax_fem.solver_abc import apply_bc_vec
+from jax_fem.problem import Problem
+from jax_fem.fe import FiniteElement
 from nnfe.FE_base import FE_Base
 
 class LV_Fung(Problem):
@@ -17,7 +16,7 @@ class LV_Fung(Problem):
             s = s[:, None]
             n = n[:, None]
             J = np.linalg.det(F)
-            C = F.T @ F * J**(-2/3)
+            C = F.T @ F * np.cbrt(J)**(-2)
             E_tilde = 1/2 * (C - np.eye(self.dim[0]))
             E11 = f.T @ E_tilde @ f
             E12 = f.T @ E_tilde @ s
@@ -40,7 +39,7 @@ class LV_Fung(Problem):
         def S_act(F, T_Ca, f):
             f = f[:, None]
             lamb = np.sqrt(f.T @ F.T @ F @ f)
-            S = T_Ca * (1 + self.beta * (lamb - 1))/(lamb ** 2) * f @ f.T
+            S = 1000 * T_Ca/ (100**2) * (1 + self.beta * (lamb - 1))/(lamb ** 2) * f @ f.T
             return S
 
         def first_PK_stress(u_grad, T_Ca, f, s, n):
@@ -51,16 +50,16 @@ class LV_Fung(Problem):
 
         return first_PK_stress
 
-    def get_pressure_maps(self):
+    def get_surface_maps(self):
 
-        def F_extLV(u_grad, nL, pL):
+        def F_extLV(u, u_grad, x, nL, pL):
             F = u_grad + np.eye(self.dim[0])
             J = np.linalg.det(F)
             # F_inv = np.linalg.inv(F)
             F_inv = 1/J * np.array([[F[1, 1] * F[2, 2] - F[1, 2] * F[2, 1], F[0, 2] * F[2, 1] - F[0, 1] * F[2, 2], F[0, 1] * F[1, 2] - F[0, 2] * F[1, 1]],
                                     [F[1, 2] * F[2, 0] - F[1, 0] * F[2, 2], F[0, 0] * F[2, 2] - F[0, 2] * F[2, 0], F[0, 2] * F[1, 0] - F[0, 0] * F[1, 2]],
                                     [F[1, 0] * F[2, 1] - F[1, 1] * F[2, 0], F[0, 1] * F[2, 0] - F[0, 0] * F[2, 1], F[0, 0] * F[1, 1] - F[0, 1] * F[1, 0]]])
-            val = pL * J * F_inv.T @ nL.reshape(3, 1)
+            val = 133.322/ (100**2) * pL * J * F_inv.T @ nL.reshape(3, 1)
             return val.reshape(-1)
 
         return [F_extLV]
@@ -71,7 +70,7 @@ class LV_Fung(Problem):
         cm2mm=10
         gram = 1e-3
         second = 1
-        dynecm2 = gram*cm/second**2
+        dynecm2 = 1.
 
         self.A1 = constants["A1"]
         self.A2 = constants["A2"]
@@ -82,61 +81,6 @@ class LV_Fung(Problem):
         self.beta = constants["beta"]
         return
 
-# class LV_NH(Problem):
-
-#     def get_tensor_map(self):
-#         def psi(F):
-#             E = 10.
-#             nu = 0.4
-#             mu = E / (2. * (1. + nu))
-#             kappa = E / (3. * (1. - 2. * nu))
-#             J = np.linalg.det(F)
-#             Jinv = J**(-2. / 3.)
-#             I1 = np.trace(F.T @ F)
-#             energy = (mu / 2.) * (Jinv * I1 - 3.) + (kappa / 2.) * (J - 1.)**2.
-#             return energy
-        
-#         P_fn = jax.grad(psi)
-
-#         def S_act(F, T_Ca, f):
-#             f = f[:, None]
-#             lamb = np.sqrt(f.T @ F.T @ F @ f)
-#             S = T_Ca * (1 + self.beta * (lamb - 1))/(lamb ** 2) * f @ f.T
-#             return S
-
-#         def first_PK_stress(u_grad, T_Ca, f, s, n):
-#             F = u_grad + np.eye(self.dim[0])
-#             P_psi = P_fn(F)#, f, s, n)
-#             P_act = F @ S_act(F, T_Ca, f)
-#             return P_psi + P_act
-
-#         return first_PK_stress
-
-#     def get_pressure_maps(self):
-
-#         def F_extLV(u_grad, nL, pL):
-#             F = u_grad + np.eye(self.dim[0])
-#             J = np.linalg.det(F)
-#             # F_inv = np.linalg.inv(F)
-#             F_inv = 1/J * np.array([[F[1, 1] * F[2, 2] - F[1, 2] * F[2, 1], F[0, 2] * F[2, 1] - F[0, 1] * F[2, 2], F[0, 1] * F[1, 2] - F[0, 2] * F[1, 1]],
-#                                     [F[1, 2] * F[2, 0] - F[1, 0] * F[2, 2], F[0, 0] * F[2, 2] - F[0, 2] * F[2, 0], F[0, 2] * F[1, 0] - F[0, 0] * F[1, 2]],
-#                                     [F[1, 0] * F[2, 1] - F[1, 1] * F[2, 0], F[0, 1] * F[2, 0] - F[0, 0] * F[2, 1], F[0, 0] * F[1, 1] - F[0, 1] * F[1, 0]]])
-#             val = pL * J * F_inv.T @ nL.reshape(3, 1)
-#             return val.reshape(-1)
-
-#         return [F_extLV]
-
-#     def set_params(self, constants, pressures, TCa, normals, fibers):
-#         self.beta = 1.4
-
-#         p_LV = pressures * np.ones_like(normals)
-#         TCa = TCa * np.ones_like((fibers[0]))[:, :, :1]
-
-#         self.internal_vars = [TCa, *fibers]
-#         self.internal_vars_surfaces = [[[normals, p_LV]]]
-        
-#         return
-
 class FE_data(FE_Base):
 
     def fe_setup(self):
@@ -145,8 +89,8 @@ class FE_data(FE_Base):
         params["A1"] = 12.
         params["A2"] = 8.
         params["A3"] = 26.
-        params["c"] = 15220.83
-        params["K"] = 1e6
+        params["c"] = 1522.083 / (100**2)
+        params["K"] = 1e5 / (100**2)
         params["alpha"] = 2.125
         params["beta"] = 1.4
 
@@ -168,8 +112,9 @@ class FE_data(FE_Base):
             return 0.0
 
         # dirichlet_bc_info = [Where, what directions, value]
-        dirichlet_bc_info = [[base]*3, [0, 1, 2], [zero_dirichlet]*3]
-        location_fns = [LVendo]
+        bc1 = [[base]*3, [0, 1, 2], [zero_dirichlet]*3]
+        dirichlet_bc_info = [[bc1]]
+        location_fns = [[LVendo]]
 
         fibers = mesh.point_data["fibers"]
         sheets = mesh.point_data["sheets"]
@@ -187,8 +132,8 @@ class FE_data(FE_Base):
 
         problem.set_params(params)
 
-        TCa = 1. * onp.ones_like((fibers))[:, :, :1]
-        p_LV = 5. * onp.ones_like(LV_normals)[:, :, :1]
+        TCa = 40. * onp.ones_like((fibers))[:, :, :1]
+        p_LV = 80. * onp.ones_like(LV_normals)[:, :, :1]
 
         internal_vars = [TCa, fibers, sheets, normals]
         internal_vars_surfaces = [[[LV_normals, p_LV]]]
@@ -196,6 +141,14 @@ class FE_data(FE_Base):
         return problem, internal_vars, internal_vars_surfaces
 
     def get_res(self, problem, int_vars, int_vars_surface):
+
+        def apply_bc_vec(res_vec, dofs):
+
+            dirichlet_dofs, dirichlet_vals = problem.get_boundary_data()
+            res_vec = res_vec.at[dirichlet_dofs].set(dofs[dirichlet_dofs])
+            res_vec = res_vec.at[dirichlet_dofs].add(-dirichlet_vals)
+
+            return res_vec
 
         def compute_residual_vars(global_dofs, internal_vars, internal_vars_surfaces):
             cells_dof_list = [fe.local_to_cell_dofs(problem.global_to_local_dofs(global_dofs, fe_index)) for fe_index, fe in enumerate(problem.fes)]
@@ -215,22 +168,22 @@ class FE_data(FE_Base):
             internal_vars_surfaces = [[[int_vars_surface[0][0][0], pressures]]]
             res_vec = compute_residual_vars(dofs, internal_vars, internal_vars_surfaces)
             # res_vec = jax.flatten_util.ravel_pytree(res_list)[0]
-            res_vec = apply_bc_vec(res_vec, dofs, problem)
+            res_vec = apply_bc_vec(res_vec, dofs)
             return res_vec
         return calc_res
 
     def get_training_data(self):
-        n = 5
-        p = onp.linspace(0, 60., n)
-        TCa = onp.linspace(0, 40., n)
+        n = 6
+        p = onp.linspace(0., 120., n)
+        TCa = onp.linspace(0., 60., n)
         X = onp.meshgrid(TCa, p)
         X = onp.vstack([onp.ravel(a) for a in X]).T
         return X
 
     def get_testing_data(self):
-        n = 5
-        p = onp.linspace(0, 60., n)
-        TCa = onp.linspace(0, 40., n)
+        n = 6
+        p = onp.linspace(0., 120., n)
+        TCa = onp.linspace(0., 60., n)
         X = onp.meshgrid(TCa, p)
         X = onp.vstack([onp.ravel(a) for a in X]).T
         return X
