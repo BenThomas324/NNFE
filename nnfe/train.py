@@ -11,16 +11,16 @@ import os
 import importlib
 
 # FE_helpers should be in CARDIAX "hopefully"
-from NN_helpers import *
+from NNFE.nnfe.ml import *
 from utils import *
-from jax_fem.solver_abc import apply_bc_vec
 
 # prob_dir = sys.argv[1]
 prob_dir = "/home/bthomas/Desktop/Research/NNFE/NNFE/problems/PS"
 sys.path.append(prob_dir)
 results_dir = prob_dir.replace("problems", "results")
 
-# jax.config.update("jax_enable_x64", True)
+# jax.config.update("jax_debug_nans", True)
+jax.config.update("jax_enable_x64", True)
 # XLA_PYTHON_CLIENT_PREALLOCATE=False
 
 param_file = prob_dir.replace("problems", "nnfe/templates")
@@ -43,8 +43,10 @@ if NN_params["kwargs"]["out_size"] == "dofs":
     NN_params["kwargs"]["out_size"] = problem.fes[0].num_total_dofs
 
 model = create_network(NN_params, key)
+
 optimizer = create_optimizer(opt_params, results_dir)
 opt_state = optimizer.init(eqx.filter(model, eqx.is_array))
+
 epochs = int(opt_params["epochs"])
 if opt_params["batch_size"] == "full":
     batch_size = X.shape[0]
@@ -64,19 +66,18 @@ calc_res = jax.vmap(fe_data.get_res(problem, internal_vars, internal_vars_surfac
 def error(model, X):
     dofs = jax.vmap(model)(X)
     res_vec = calc_res(dofs, X)
-    ind_loss = np.linalg.norm(res_vec, axis=1, ord=2)
-    return ind_loss.mean()
+    ind_loss = (res_vec**2).sum(axis=1)
+    # ind_loss = np.linalg.norm(res_vec, axis=1, ord=2)**2
+    return ind_loss.mean()/(100**2)
 
 # Jit step function to make super fast
 @eqx.filter_jit
 def make_step(model, X, opt_state):
     loss, grads = error(model, X)
-
     updates, opt_state = optimizer.update(grads, opt_state, model)
     # Use below if using a "w" optimizer    
     # updates, opt_state = optimizer.update(grads, opt_state, model)
     model = eqx.apply_updates(model, updates)
-
     return loss, model, opt_state
 
 # Make initial step to see jit compile time
@@ -95,20 +96,21 @@ for step in range(epochs):
     ### use make_step on X[inds] for "batching"
     loss, model, opt_state = make_step(model, X[inds], opt_state)
     loss_vec[step] = loss
-    if (step+1)%1e1 == 0:
+    if (step+1)%1e2 == 0:
         print(f"step={step}, loss={loss}")
         sys.stdout.flush()
     if (step + 1)%1e5 == 0:
-        eqx.tree_serialise_leaves(results_dir + "/model.eqx", model)
+        eqx.tree_serialise_leaves(results_dir + f"/model.eqx", model)
 tic = time.time()
 
 print("Total time: ", tic - toc)
 print("Average time: ", (tic - toc)/epochs)
 print("JIT time: ", jit_time)
 
-eqx.tree_serialise_leaves(results_dir + "/model.eqx", model)
+eqx.tree_serialise_leaves(results_dir + f"/model.eqx", model)
 plot_loss(loss_vec, results_dir)
 
 os.remove(results_dir + "/running.txt")
-print("Saved to :", results_dir)
-print("Finished")
+print("Finished training")
+print("Saved to :")
+print(results_dir)

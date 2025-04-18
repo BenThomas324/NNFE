@@ -1,21 +1,33 @@
+"""
+This file is meant to handle all aspects of handling the filesystem.
+It will create directories, save models, and load files.
+(May want to rename)
+"""
 
-import os
 import yaml
 import numpy as onp
+from pathlib import Path
 
-def setup_dirs(params, results_dir):
+def read_yaml(file):
+    with open(file, "r") as f:
+        return yaml.safe_load(f)
+
+def create_dirs(params, results_dir):
+    # Currently done via RNG, but should change to user specified file
+    # and throw error if it already exists
     temp_key = onp.random.randint(1e5)
-    while os.path.exists(results_dir + f"/{temp_key}"):
+    while (results_dir / f"/{temp_key}").exists():
         temp_key = onp.random.randint(1e5)
 
     results_dir += f"/{temp_key}"
-    os.makedirs(results_dir)
-    os.makedirs(results_dir + "/plots")
-    os.makedirs(results_dir + "/values")
+    (results_dir).mkdir()
+    (results_dir + "/plots").mkdir()
+    (results_dir + "/values").mkdir()
     
-    with open(results_dir + "/params.yaml", "w") as f:
+    with open(results_dir / "/params.yaml", "w") as f:
         yaml.dump(params, f)
 
     onp.savetxt(results_dir + "/running.txt", onp.array([0]))
 
     return results_dir, temp_key
+
