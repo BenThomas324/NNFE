@@ -6,7 +6,6 @@ jax.config.update("jax_enable_x64", True)
 
 # Leftmost column for defining function space
 from cardiax.fe import FiniteElement
-from cardiax.iga import BSpline
 # Center column for defining PDE
 from cardiax.problem import Problem
 # Rightmost column for defining solver

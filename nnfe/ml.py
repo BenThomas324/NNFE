@@ -13,7 +13,6 @@ import nnfe.networks as networks
 from nnfe.plotting import *
 
 class ML():
-
     def __init__(self, ml_params):
         
         self.network_params = ml_params["Network"]

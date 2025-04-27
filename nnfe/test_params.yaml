@@ -62,7 +62,7 @@ Machine_Learning:
     options:
       learning_rate:
 
-fe_input_file: "/home/bthomas/Desktop/Research/NNFE_code/NNFE/nnfe/fe_input_file.yaml"
+fe_input_file: "/home/bjt2369@austin.utexas.edu/Desktop/Research/NNFE_code/NNFE/nnfe/fe_input_file.yaml"
 
 # Controls what should be plotted through the run
 # could add custom plots here to be triggered
