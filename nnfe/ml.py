@@ -8,6 +8,7 @@ import equinox as eqx
 import optax
 import jax
 import jax.numpy as np
+import equinox as eqx
 
 import nnfe.networks as networks
 from nnfe.plotting import *
@@ -19,6 +20,7 @@ class ML():
         self.optimizer_params = ml_params["Optimizer"]
         self.network = self.create_network(self.network_params, ml_params["Key"])
         self.optimizer = self.create_optimizer(self.optimizer_params)
+        self.opt_state = self.optimizer.init(eqx.filter(self.network, eqx.is_array))
         return
 
     def trunc_weight(self, weight: jax.Array, key: jax.random.PRNGKey) -> jax.Array:

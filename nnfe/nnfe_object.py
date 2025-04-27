@@ -1,23 +1,31 @@
 
 import yaml
-from nnfe.ml import ML
 from nnfe.models import *
+import abc
+import equinox as eqx
 
+from nnfe.ml import ML
 from cardiax.input_file_handler import FE_Handler
+from nnfe.sampling import Sampler
 
 class NNFE_base():
 
-    def __init__(self, problem, ml):
+    def __init__(self, param_file):
         """
         Initialization of NNFE object, 
         will have to look more into what is needed here
         Args:
             problem (_type_): _description_
             ml (_type_): _description_
+            sampler (_type_): _description_
         """
-        self.problem = problem
-        self.ml = ml
+
+        self.problem, self.ml, self.sampler = load_nnfe(param_file)
+
+        self.val_and_grads =eqx.filter_value_and_grad(self.loss_fct)
+
         return
+    
     
     def setup(self):
         """
@@ -33,6 +41,25 @@ class NNFE_base():
         Main training loop for NNFE
         """
 
+        loss_vals = []
+
+        for i in range(int(self.ml.optimizer_params["epochs"])):
+            self.ml.network, self.ml.opt_state, train_loss = self.make_step(self.ml.network, self.sampler.X, self.ml.opt_state)
+            loss_vals.append(train_loss)
+            if i % 10 == 0:
+                print("Iteration: ", i, " Loss: ", train_loss)
+
+        return
+
+    def test(self):
+        """
+        Test the accuracy of the model after training
+        """
+        res_vecs = self.vcalc_res(self.ml.network, self.sampler.Y)
+        mean_vecs = (res_vecs**2).mean(axis=1)
+        print("Average Residuals: ", mean_vecs)
+        print("Max Residuals: ", res_vecs.max(axis=1))
+        print("Tract val: ", self.sampler.Y)
         return
 
     def save(self):
@@ -42,7 +69,36 @@ class NNFE_base():
         to split up training process just in case
         """
 
+        eqx.tree_serialise_leaves("some_filename.eqx", self.ml.network)
+
         return
+
+    @abc.abstractmethod
+    def calc_res(self):
+        """
+        Calculate the residuals for the PDE
+        This is done by calling the FE_handler object
+        and passing in the ML object
+        """
+
+        pass
+
+    @abc.abstractmethod
+    def loss_fct(self):
+        """
+        Calculate the residuals for the PDE
+        This is done by calling the FE_handler object
+        and passing in the ML object
+        """
+
+        pass
+
+    @eqx.filter_jit
+    def make_step(self, model, x, opt_state):
+        loss_val, grads = self.val_and_grads(model, x)
+        updates, opt_state = self.ml.optimizer.update(grads, opt_state, eqx.filter(model, eqx.is_array))
+        model = eqx.apply_updates(model, updates)
+        return model, opt_state, loss_val
 
 def load_nnfe(param_file):
     """
@@ -75,12 +131,11 @@ def load_nnfe(param_file):
 
     ml = ML(params["Machine_Learning"])
 
+    sampler = Sampler(params["Sampler"])
+
     # Return (Problem, ML, ...)
-    return fe_handler.problem, ml
+    return fe_handler.problem, ml, sampler
 
-param_file = "test_params.yaml"
+# param_file = "test_params.yaml"
 
-nnfe1 = load_nnfe(param_file)
-nnfe = NNFE_base(*nnfe1)
-
-print()
+# nnfe = NNFE_base(param_file)

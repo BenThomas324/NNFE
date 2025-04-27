@@ -7,6 +7,14 @@ Project:
   # When to save the parameters and update plots
   saveat: 1.0e+4 
 
+# Controls the overall control need for NNFE
+NNFE:
+  # Number of variables to train
+
+
+# FE Problem to solve defined in a separate yaml file
+fe_input_file: "/home/bjt2369@austin.utexas.edu/Desktop/Research/NNFE_code/NNFE/nnfe/fe_input_file.yaml"
+
 # All parameters associated with the machine learning part of NNFE
 # Split into Network and Optimizer
 Machine_Learning:
@@ -17,8 +25,8 @@ Machine_Learning:
     kwargs:
       in_size: 1
       out_size: "dofs" # Can be specified or "dofs" if NNFE
-      width_size: 256
-      depth: 5
+      width_size: 512
+      depth: 4
       activation: "elu"
       use_bias: True
       use_final_bias: True
@@ -28,7 +36,7 @@ Machine_Learning:
   Optimizer:
     name: "sgd"
     learning_rate: 1.0e-3
-    epochs: 2.5e+4
+    epochs: 2.5e+3
     batch_size: .4
 
     scheduler:
@@ -39,8 +47,8 @@ Machine_Learning:
           name: "exponential_decay"
           kwargs:
             init_value: 1.0e-2
-            decay_rate: 1.0e-2
-            transition_steps: 2.5e+4
+            decay_rate: 1.0e-1
+            transition_steps: 2.5e+3
         # s1:
         #   name: "warmup_cosine_decay_schedule"
         #   init_value: 1.0e-4
@@ -62,29 +70,23 @@ Machine_Learning:
     options:
       learning_rate:
 
-fe_input_file: "/home/bjt2369@austin.utexas.edu/Desktop/Research/NNFE_code/NNFE/nnfe/fe_input_file.yaml"
+Sampler:
+  training:
+    name: "uniform"
+    kwargs:
+      mins: [0.] # List of min values
+      maxes: [3.] # List of max values
+      samples: [5] # List of number of samples
+  
+  testing:
+    name: "uniform"
+    kwargs:
+      between_training: True
+      mins: [0.] # List of min values
+      maxes: [3.] # List of max values
+      samples: [5] # List of number of samples
 
 # Controls what should be plotted through the run
 # could add custom plots here to be triggered
 Plotting:
   loss:
-  
-# Sampling for the data used to train NNFE
-# May become adaptive in the future
-# this should give the freedom to do so
-Sampling:
-  constant: True
-  adaptive:
-    frequency: # How often to generate new samples
-    samples: # Number of samples to check against
-    keep: # Number or percentage of samples to keep
-    fixed: # If any samples are fixed ie corners or boundaries
-
-
-
-
-
-
-
-
-
