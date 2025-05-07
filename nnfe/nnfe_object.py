@@ -3,6 +3,7 @@ import yaml
 from nnfe.models import *
 import abc
 import equinox as eqx
+import time
 
 from nnfe.ml import ML
 from cardiax.input_file_handler import FE_Handler
@@ -43,11 +44,18 @@ class NNFE_base():
 
         loss_vals = []
 
+        toc = time.time()
         for i in range(int(self.ml.optimizer_params["epochs"])):
             self.ml.network, self.ml.opt_state, train_loss = self.make_step(self.ml.network, self.sampler.X, self.ml.opt_state)
             loss_vals.append(train_loss)
             if i % 10 == 0:
                 print("Iteration: ", i, " Loss: ", train_loss)
+
+        time_elapsed = time.time() - toc
+        print("Training time: ")
+        print(time_elapsed)
+        print("Time per iter: ")
+        print(time_elapsed / self.ml.optimizer_params["epochs"])
 
         return
 
@@ -55,6 +63,15 @@ class NNFE_base():
         """
         Test the accuracy of the model after training
         """
+
+        print("Training Error")
+        res_vecs = self.vcalc_res(self.ml.network, self.sampler.X)
+        mean_vecs = (res_vecs**2).mean(axis=1)
+        print("Average Residuals: ", mean_vecs)
+        print("Max Residuals: ", res_vecs.max(axis=1))
+        print("Tract val: ", self.sampler.X)
+
+        print("Testing Error")
         res_vecs = self.vcalc_res(self.ml.network, self.sampler.Y)
         mean_vecs = (res_vecs**2).mean(axis=1)
         print("Average Residuals: ", mean_vecs)
