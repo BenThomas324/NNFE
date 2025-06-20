@@ -1,0 +1,54 @@
+---
+jupytext:
+  main_language: python
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.15.0
+---
+
+# Sample FEniCS-like documentation of Python code
+
+Copyright (C) 2024 WCCMS
+
+NNFE training example
+This file includes an example of how to train a Neural Network
+within the NNFE framework. It comments on how training occurs,
+and explores all functions called, to help explain what is
+going on to the everyday user.
+
+```python
+import jax.numpy as jnp
+from functools import partial
+
+import argparse
+```
+
+Note that in imports above, we used the syntax: \\
+\# + \\
+< your code (imports) here > \\
+\# - \\
+to identify the text in the `.py` file as code. Every block of markdown text in this file starts
+with a python comment (#).
+
+```python
+# example function
+def l2_norm(x,y):
+    return jnp.linalg.norm(x - y)
+```
+
+We can insert math text here to describe what's going on. The L_2 norm (in finite dimensions) is defined as:
+
+$$
+|| \mathbf{x} ||_2 = \sqrt{\sum_{i=0}^n x_n^2}
+$$
+
+we can also define math in-line, a Fung-like model looks like $\Psi = \frac{c}{2} (e^{I_1 - 3} - 1)$, for example.
+NOTE: ***a line of white space*** between text and the double-dollarsign indicating you're in a math environment are required!
+
+```python
+print(jnp.linalg.norm(jnp.array([3,4])))
+```
+
+The purpose of this demo is just to demonstrate how the FEniCS-like tutorials are generated!

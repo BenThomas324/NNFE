@@ -1,23 +1,80 @@
-[build-system]
-requires = ["setuptools>=64", "wheel"]
-build-backend = "setuptools.build_meta"
+[build-system] # Require setuptool version due to https://github.com/pypa/setuptools/issues/2938
+requires = ["setuptools>=61.0.0", "wheel"]
 
+ # See https://python-poetry.org/docs/pyproject/ for more keywords for the project table
 [project]
 name = "NNFE"
-version = "0.0.1"
-requires-python = ">=3.9"
 authors = [
-  {name = "Benjamin Thomas", email = "bjt3241203@gmail.com"}
-]
-description = "A framework for learning operators"
+    {name = "Benjamin Thomas", email = "bjt2369@utexas.edu"},
+    {name = "Kenneth Meyer", email = "kmeyer2@utexas.edu"},
+    {name = "Gabriel Peery", email = "gabriel.peery@utexas.edu}"},
+    {name = "Ulas Akyuz", email = "ua2375@my.utexas.edu"}
+    ]
+version = "0.1.0"
+description = "NNFE: Implementation of NNFE with CARDIAX as backend"
+
+# "readme" the description field in your package, see: https://python-poetry.org/docs/pyproject/#readme
 readme = "README.md"
-license = {file = "LICENSE"}
-keywords = [
 
+requires-python = ">=3.13"
+
+# Direct dependencies
+#TODO: Update these
+dependencies = [
+    'jax', # JAX is used for automatic differentiation and GPU acceleration
+    'jaxlib', # JAX requires jaxlib for GPU support
+    'numpy', # Numpy is used for numerical operations
 ]
-classifiers = [
 
+#TODO: Check these
+[project.optional-dependencies]
+test = [
+   "flake8", # Formatting: https://flake8.pycqa.org/en/latest/user/error-codes.html
+   "pytest", # Testing suite
+   "pytest-cov" # Coverage reports
 ]
 
-[tool.setuptools]
-packages = ["nnfe"]
+#TODO: Check these
+docs = [
+    "jupyter-book", # Required to build documentation
+    "jupytext", # Required to convert .py to .ipynb files
+    "ipython!=8.7.0" # https://github.com/ipython/ipython/issues/13845
+]
+
+binder = [ # Required to interface with Binder when having a Dockerfile in root
+    "jupyterlab",
+    "notebook"
+]
+pypi = [
+    "build" # Used for building wheels and uploading to pypi
+]
+
+all = ["nnfe[test,docs,binder,pypi]"]
+
+[tool.mypy]
+ignore_missing_imports = true # Does not show errors when importing untyped libraries
+exclude = [ # We only want mypy to consider files that are not generated in installing or building documentation
+    "docs/",
+    "build/"
+]
+files = [  # Folder to which files that should be checked by mypy
+    "src",
+    "test"
+]
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+    "--cov=nnfe",
+    "--cov-report=html",
+    "--cov-report=term-missing",
+    "-v"]
+
+testpaths = [
+    "test"
+]
+
+
+# Pair notebooks with python files
+[tool.jupytext]
+formats = "demos///ipynb,demos///py:percent"
