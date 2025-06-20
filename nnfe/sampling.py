@@ -49,4 +49,3 @@ class Sampler():
         return onp.vstack([g.flatten() for g in grid]).T
 
 
-
