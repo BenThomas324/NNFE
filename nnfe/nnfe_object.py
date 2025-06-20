@@ -6,10 +6,29 @@ import equinox as eqx
 import time
 
 from nnfe.ml import ML
-from cardiax.input_file_handler import FE_Handler
+from cardiax.Input_file.input_file_handler import FE_Handler
 from nnfe.sampling import Sampler
 
 class NNFE_base():
+    """
+    Base class for the NNFE object.
+    There is a LOT of customization that can occur here, 
+    making it more important than ever to create input files for 
+    reproducibility and tracking.
+    This class is the organizational structure that handles the subparts
+    of the NNFE method. This includes:
+    - Problem definition (problem)
+    - Machine Learning model (ml)
+    - Sampler for training/testing data (sampler)
+    - Training loop
+    - Testing loop
+    - Saving/loading model
+    TODO:
+    - Make compatible with future refactor
+    - Add more documentation
+    - Add checkpointing
+    - Add or extend logger
+    """
 
     def __init__(self, param_file):
         """

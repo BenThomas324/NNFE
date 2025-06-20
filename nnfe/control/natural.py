@@ -16,7 +16,7 @@ import jax
 # Should be better way to import this
 import sys
 sys.path.append("..")
-from nnfe_object import NNFE_base
+from nnfe.nnfe_object import NNFE_base
 
 class Natural_NNFE(NNFE_base):
 
@@ -45,16 +45,24 @@ class Natural_NNFE(NNFE_base):
 
     def calc_res(self, model, x):
         dofs = model(x)
-        int_vars_surfaces = [[[x * np.ones_like(self.problem.internal_vars_surfaces[0][0][0])]]]
+        int_vars_surfaces = [[[x * self.problem.internal_vars_surfaces[0][0][0]]]]
         res_vec = self.problem.compute_residual_helper(dofs, [], int_vars_surfaces)
         # Bottom goes to 0
         res_vec = res_vec.at[self.dirichlet_dofs].set(dofs[self.dirichlet_dofs])
         res_vec = res_vec.at[self.dirichlet_dofs].add(-self.dirichlet_vals, unique_indices=True)
         return res_vec
 
-param_file = "../test_params.yaml"
+    def evaluate(self, x):
+        """
+        Evaluate the model at a given point x.
+        Args:
+            x: The input point to evaluate the model at.
+        Returns:
+            The output of the model at the input point x.
+        """
+        dofs = self.ml.network(x)
+        dofs = dofs.at[self.dirichlet_dofs].set(self.dirichlet_vals)
+        return dofs
+    
 
-nnfe = Natural_NNFE(param_file)
-nnfe.train()
-nnfe.test()
-print()
+
