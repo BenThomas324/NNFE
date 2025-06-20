@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CARDIAX Hyperelasticity Demo &mdash; CARDIAX 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="jax_fem package" href="../jax_fem.html" />
+    <link rel="prev" title="CARDIAX Demos" href="../demos.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            CARDIAX
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../demos.html">CARDIAX Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../jax_fem.html">jax_fem package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CARDIAX</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../demos.html">CARDIAX Demos</a></li>
+      <li class="breadcrumb-item active">CARDIAX Hyperelasticity Demo</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/demos/demo_cardiax_hyperelasticity.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="cardiax-hyperelasticity-demo">
+<h1>CARDIAX Hyperelasticity Demo<a class="headerlink" href="#cardiax-hyperelasticity-demo" title="Link to this heading"></a></h1>
+<p>Copyright (C) 2024 WCCMS</p>
+<p>Classic hyperelastic cube twisting problem
+The demo is implemented in a single <a class="reference external" href="https://github.com/WCCMS-UTAustin/CARDIAX/blob/main/docs/source/demos/demo_cardiax_hyperelasticity.py">Python file</a>, and can also be downloaded
+as a <a class="reference external" href="https://github.com/WCCMS-UTAustin/CARDIAX/blob/main/docs/source/demos/demo_cardiax_hyperelasticity.ipynb">jupyter notebook</a>.</p>
+<p><strong>Imports</strong>
+<br>
+First, some JAX and CARDIAX specific modules are imported:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import some useful modules.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># Import modules from CARDIAX.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cardiax.problem</span><span class="w"> </span><span class="kn">import</span> <span class="n">Problem</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cardiax.solver</span><span class="w"> </span><span class="kn">import</span> <span class="n">solver</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cardiax.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">save_sol</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">CARDIAX.cardiax.generate_mesh_deprecated</span><span class="w"> </span><span class="kn">import</span> <span class="n">box_mesh</span> <span class="c1">#, get_meshio_cell_type, Mesh</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cardiax.fe</span><span class="w"> </span><span class="kn">import</span> <span class="n">FiniteElement</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">CARDIAX.cardiax.IGA.iga</span><span class="w"> </span><span class="kn">import</span> <span class="n">BSpline</span>
+
+<span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_debug_nans&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>HyperElasticity Class Definition</strong>
+<br>
+We use a <code class="xref py py-class docutils literal notranslate"><span class="pre">HyperElasticity</span></code> class to define a problem:
+The function ‘get_tensor_map’ is defined below; it overrides the base class method. Generally, JAX-FEM (and CARDIAX)
+solves -<span class="math notranslate nohighlight">\(\nabla \cdot f(\nabla u) = b\)</span>. Here, we define <span class="math notranslate nohighlight">\(f(\nabla u\)</span>) = <span class="math notranslate nohighlight">\(\mathbf{P}\)</span>. Notice how we first
+define <span class="math notranslate nohighlight">\(\psi\)</span>, and then use automatic differentiation (jax.grad)
+to obtain the ‘P_fn’ function.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">HyperElasticity</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Defines the hyperelastic material behavior, object mesh, boundary conditions, etc.. Includes 1 main function, get_tensor_map(self) with two nested functions: psi(F) and first_PK_stress(u_grad). </span>
+
+<span class="sd">        The class defines, solves, and stores a solution to a hyperelasticity problem, but does not return anything.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        Problem (class): the base clase used to define finite element problems in JAX-FEM/CARDIAX (more details in problem.py).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tensor_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">psi</span><span class="p">(</span><span class="n">F</span><span class="p">):</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="mf">10.</span>
+            <span class="n">nu</span> <span class="o">=</span> <span class="mf">0.3</span>
+            <span class="n">mu</span> <span class="o">=</span> <span class="n">E</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">nu</span><span class="p">))</span>
+            <span class="n">kappa</span> <span class="o">=</span> <span class="n">E</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="mf">2.</span> <span class="o">*</span> <span class="n">nu</span><span class="p">))</span>
+            <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+            <span class="c1">#Jinv = J**(-2. / 3.)</span>
+            <span class="n">Jinv</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cbrt</span><span class="p">(</span><span class="n">J</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">I1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">F</span><span class="p">)</span>
+            <span class="n">energy</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Jinv</span> <span class="o">*</span> <span class="n">I1</span> <span class="o">-</span> <span class="mf">3.</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">kappa</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">J</span> <span class="o">-</span> <span class="mf">1.</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span>
+            <span class="k">return</span> <span class="n">energy</span>
+
+        <span class="n">P_fn</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">first_PK_stress</span><span class="p">(</span><span class="n">u_grad</span><span class="p">):</span>
+            <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">u_grad</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">F</span> <span class="o">=</span> <span class="n">u_grad</span> <span class="o">+</span> <span class="n">I</span>
+            <span class="n">P</span> <span class="o">=</span> <span class="n">P_fn</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">P</span>
+
+        <span class="k">return</span> <span class="n">first_PK_stress</span>
+</pre></div>
+</div>
+<p>The 1st Piola Kirchoff Stress tensor can be used to derive the forces required for deformation.</p>
+<p>The strain energy density function is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+\psi = \left(\frac{\mu}{2}\right) \left(J^{-\frac{2}{3}} I_1 - 3\right) + \left(\frac{\kappa}{2}\right) \left(J - 1\right)^2
+\]</div>
+<p><strong>Mesh Definition</strong>
+<br>
+First, a FiniteElement or Bspline class is defined to discretize the domain. In this example, we can chose between linear hexahedral or linear bspline elements.
+Results obtained using a linear bspline and linear hexahedral mesh should be the same (up to the tolerance of the solver).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">domain</span> <span class="o">=</span> <span class="s1">&#39;linear bspline&#39;</span>
+<span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;data&#39;</span><span class="p">)</span>
+
+<span class="k">match</span> <span class="n">domain</span><span class="p">:</span>
+    <span class="k">case</span> <span class="s1">&#39;linear hex&#39;</span><span class="p">:</span>
+        <span class="n">ele_type</span> <span class="o">=</span> <span class="s1">&#39;hexahedron&#39;</span>
+        <span class="n">mesh</span> <span class="o">=</span> <span class="n">box_mesh</span><span class="p">(</span><span class="n">Nx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                       <span class="n">Ny</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                       <span class="n">Nz</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                       <span class="n">Lx</span><span class="o">=</span><span class="n">Lx</span><span class="p">,</span>
+                       <span class="n">Ly</span><span class="o">=</span><span class="n">Ly</span><span class="p">,</span>
+                       <span class="n">Lz</span><span class="o">=</span><span class="n">Lz</span><span class="p">,</span>
+                       <span class="n">data_dir</span><span class="o">=</span><span class="n">data_dir</span><span class="p">,</span>
+                       <span class="n">ele_type</span><span class="o">=</span><span class="n">ele_type</span><span class="p">)</span>
+        <span class="n">fe</span> <span class="o">=</span> <span class="n">FiniteElement</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">vec</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">dim</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">ele_type</span> <span class="o">=</span> <span class="n">ele_type</span><span class="p">,</span> <span class="n">gauss_order</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">case</span> <span class="s1">&#39;linear bspline&#39;</span><span class="p">:</span>
+        <span class="n">deg</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">ele_type</span> <span class="o">=</span> <span class="s1">&#39;SPLINEHEX&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">deg</span><span class="p">)</span>
+        <span class="n">knot0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">deg</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span> <span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">deg</span><span class="p">)))</span>
+        <span class="n">knot1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">deg</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span> <span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">deg</span><span class="p">)))</span>
+        <span class="n">knot2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">deg</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span> <span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">deg</span><span class="p">)))</span>
+        <span class="n">knots</span> <span class="o">=</span> <span class="p">[</span><span class="n">knot0</span><span class="p">,</span> <span class="n">knot1</span><span class="p">,</span> <span class="n">knot2</span><span class="p">]</span>
+        <span class="n">degrees</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="p">[</span><span class="n">deg</span><span class="p">]</span>
+        <span class="n">fe</span> <span class="o">=</span> <span class="n">BSpline</span><span class="p">(</span><span class="n">knots</span><span class="p">,</span> <span class="n">degrees</span><span class="p">,</span> <span class="n">vec</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">dim</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">ele_type</span> <span class="o">=</span> <span class="n">ele_type</span><span class="p">,</span> <span class="n">gauss_order</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">deg</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the traditional finite element seeting, a mesh is passed to a <code class="xref py py-class docutils literal notranslate"><span class="pre">FiniteElement</span></code> object.
+In a IGA setting, knots and degrees are passed to <code class="xref py py-class docutils literal notranslate"><span class="pre">BSpline</span></code> object.
+<code class="xref py py-class docutils literal notranslate"><span class="pre">BSpline</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">FiniteElement</span></code> are intended to inherit from
+the same abstract class. T-splines, G-Splines, and other mesh-like objects can hopefully be generated with this template.</p>
+<p><strong>Boundary Conditions</strong>
+<br>
+To finish defining the problem, the boundary conditions are defined.
+One of the faces of the cube is held in place (left face with x values as 0), while the opposite face (right face with x values equal to 1 or Lx) is twisted clockwise along the YZ plane.
+Two functions are used to capture/seperate all points on the left and right faces:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">left</span><span class="p">(</span><span class="n">point</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">right</span><span class="p">(</span><span class="n">point</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Lx</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then, the boundary displacements are defined. The Dirichlet boundary conditions are used.
+For the left face, no displacement is imposed, so the boundary condition is 0:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">zero_dirichlet_val</span><span class="p">(</span><span class="n">point</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">0.</span>
+</pre></div>
+</div>
+<p>For the right face, the y values are defined with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">dirichlet_val_x2</span><span class="p">(</span><span class="n">point</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">)</span> <span class="o">-</span>
+            <span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">)</span> <span class="o">-</span> <span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mf">2.</span>
+</pre></div>
+</div>
+<p>For the right face, the z values are defined similarly:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">dirichlet_val_x3</span><span class="p">(</span><span class="n">point</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">)</span> <span class="o">+</span>
+            <span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">)</span> <span class="o">-</span> <span class="n">point</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mf">2.</span>
+</pre></div>
+</div>
+<p>Now, the Dirichlet boundary conditions are combined:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dirichlet_bc_info</span> <span class="o">=</span> <span class="p">[[</span><span class="n">left</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="p">[</span><span class="n">right</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
+                     <span class="p">[</span><span class="n">zero_dirichlet_val</span><span class="p">,</span> <span class="n">dirichlet_val_x2</span><span class="p">,</span> <span class="n">dirichlet_val_x3</span><span class="p">]</span> <span class="o">+</span>
+                     <span class="p">[</span><span class="n">zero_dirichlet_val</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><span class="math notranslate nohighlight">\(\texttt{[left] * 3 + [right] * 3}\)</span> specifies that the BC are applied to the left and right faces of the cube for all three spatial dimensions (x, y, z).
+<br>
+<span class="math notranslate nohighlight">\(\texttt{[0, 1, 2] * 2}\)</span> indicates which components of the displacement vector are being constrained. Here, <span class="math notranslate nohighlight">\(\texttt{0, 1, 2}\)</span> correspond to the x, y, and z components respectively. This pattern <span class="math notranslate nohighlight">\(\texttt{[0, 1, 2]}\)</span> is repeated twice to match the left and right faces.
+<br>
+<span class="math notranslate nohighlight">\(\texttt{[zero_dirichlet_val, ... ,dirichlet_val_x3]+[zero_dirichlet_val]*3}\)</span> specifies the boundary value functions to be applied. For the left face, <span class="math notranslate nohighlight">\(\texttt{zero_dirichlet_val}\)</span> is applied to the x component, <span class="math notranslate nohighlight">\(\texttt{dirichlet_val_x2}\)</span> to the y component, and <span class="math notranslate nohighlight">\(\texttt{dirichlet_val_x3}\)</span> to the z component.
+For the right face, <span class="math notranslate nohighlight">\(\texttt{zero_dirichlet_val}\)</span> is applied to all three components.</p>
+<p><strong>Problem Definition and Solution</strong>
+<br>
+Now, finally, a hyperelasticity object is initialized with the FE object, FE bindings (optionally), and boundary condition-related information.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">problem</span> <span class="o">=</span> <span class="n">HyperElasticity</span><span class="p">(</span><span class="n">fe</span><span class="p">,</span>
+                          <span class="c1">#fe_bindings = [[0,1]],</span>
+                          <span class="n">dirichlet_bc_info</span><span class="o">=</span><span class="n">dirichlet_bc_info</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The problem is then solved:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sol</span> <span class="o">=</span> <span class="n">solver</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">use_petsc</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, the solution is saved as a .vtu file (visualized through ParaView) in the above specified data directory.
+Note that for BSplines, visualization is only supported for linear elements.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">problem_name</span> <span class="o">=</span> <span class="n">domain</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">vtk_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;vtk/&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">vtk_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">vtk_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">vtk_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;u_T_&#39;</span> <span class="o">+</span><span class="n">problem_name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">problem_name</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.vtu&#39;</span><span class="p">)</span>
+<span class="n">save_sol</span><span class="p">(</span><span class="n">problem</span><span class="o">.</span><span class="n">fes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sol</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">vtk_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../demos.html" class="btn btn-neutral float-left" title="CARDIAX Demos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../jax_fem.html" class="btn btn-neutral float-right" title="jax_fem package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, WCCMS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
