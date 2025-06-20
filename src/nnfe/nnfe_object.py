@@ -171,7 +171,3 @@ def load_nnfe(param_file):
 
     # Return (Problem, ML, ...)
     return fe_handler.problem, ml, sampler
-
-# param_file = "test_params.yaml"
-
-# nnfe = NNFE_base(param_file)

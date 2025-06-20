@@ -114,7 +114,7 @@ class DNN(eqx.Module, strict=True):
         self.use_bias = use_bias
         self.use_final_bias = use_final_bias
 
-    @jax.named_scope("eqx.nn.DNN")
+    @jax.named_scope("nnfe.DNN")
     def __call__(self, x: Array, *, key: Optional[PRNGKeyArray] = None) -> Array:
         """**Arguments:**
 
@@ -239,7 +239,7 @@ class ResNet(eqx.Module, strict=True):
         self.use_bias = use_bias
         self.use_final_bias = use_final_bias
 
-    @jax.named_scope("eqx.nn.ResNet")
+    @jax.named_scope("nnfe.ResNet")
     def __call__(self, x: Array, *, key: Optional[PRNGKeyArray] = None) -> Array:
         """**Arguments:**
 
@@ -376,7 +376,7 @@ class DenseNet(eqx.Module, strict=True):
         self.use_bias = use_bias
         self.use_final_bias = use_final_bias
 
-    @jax.named_scope("eqx.nn.DenseNet")
+    @jax.named_scope("nnfe.DenseNet")
     def __call__(self, x: Array, *, key: Optional[PRNGKeyArray] = None) -> Array:
         """**Arguments:**
 
