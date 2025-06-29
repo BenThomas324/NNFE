@@ -6,7 +6,7 @@ as the internal variables for the PDE.
 
 from nnfe_object import NNFE_base
 
-class Mixed_NNFE(NNFE_base):
+class NNFE(NNFE_base):
 
     """
     This class is responsible for the combined training

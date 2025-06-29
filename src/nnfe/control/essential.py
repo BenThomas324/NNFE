@@ -6,7 +6,7 @@ since this involves a lifting of the function.
 
 from nnfe_object import NNFE_base
 
-class Essential_NNFE(NNFE_base):
+class NNFE(NNFE_base):
 
     """
     This class is responsible for training over essential variables, 

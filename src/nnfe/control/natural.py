@@ -18,7 +18,7 @@ import sys
 sys.path.append("..")
 from nnfe.nnfe_object import NNFE_base
 
-class Natural_NNFE(NNFE_base):
+class NNFE(NNFE_base):
 
     """
     This class is responsible for training over natural variables.
