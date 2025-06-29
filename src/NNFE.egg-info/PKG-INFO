@@ -1,0 +1,27 @@
+Metadata-Version: 2.4
+Name: NNFE
+Version: 0.1.0
+Summary: NNFE: Implementation of NNFE with CARDIAX as backend
+Author-email: Benjamin Thomas <bjt2369@utexas.edu>, Kenneth Meyer <kmeyer2@utexas.edu>, Gabriel Peery <gabriel.peery@utexas.edu}>, Ulas Akyuz <ua2375@my.utexas.edu>
+Requires-Python: >=3.13
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: jax
+Requires-Dist: jaxlib
+Requires-Dist: numpy
+Provides-Extra: test
+Requires-Dist: flake8; extra == "test"
+Requires-Dist: pytest; extra == "test"
+Requires-Dist: pytest-cov; extra == "test"
+Provides-Extra: docs
+Requires-Dist: jupyter-book; extra == "docs"
+Requires-Dist: jupytext; extra == "docs"
+Requires-Dist: ipython!=8.7.0; extra == "docs"
+Provides-Extra: binder
+Requires-Dist: jupyterlab; extra == "binder"
+Requires-Dist: notebook; extra == "binder"
+Provides-Extra: pypi
+Requires-Dist: build; extra == "pypi"
+Provides-Extra: all
+Requires-Dist: nnfe[binder,docs,pypi,test]; extra == "all"
+Dynamic: license-file
