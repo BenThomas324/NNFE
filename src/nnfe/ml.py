@@ -58,8 +58,9 @@ class ML():
     def create_network(self, params, key):
         if key == "random":
             # Make random key, use random directory key as prev
-            key = 1
+            key = onp.random.randint(0, int(1e6))
             params["Key"] = key # Save the randomized key
+            key = jax.random.PRNGKey(key)
         elif type(key) == int:
             key = jax.random.PRNGKey(key)
         else:

@@ -8,6 +8,7 @@ import time
 from nnfe.ml import ML
 from cardiax.Input_file.input_file_handler import FE_Handler
 from nnfe.sampling import Sampler
+from nnfe.utils import Utilities
 
 class NNFE_base():
     """
@@ -40,9 +41,9 @@ class NNFE_base():
             sampler (_type_): _description_
         """
 
-        self.problem, self.ml, self.sampler = load_nnfe(param_file)
+        self.problem, self.ml, self.sampler, self.utility = load_nnfe(param_file)
 
-        self.val_and_grads =eqx.filter_value_and_grad(self.loss_fct)
+        self.val_and_grads = eqx.filter_value_and_grad(self.loss_fct)
 
         return
     
@@ -51,8 +52,7 @@ class NNFE_base():
         """
         Setup directories and other things required for NNFE
         """
-        #TODO: Actually set things up
-        # Testing a lot now, so not saving
+        
 
         return
     
@@ -67,7 +67,7 @@ class NNFE_base():
         for i in range(int(self.ml.optimizer_params["epochs"])):
             self.ml.network, self.ml.opt_state, train_loss = self.make_step(self.ml.network, self.sampler.X, self.ml.opt_state)
             loss_vals.append(train_loss)
-            if i % 10 == 0:
+            if i % 1000 == 0:
                 print("Iteration: ", i, " Loss: ", train_loss)
 
         time_elapsed = time.time() - toc
@@ -169,5 +169,6 @@ def load_nnfe(param_file):
 
     sampler = Sampler(params["Sampler"])
 
-    # Return (Problem, ML, ...)
-    return fe_handler.problem, ml, sampler
+    utility = Utilities(params["Project"])
+
+    return fe_handler.problem, ml, sampler, utility

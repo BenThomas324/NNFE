@@ -3,7 +3,7 @@ Name: NNFE
 Version: 0.1.0
 Summary: NNFE: Implementation of NNFE with CARDIAX as backend
 Author-email: Benjamin Thomas <bjt2369@utexas.edu>, Kenneth Meyer <kmeyer2@utexas.edu>, Gabriel Peery <gabriel.peery@utexas.edu}>, Ulas Akyuz <ua2375@my.utexas.edu>
-Requires-Python: >=3.13
+Requires-Python: >=3.12
 Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: jax

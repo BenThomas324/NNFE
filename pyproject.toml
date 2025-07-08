@@ -16,7 +16,7 @@ description = "NNFE: Implementation of NNFE with CARDIAX as backend"
 # "readme" the description field in your package, see: https://python-poetry.org/docs/pyproject/#readme
 readme = "README.md"
 
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 
 # Direct dependencies
 #TODO: Update these
