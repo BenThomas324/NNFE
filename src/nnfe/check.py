@@ -44,7 +44,7 @@ for i in range(2):
     NN_params["load_model"] = results_dir + f"/model{i}.eqx"
     models.append(create_network(NN_params, 0))
 
-from nnfe.plotting import NNFE_vis
+from nnfe.plotter import NNFE_vis
 
 solver = Newton_Solver(problem, np.zeros(problem.num_total_dofs_all_vars))
 dofs = models[0](X[0]) + models[1](X[1])

@@ -11,7 +11,7 @@ import jax.numpy as np
 import equinox as eqx
 
 import nnfe.networks as networks
-from nnfe.plotting import *
+from nnfe.plotter import *
 
 class ML():
     def __init__(self, ml_params):
@@ -100,5 +100,4 @@ class ML():
         params["options"]["learning_rate"] = scheduler
         optimizer = getattr(optax, params["name"])(**params["options"])
 
-        # plot_learning_rate(scheduler, params["epochs"], results_dir)
         return optimizer

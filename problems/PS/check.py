@@ -38,7 +38,7 @@ if NN_params["kwargs"]["out_size"] == "dofs":
 NN_params["load_model"] = results_dir + f"/model.eqx"
 model = create_network(NN_params, 0)
 
-from nnfe.plotting import NNFE_vis
+from nnfe.plotter import NNFE_vis
 
 problem.internal_vars = internal_vars
 problem.internal_vars_surfaces = internal_vars_surfaces
