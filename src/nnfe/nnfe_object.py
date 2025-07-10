@@ -9,6 +9,7 @@ from nnfe.ml import ML
 from cardiax.Input_file.input_file_handler import FE_Handler
 from nnfe.sampling import Sampler
 from nnfe.utils import Utilities
+from nnfe.plotter import Plotter
 
 class NNFE_base():
     """
@@ -41,7 +42,7 @@ class NNFE_base():
             sampler (_type_): _description_
         """
 
-        self.problem, self.ml, self.sampler, self.utility = load_nnfe(param_file)
+        self.problem, self.ml, self.sampler, self.utility, self.plotter = load_nnfe(param_file)
 
         self.val_and_grads = eqx.filter_value_and_grad(self.loss_fct)
 
@@ -61,20 +62,35 @@ class NNFE_base():
         Main training loop for NNFE
         """
 
+        self.plotter.plot_learning_rate(self.ml.optimizer_params["options"]["learning_rate"],
+                           self.ml.optimizer_params["epochs"])
+
         loss_vals = []
 
         toc = time.time()
         for i in range(int(self.ml.optimizer_params["epochs"])):
             self.ml.network, self.ml.opt_state, train_loss = self.make_step(self.ml.network, self.sampler.X, self.ml.opt_state)
             loss_vals.append(train_loss)
-            if i % 1000 == 0:
+            if i % self.utility.print == 0:
                 print("Iteration: ", i, " Loss: ", train_loss)
+
+            # Save model while training
+            if i % self.utility.save == 0:
+                self.save()
+                print("Model saved at iteration: ", i)
+
+        # Save the model after training
+        self.save()
 
         time_elapsed = time.time() - toc
         print("Training time: ")
         print(time_elapsed)
         print("Time per iter: ")
         print(time_elapsed / self.ml.optimizer_params["epochs"])
+
+        self.test()
+
+        self.plotter.plot_loss(onp.hstack(loss_vals))
 
         return
 
@@ -105,7 +121,7 @@ class NNFE_base():
         to split up training process just in case
         """
 
-        eqx.tree_serialise_leaves("some_filename.eqx", self.ml.network)
+        eqx.tree_serialise_leaves("model_test.eqx", self.ml.network)
 
         return
 
@@ -165,10 +181,13 @@ def load_nnfe(param_file):
     if params["Machine_Learning"]["Network"]["kwargs"]["out_size"] == "dofs":
         params["Machine_Learning"]["Network"]["kwargs"]["out_size"] = int(fe_handler.problem.num_total_dofs_all_vars)
 
+    utility = Utilities(params["Project"])
+    params["Machine_Learning"]["Key"] = utility.key
+
     ml = ML(params["Machine_Learning"])
 
     sampler = Sampler(params["Sampler"])
 
-    utility = Utilities(params["Project"])
+    plotter = Plotter(params["Plotting"], utility)
 
-    return fe_handler.problem, ml, sampler, utility
+    return fe_handler.problem, ml, sampler, utility, plotter
