@@ -26,13 +26,21 @@ class Sampler():
 
         return
 
+    def safe_eval(self, expr):
+        if type(expr) is str:
+            return eval(expr)
+        elif type(expr) in [float, int]:
+            return expr
+        else:
+            raise ValueError("Expression must be a valid string, float, or int")
+
     def uniform(self, mins=[0.], maxes=[1.], samples=[5], between_training=False):
 
         assert len(mins) == len(maxes) == len(samples), "Mins, maxes, and samples must be the same length"
         n = len(samples)
-        mins = onp.array(mins)
-        maxes = onp.array(maxes)
-        samples = onp.array(samples)
+        mins = onp.array([self.safe_eval(m) for m in mins])
+        maxes = onp.array([self.safe_eval(m) for m in maxes])
+        samples = onp.array([self.safe_eval(s) for s in samples])
 
         if between_training:
             samples -= 1

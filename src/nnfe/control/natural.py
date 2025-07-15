@@ -34,7 +34,7 @@ class NNFE(NNFE_base):
             ml (_type_): _description_
         """
         super().__init__(param_file)
-        self.dirichlet_dofs, self.dirichlet_vals = self.problem.get_boundary_data()
+        self.dirichlet_dofs, self.dirichlet_vals = self.fe_handler.problem.get_boundary_data()
 
         self.vcalc_res = jax.vmap(self.calc_res, in_axes=(None, 0), out_axes=0)
         return
@@ -45,8 +45,8 @@ class NNFE(NNFE_base):
 
     def calc_res(self, model, x):
         dofs = model(x)
-        int_vars_surfaces = [[[x * self.problem.internal_vars_surfaces[0][0][0]]]]
-        res_vec = self.problem.compute_residual_helper(dofs, [], int_vars_surfaces)
+        int_vars_surfaces = [[[x * self.fe_handler.problem.internal_vars_surfaces[0][0][0]]]]
+        res_vec = self.fe_handler.problem.compute_residual_helper(dofs, [], int_vars_surfaces)
         # Bottom goes to 0
         res_vec = res_vec.at[self.dirichlet_dofs].set(dofs[self.dirichlet_dofs])
         res_vec = res_vec.at[self.dirichlet_dofs].add(-self.dirichlet_vals, unique_indices=True)
