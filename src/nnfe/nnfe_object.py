@@ -78,9 +78,10 @@ class NNFE_base():
             if i % self.utility.save == 0:
                 self.save()
                 print("Model saved at iteration: ", i)
+                print("Run in dir: ", self.utility.parent)
 
         # Save the model after training
-        self.save()
+        self.save(forced=True)
 
         time_elapsed = time.time() - toc
         print("Training time: ")
@@ -88,10 +89,9 @@ class NNFE_base():
         print("Time per iter: ")
         print(time_elapsed / self.ml.optimizer_params["epochs"])
 
-        self.test()
-
         self.plotter.plot_loss(onp.hstack(loss_vals))
 
+        onp.savetxt(self.utility.parent / "running.txt", onp.array([time_elapsed]))
         return
 
     def test(self):
@@ -104,24 +104,36 @@ class NNFE_base():
         mean_vecs = (res_vecs**2).mean(axis=1)
         print("Average Residuals: ", mean_vecs)
         print("Max Residuals: ", res_vecs.max(axis=1))
-        print("Tract val: ", self.sampler.X)
 
         print("Testing Error")
         res_vecs = self.vcalc_res(self.ml.network, self.sampler.Y)
         mean_vecs = (res_vecs**2).mean(axis=1)
         print("Average Residuals: ", mean_vecs)
         print("Max Residuals: ", res_vecs.max(axis=1))
-        print("Tract val: ", self.sampler.Y)
         return
 
-    def save(self):
+    def save(self, forced=False):
         """
         Responsible for saving the model and other things
         May want to create a temp save and final save
         to split up training process just in case
         """
 
-        eqx.tree_serialise_leaves("model_test.eqx", self.ml.network)
+        try:
+            path = self.utility.parent / self.utility.dirs_params["model_dir"]
+            eqx.tree_serialise_leaves(path / "model_test.eqx", self.ml.network)
+        except KeyError:
+            print("No model_dir set in utility parameters, skipping save")
+            return
+
+        if forced:
+            try:
+                path = self.utility.parent / self.utility.dirs_params["model_dir"]
+                eqx.tree_serialise_leaves(path / "model_test.eqx", self.ml.network)
+            except KeyError:
+                eqx.tree_serialise_leaves(self.utility.parent / "model_test.eqx", self.ml.network)
+                print("Forced save if forgot to assign model_dir")
+
 
         return
 
@@ -171,7 +183,7 @@ def load_nnfe(param_file):
 
     # Read in the parameter file
     with open(param_file, "r") as f:
-        params = yaml.safe_load(f)    
+        params = yaml.safe_load(f)
 
     # Load the Problem object defining the appropriate PDE
     fe_handler = FE_Handler(params["fe_input_file"])
@@ -189,5 +201,9 @@ def load_nnfe(param_file):
     sampler = Sampler(params["Sampler"])
 
     plotter = Plotter(params["Plotting"], utility)
+
+    if params["Project"]["save"]:
+        with open(utility.parent / param_file, "w") as f:
+            yaml.dump(params, f)
 
     return fe_handler.problem, ml, sampler, utility, plotter

@@ -15,7 +15,10 @@ from nnfe.plotter import *
 
 class ML():
     def __init__(self, ml_params):
-        
+
+        if not ml_params["Key"]:
+            ml_params["Key"] = 0
+
         self.network_params = ml_params["Network"]
         self.optimizer_params = ml_params["Optimizer"]
         self.network = self.create_network(self.network_params, ml_params["Key"])
