@@ -37,12 +37,12 @@ class NNFE_base():
         Initialization of NNFE object, 
         will have to look more into what is needed here
         Args:
-            problem (_type_): _description_
+            fe_handler (_type_): _description_
             ml (_type_): _description_
             sampler (_type_): _description_
         """
 
-        self.problem, self.ml, self.sampler, self.utility, self.plotter = load_nnfe(param_file)
+        self.fe_handler, self.ml, self.sampler, self.utility, self.plotter = load_nnfe(param_file)
 
         self.val_and_grads = eqx.filter_value_and_grad(self.loss_fct)
 
@@ -206,4 +206,4 @@ def load_nnfe(param_file):
         with open(utility.parent / param_file, "w") as f:
             yaml.dump(params, f)
 
-    return fe_handler.problem, ml, sampler, utility, plotter
+    return fe_handler, ml, sampler, utility, plotter
