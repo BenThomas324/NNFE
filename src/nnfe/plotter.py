@@ -16,8 +16,8 @@ class Plotter():
             self.plot_loss = self.plot_loss
             try: 
                 self.loss_path = utils.parent / utils.dirs_params["plot_dir"] / "loss.png"
-            except KeyError:
-                print("No plot_dir set")
+            except:
+                pass
 
         else:
             self.plot_loss = lambda x: None
@@ -26,8 +26,8 @@ class Plotter():
             self.plot_learning_rate = self.plot_learning_rate
             try: 
                 self.lr_path = utils.parent / utils.dirs_params["plot_dir"] / "LR_plot.png"
-            except KeyError:
-                print("No plot_dir set")
+            except:
+                pass
             
         else:
             self.plot_learning_rate = lambda scheduler, epochs: None
