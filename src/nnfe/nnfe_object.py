@@ -43,7 +43,7 @@ class NNFE_base():
         """
 
         self.fe_handler, self.ml, self.sampler, self.utility, self.plotter = load_nnfe(param_file)
-
+        self.problem = self.fe_handler.problem
         self.val_and_grads = eqx.filter_value_and_grad(self.loss_fct)
 
         return
@@ -196,14 +196,15 @@ def load_nnfe(param_file):
     utility = Utilities(params["Project"])
     params["Machine_Learning"]["Key"] = utility.key
 
+    if params["Project"]["save"]:
+        params["Project"]["save"] = False
+        with open(utility.parent / param_file, "w") as f:
+            yaml.dump(params, f)
+
     ml = ML(params["Machine_Learning"])
 
     sampler = Sampler(params["Sampler"])
 
     plotter = Plotter(params["Plotting"], utility)
-
-    if params["Project"]["save"]:
-        with open(utility.parent / param_file, "w") as f:
-            yaml.dump(params, f)
 
     return fe_handler, ml, sampler, utility, plotter
