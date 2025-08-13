@@ -12,7 +12,7 @@ src/nnfe/ml.py
 src/nnfe/models.py
 src/nnfe/networks.py
 src/nnfe/nnfe_object.py
-src/nnfe/plotting.py
+src/nnfe/plotter.py
 src/nnfe/sampling.py
 src/nnfe/solve.py
 src/nnfe/test.py

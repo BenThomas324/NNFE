@@ -1,12 +1,16 @@
 
 import numpy as onp
 import jax
+import os
 
-from nnfe.control.natural import Natural_NNFE
+from nnfe.control.natural import NNFE
 from cardiax.solvers.newton import Newton_Solver
 
-nnfe = Natural_NNFE("test_params.yaml")
+os.makedirs("results", exist_ok=True)
 
+nnfe = NNFE("test_params.yaml")
+
+nnfe.problem = nnfe.fe_handler.problem
 nnfe.train()
 
 nn_sols = jax.vmap(nnfe.evaluate)(nnfe.sampler.Y)
@@ -21,5 +25,6 @@ for i in range(len(nnfe.sampler.Y)):
     fe_sols.append(sol)
     print(onp.linalg.norm(sol.reshape(-1, 3) - nn_sols[i].reshape(-1, 3), axis=1).max())
 
-nnfe.problem.mesh[0].point_data["fe_sol"] = onp.array(fe_sols[-1]).reshape(-1, 3)
-nnfe.problem.mesh[0].write("test.vtk")
+    nnfe.problem.mesh[0].point_data["nn_sol"] = onp.array(nn_sols[i]).reshape(-1, 3)
+    nnfe.problem.mesh[0].point_data["fe_sol"] = onp.array(fe_sols[-1]).reshape(-1, 3)
+    nnfe.problem.mesh[0].write(f"results/test_{i:02}.vtk")

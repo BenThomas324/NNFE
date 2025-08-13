@@ -12,6 +12,8 @@ class Utilities:
 
     def __init__(self, utility_params):
         
+        self.output_params = utility_params["output"]
+
         if utility_params["save"]:
             parent = Path(utility_params["parent_dir"]) / Path(utility_params["name"])
 
@@ -22,32 +24,26 @@ class Utilities:
 
             self.key = temp_key
             self.dirs_params = utility_params["extra_dirs"]
-            self.output_params = utility_params["output"]
 
             for dir_path in self.dirs_params.values():
                 dir_path = self.parent / dir_path
                 if not dir_path.exists():
                     dir_path.mkdir(parents=True, exist_ok=True)
 
-            if self.output_params["print"]:
-                self.print = self.output_params["print"]
-            else:
-                self.print = False
-
-            if self.output_params["saveat"]:
-                self.save = self.output_params["saveat"]
-            else:
-                self.save = False
+            self.save = self.output_params["saveat"]
 
             onp.savetxt(self.parent / "running.txt", onp.array([1]))
 
         else:
             # Figure out what else to do here...
-            self.print = False
-            self.save = False
             self.key = None
             self.dirs_params = {}
-            self.output_params = {}
+            self.save = False
+
+        if self.output_params["print"]:
+            self.print = self.output_params["print"]
+        else:
+            self.print = 10
 
         return
 
