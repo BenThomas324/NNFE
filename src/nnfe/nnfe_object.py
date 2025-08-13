@@ -68,20 +68,20 @@ class NNFE_base():
         loss_vals = []
 
         toc = time.time()
-        for i in range(int(self.ml.optimizer_params["epochs"])):
+        for i in range(1, int(self.ml.optimizer_params["epochs"]) + 1):
             self.ml.network, self.ml.opt_state, train_loss = self.make_step(self.ml.network, self.sampler.X, self.ml.opt_state)
             loss_vals.append(train_loss)
             if i % self.utility.print == 0:
                 print("Iteration: ", i, " Loss: ", train_loss)
 
             # Save model while training
-            if i % self.utility.save == 0:
-                self.save()
-                print("Model saved at iteration: ", i)
-                print("Run in dir: ", self.utility.parent)
-
-        # Save the model after training
-        self.save(forced=True)
+            try:
+                if i % self.utility.save == 0:
+                    self.save()
+                    print("Model saved at iteration: ", i)
+                    print("Run in dir: ", self.utility.parent)
+            except ZeroDivisionError:
+                pass
 
         time_elapsed = time.time() - toc
         print("Training time: ")
@@ -89,9 +89,15 @@ class NNFE_base():
         print("Time per iter: ")
         print(time_elapsed / self.ml.optimizer_params["epochs"])
 
+        # Save the model after training
+        if self.utility.save:
+            self.save(forced=True)
+            onp.savetxt(self.utility.parent / "running.txt", onp.array([time_elapsed]))
+        else:
+            print("No save directory specified, skipping save")
+
         self.plotter.plot_loss(onp.hstack(loss_vals))
 
-        onp.savetxt(self.utility.parent / "running.txt", onp.array([time_elapsed]))
         return
 
     def test(self):
@@ -193,7 +199,7 @@ def load_nnfe(param_file):
     if params["Machine_Learning"]["Network"]["kwargs"]["out_size"] == "dofs":
         params["Machine_Learning"]["Network"]["kwargs"]["out_size"] = int(fe_handler.problem.num_total_dofs_all_vars)
 
-    utility = Utilities(params["Project"])
+    utility = Utilities(params["Project_Utility"])
     params["Machine_Learning"]["Key"] = utility.key
 
     ml = ML(params["Machine_Learning"])
@@ -202,7 +208,7 @@ def load_nnfe(param_file):
 
     plotter = Plotter(params["Plotting"], utility)
 
-    if params["Project"]["save"]:
+    if params["Project_Utility"]["save"]:
         with open(utility.parent / param_file, "w") as f:
             yaml.dump(params, f)
 

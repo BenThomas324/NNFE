@@ -2,7 +2,7 @@
 ### What do we want to control from the input file? ###
 
 # Path to input file, mesh, and potentially other things...
-directory: "/home/bjt2369@austin.utexas.edu/Desktop/Research/NNFE_code/CARDIAX/demos/input_file"
+directory: "."
 
 ### FE object ###
 # Mesh, quadrature, dim
