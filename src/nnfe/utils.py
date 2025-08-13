@@ -12,6 +12,8 @@ class Utilities:
 
     def __init__(self, utility_params):
         
+        self.output_params = utility_params["output"]
+
         if utility_params["save"]:
             parent = Path(utility_params["parent_dir"]) / Path(utility_params["name"])
 
