@@ -201,7 +201,7 @@ def load_nnfe(param_file):
 
     utility = Utilities(params["Project_Utility"])
 
-    ml = ML(params["Machine_Learning"])
+    ml = ML(params["ml_input_file"], fe_handler.problem.num_total_dofs_all_vars, utility.key)
 
     sampler = Sampler(params["Sampler"])
 
