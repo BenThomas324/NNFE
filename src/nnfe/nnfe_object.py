@@ -4,6 +4,7 @@ from nnfe.models import *
 import abc
 import equinox as eqx
 import time
+from pathlib import Path
 
 from nnfe.ml import ML
 from cardiax.Input_file.input_file_handler import FE_Handler
@@ -43,7 +44,7 @@ class NNFE_base():
         """
 
         self.fe_handler, self.ml, self.sampler, self.utility, self.plotter = load_nnfe(param_file)
-
+        self.problem = self.fe_handler.problem
         self.val_and_grads = eqx.filter_value_and_grad(self.loss_fct)
 
         return
@@ -165,7 +166,8 @@ class NNFE_base():
 
     @eqx.filter_jit
     def make_step(self, model, x, opt_state):
-        loss_val, grads = self.val_and_grads(model, x)
+        diff_model, static_model = eqx.partition(model, self.ml.filter)
+        loss_val, grads = self.val_and_grads(diff_model, static_model, x)
         updates, opt_state = self.ml.optimizer.update(grads, opt_state, eqx.filter(model, eqx.is_array))
         model = eqx.apply_updates(model, updates)
         return model, opt_state, loss_val
@@ -187,22 +189,20 @@ def load_nnfe(param_file):
         (ML): The ML object
     """
 
+    param_file = Path(param_file)
+
     # Read in the parameter file
     with open(param_file, "r") as f:
         params = yaml.safe_load(f)
 
     # Load the Problem object defining the appropriate PDE
+
     fe_handler = FE_Handler(params["fe_input_file"])
 
-    # Do this after create the Problem object
-    # in case output_size = "dofs"
-    if params["Machine_Learning"]["Network"]["kwargs"]["out_size"] == "dofs":
-        params["Machine_Learning"]["Network"]["kwargs"]["out_size"] = int(fe_handler.problem.num_total_dofs_all_vars)
-
     utility = Utilities(params["Project_Utility"])
-    params["Machine_Learning"]["Key"] = utility.key
 
-    ml = ML(params["Machine_Learning"])
+    ml = ML(params["ml_input_file"], output_size=int(fe_handler.problem.num_total_dofs_all_vars),
+            key=utility.key)
 
     sampler = Sampler(params["Sampler"])
 

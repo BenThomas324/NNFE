@@ -8,10 +8,9 @@ on the PDE that is defined.
 # Beginning development here 
 # This should be the easiest case to implement
 import os
-os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
-
 import jax.numpy as np
 import jax
+import equinox as eqx
 
 # Should be better way to import this
 import sys
@@ -39,14 +38,15 @@ class NNFE(NNFE_base):
         self.vcalc_res = jax.vmap(self.calc_res, in_axes=(None, 0), out_axes=0)
         return
 
-    def loss_fct(self, model, x):
+    def loss_fct(self, diff_model, static_model, x):
+        model = eqx.combine(diff_model, static_model)
         vres = self.vcalc_res(model, x)
         return np.mean(np.linalg.norm(vres, axis=1))
 
     def calc_res(self, model, x):
         dofs = model(x)
         int_vars_surfaces = [[[x * self.fe_handler.problem.internal_vars_surfaces[0][0][0]]]]
-        res_vec = self.fe_handler.problem.compute_residual_helper(dofs, [], int_vars_surfaces)
+        res_vec = self.fe_handler.problem.compute_residual_helper(dofs, self.fe_handler.problem.internal_vars, int_vars_surfaces)
         # Bottom goes to 0
         res_vec = res_vec.at[self.dirichlet_dofs].set(dofs[self.dirichlet_dofs])
         res_vec = res_vec.at[self.dirichlet_dofs].add(-self.dirichlet_vals, unique_indices=True)

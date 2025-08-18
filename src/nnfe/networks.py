@@ -12,12 +12,49 @@ from typing import (
     Optional,
     Union,
 )
+import jax.numpy as np
 import jax.tree_util as jtu
 
 
 identity = lambda x: x
 
 MLP = eqx.nn.MLP
+
+class Sum_models(eqx.Module, strict=True):
+    """Combined model for NNFE, which can be used to combine multiple models into one.
+
+    !!! faq
+
+        If you get a TypeError saying an object is not a valid JAX type, see the
+            [FAQ](https://docs.kidger.site/equinox/faq/)."""
+
+    models: tuple[eqx.Module, ...]
+    out_size: int
+
+    def __init__(self, models: tuple[eqx.Module, ...]):
+        self.models = models
+        self.out_size = self.models[-1].out_size
+    
+        for i in range(len(models) - 1):
+            assert models[i].out_size == self.out_size
+
+    def __call__(self, x: Array, *, key: Optional[PRNGKeyArray] = None) -> Array:
+        """**Arguments:**
+
+        - `x`: A JAX array with shape `(in_size,)`. (Or shape `()` if
+            `in_size="scalar"`.)
+        - `key`: Ignored; provided for compatibility with the rest of the Equinox API.
+            (Keyword only argument.)
+
+        **Returns:**
+
+        A JAX array with shape `(out_size,)`. (Or shape `()` if `out_size="scalar"`.)
+        """
+
+        y = np.zeros((self.out_size,))
+        for model in self.models:
+            y += model(x)
+        return y
 
 class DNN(eqx.Module, strict=True):
     """Standard Multi-Layer Perceptron; also known as a feed-forward network.
