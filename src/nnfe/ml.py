@@ -17,7 +17,7 @@ import nnfe.networks as networks
 from nnfe.plotter import *
 
 class ML():
-    def __init__(self, param_file, output_size=None, key=0):
+    def __init__(self, param_file, out_size=None, key=0):
 
         param_file = Path(param_file)
         with open(param_file) as f:
@@ -35,7 +35,7 @@ class ML():
         self.network_params = ml_params["Networks"]
         self.optimizer_params = ml_params["Optimizer"]
 
-        self.network, self.filter = self.create_network(self.network_params, output_size, key)
+        self.network, self.filter = self.create_network(self.network_params, out_size, key)
         self.optimizer = self.create_optimizer(self.optimizer_params)
         self.opt_state = self.optimizer.init(eqx.filter(self.network, eqx.is_array))
         return
@@ -72,10 +72,10 @@ class ML():
         model = eqx.tree_at(get_weights, model, new_weights)
         return model
 
-    def network_from_params(self, params, output_size, key):
+    def network_from_params(self, params, out_size, key):
 
         if params["kwargs"]["out_size"] == "dofs":
-            params["kwargs"]["out_size"] = output_size
+            params["kwargs"]["out_size"] = out_size
 
         params["kwargs"]["key"] = key
         params["kwargs"]["activation"] = getattr(jax.nn, params["kwargs"]["activation"])
@@ -101,12 +101,12 @@ class ML():
         )
         return filter
 
-    def create_network(self, params, output_size, key=0):
+    def create_network(self, params, out_size, key=0):
         models = []
         filter_inds = []
         for i, p in enumerate(params):
             key, subkey = jax.random.split(key)
-            models.append(self.network_from_params(params[p], output_size, subkey))
+            models.append(self.network_from_params(params[p], out_size, subkey))
             if params[p].get("static", False):
                 filter_inds.append(i)
             else:
