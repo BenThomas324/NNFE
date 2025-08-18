@@ -30,20 +30,26 @@ class Utilities:
                 if not dir_path.exists():
                     dir_path.mkdir(parents=True, exist_ok=True)
 
-            self.save = self.output_params["saveat"]
-
             onp.savetxt(self.parent / "running.txt", onp.array([1]))
 
         else:
             # Figure out what else to do here...
-            self.key = onp.random.randint(1e5)
+            self.parent = Path(".")
+            self.key = 0
             self.dirs_params = {}
-            self.save = False
+
+        self.output_params = utility_params["output"]
 
         if self.output_params["print"]:
             self.print = self.output_params["print"]
         else:
-            self.print = 10
+            self.print = False
+
+        if self.output_params["saveat"]:
+            self.save = self.output_params["saveat"]
+        else:
+            self.save = False
+
 
         return
 

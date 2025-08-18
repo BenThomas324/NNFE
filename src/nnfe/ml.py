@@ -137,7 +137,7 @@ class ML():
             scheduler = optax.join_schedules(schedulers, boundaries)
 
         else:
-            scheduler = optax.constant_schedule(params["learning_rate"])
+            scheduler = optax.constant_schedule(params["options"]["learning_rate"])
 
         params["options"]["learning_rate"] = scheduler
         optimizer = getattr(optax, params["name"])(**params["options"])
