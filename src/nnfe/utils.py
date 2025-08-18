@@ -36,7 +36,7 @@ class Utilities:
 
         else:
             # Figure out what else to do here...
-            self.key = None
+            self.key = onp.random.randint(1e5)
             self.dirs_params = {}
             self.save = False
 

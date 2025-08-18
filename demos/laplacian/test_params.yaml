@@ -1,0 +1,101 @@
+
+# Generic things to save for the run
+Project_Utility:
+  name: test # Project title
+  parent_dir: "."
+  save: False # Set to False if testing
+
+  extra_dirs:
+    results_dir: "results" # Directory to save results
+    model_dir: "models" # Directory to save models
+    plot_dir: "plots" # Directory to save plots
+    log_dir: "logs" # Directory to save logs
+
+  output:
+    print: 1.0e+1 # When to print the loss and other information
+    saveat: 1.0e+3 # When to save the parameters and update plots
+
+# Controls the overall control need for NNFE
+NNFE:
+  # Number of variables to train
+
+
+# FE Problem to solve defined in a separate yaml file
+fe_input_file: "fe_input_file.yaml"
+
+# All parameters associated with the machine learning part of NNFE
+# Split into Network and Optimizer
+Machine_Learning:
+  Key: 3 # Either number or "random" for random key
+  Network:
+    # Which model to use, based on "networks.py"
+    name: "ResNet"
+    kwargs:
+      in_size: 1
+      out_size: "dofs" # Can be specified or "dofs" if NNFE
+      width_size: 128
+      depth: 6
+      activation: "elu"
+      use_bias: True
+      use_final_bias: True
+
+    load_model:
+
+  Optimizer:
+    name: "adam"
+    learning_rate: 1.0e-3
+    epochs: 1.e+4
+    batch_size: 1.
+
+    scheduler:
+      toggle: True
+      boundaries: []
+      list:
+        s1:
+          name: "exponential_decay"
+          kwargs:
+            init_value: 1.0e-3
+            decay_rate: 1.0e-1
+            transition_steps: 1.0e+4
+        # s1:
+        #   name: "warmup_cosine_decay_schedule"
+        #   init_value: 1.0e-4
+        #   peak_value: 2.5e-4
+        #   warmup_steps: 5.0e+3
+        #   decay_steps: 1.0e+4
+        #   end_value: 1.0e-5
+        # s2:
+        #   name: "warmup_cosine_decay_schedule"
+        #   init_value: 1.0e-5
+        #   peak_value: 5.0e-5
+        #   warmup_steps: 5.0e+3
+        #   decay_steps: 1.0e+4
+        #   end_value: 1.0e-6
+        # s3:
+        #   name: "constant_schedule"
+        #   value: 5.0e-6
+
+    options:
+      learning_rate:
+
+Sampler:
+  training:
+    name: "uniform"
+    kwargs:
+      mins: [0.] # List of min values
+      maxes: [2.] # List of max values
+      samples: [10] # List of number of samples
+  
+  testing:
+    name: "uniform"
+    kwargs:
+      between_training: True
+      mins: [0.] # List of min values
+      maxes: [2.] # List of max values
+      samples: [10] # List of number of samples
+
+# Controls what should be plotted through the run
+# could add custom plots here to be triggered
+Plotting:
+  loss:
+  learning_rate:

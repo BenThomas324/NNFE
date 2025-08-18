@@ -9,19 +9,33 @@ import optax
 import jax
 import jax.numpy as np
 import equinox as eqx
+import yaml
+from pathlib import Path
+import jax.tree_util as jtu
 
 import nnfe.networks as networks
 from nnfe.plotter import *
 
 class ML():
-    def __init__(self, ml_params):
+    def __init__(self, param_file, output_size=None, key=0):
 
-        if not ml_params["Key"]:
-            ml_params["Key"] = 0
+        param_file = Path(param_file)
+        with open(param_file) as f:
+            ml_params = yaml.safe_load(f)
 
-        self.network_params = ml_params["Network"]
+        if type(ml_params["Networks"]["key"]) == int:
+            # Make random key, use random directory key as prev
+            key = jax.random.PRNGKey(ml_params["Networks"]["key"])
+        elif ml_params["Networks"]["key"] == "random":
+            key = jax.random.PRNGKey(key)
+        else:
+            raise ValueError("Key must be 'random' or an integer")
+        del ml_params["Networks"]["key"]
+
+        self.network_params = ml_params["Networks"]
         self.optimizer_params = ml_params["Optimizer"]
-        self.network = self.create_network(self.network_params, ml_params["Key"])
+
+        self.network, self.filter = self.create_network(self.network_params, output_size, key)
         self.optimizer = self.create_optimizer(self.optimizer_params)
         self.opt_state = self.optimizer.init(eqx.filter(self.network, eqx.is_array))
         return
@@ -58,17 +72,11 @@ class ML():
         model = eqx.tree_at(get_weights, model, new_weights)
         return model
 
-    def create_network(self, params, key):
-        if key == "random":
-            # Make random key, use random directory key as prev
-            key = onp.random.randint(0, int(1e6))
-            params["Key"] = key # Save the randomized key
-            key = jax.random.PRNGKey(key)
-        elif type(key) == int:
-            key = jax.random.PRNGKey(key)
-        else:
-            raise ValueError("Key must be 'random' or an integer")
-        
+    def network_from_params(self, params, output_size, key):
+
+        if params["kwargs"]["out_size"] == "dofs":
+            params["kwargs"]["out_size"] = output_size
+
         params["kwargs"]["key"] = key
         params["kwargs"]["activation"] = getattr(jax.nn, params["kwargs"]["activation"])
         model = getattr(networks, params["name"])(**params["kwargs"])
@@ -85,13 +93,44 @@ class ML():
         print("Number of parameters: ", sum(model_num))
         return model
 
+    def filtering(self, filter, model_ind):
+        filter = eqx.tree_at(
+            lambda tree: tree.models[model_ind],
+            filter,
+            replace=False
+        )
+        return filter
+
+    def create_network(self, params, output_size, key=0):
+        models = []
+        filter_inds = []
+        for i, p in enumerate(params):
+            key, subkey = jax.random.split(key)
+            models.append(self.network_from_params(params[p], output_size, subkey))
+            if params[p].get("static", False):
+                filter_inds.append(i)
+            else:
+                filter_inds.append(False)
+
+        if len(models) == 1:
+            model = models[0]
+        else:
+            model = networks.Sum_models(models)
+
+        filter = jtu.tree_map(lambda _: True, model)
+        for f in filter_inds:
+            if type(f) == int:
+                filter = self.filtering(filter, f)
+
+        return model, filter
+
     def create_optimizer(self, params):
 
         if params["scheduler"]["toggle"]:
             boundaries = params["scheduler"]["boundaries"]
             schedulers = []
-            for s in params["scheduler"]["list"]:
-                p = params["scheduler"]["list"][s]
+            for s in params["scheduler"]["schedules"]:
+                p = params["scheduler"]["schedules"][s]
                 sched = getattr(optax, p["name"])
                 schedulers.append(sched(**p["kwargs"]))
 
