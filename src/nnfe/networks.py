@@ -50,10 +50,10 @@ class Sum_models(eqx.Module, strict=True):
 
         A JAX array with shape `(out_size,)`. (Or shape `()` if `out_size="scalar"`.)
         """
-
-        y = np.zeros((self.out_size,))
+        # Why can't I set as self.out_size?
+        y = np.zeros((self.models[-1].out_size,))
         for model in self.models:
-            y += model(x)
+            y += model(x[:model.in_size])
         return y
 
 class DNN(eqx.Module, strict=True):
