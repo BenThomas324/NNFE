@@ -8,7 +8,7 @@ from cardiax.solvers.newton import Newton_Solver
 
 os.makedirs("results", exist_ok=True)
 
-nnfe = NNFE("test_params.yaml")
+nnfe = NNFE("inputs/test_params.yaml")
 
 nnfe.problem = nnfe.fe_handler.problem
 nnfe.train()

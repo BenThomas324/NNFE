@@ -3,13 +3,14 @@
 Project_Utility:
   name: test # Project title
   parent_dir: "."
-  save: False # Set to False if testing
+  save: True # Set to False if testing
 
   extra_dirs:
     results_dir: "results" # Directory to save results
     model_dir: "models" # Directory to save models
     plot_dir: "plots" # Directory to save plots
     log_dir: "logs" # Directory to save logs
+    input_dir: "input_files"
 
   output:
     print: 1.0e+1 # When to print the loss and other information
@@ -40,5 +41,5 @@ Sampler:
 # Controls what should be plotted through the run
 # could add custom plots here to be triggered
 Plotting:
-  loss:
-  learning_rate:
+  loss: True
+  learning_rate: True

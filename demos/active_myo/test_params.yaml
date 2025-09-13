@@ -3,24 +3,25 @@
 Project_Utility:
   name: test # Project title
   parent_dir: "."
-  save: False # Set to False if testing
+  save: True # Set to False if testing
 
   extra_dirs:
     results_dir: "results" # Directory to save results
     model_dir: "models" # Directory to save models
     plot_dir: "plots" # Directory to save plots
     log_dir: "logs" # Directory to save logs
+    input_dir: "input_files"
 
   output:
     print: 1.0e+1 # When to print the loss and other information
     saveat: 1.0e+3 # When to save the parameters and update plots
 
 # FE Problem to solve defined in a separate yaml file
-fe_input_file: "fe_input_file.yaml"
+fe_input_file: "inputs/fe_input_file.yaml"
 
 # All parameters associated with the machine learning part of NNFE
 # Split into Network and Optimizer
-ml_input_file: "ml_input_file.yaml"
+ml_input_file: "inputs/ml_input_file.yaml"
 
 Sampler:
   training:

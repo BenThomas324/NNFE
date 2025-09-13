@@ -1,13 +1,13 @@
 
 import yaml
-from nnfe.models import *
 import abc
 import equinox as eqx
 import time
 from pathlib import Path
+import numpy as onp
 
 from nnfe.ml import ML
-from cardiax.Input_file.input_file_handler import FE_Handler
+from cardiax.Input_file.input_file_reader import FE_manager
 from nnfe.sampling import Sampler
 from nnfe.utils import Utilities
 from nnfe.plotter import Plotter
@@ -63,7 +63,7 @@ class NNFE_base():
         Main training loop for NNFE
         """
 
-        self.plotter.plot_learning_rate(self.ml.optimizer_params["options"]["learning_rate"],
+        self.plotter.plot_learning_rate(self.ml.lr_scheduler,
                            self.ml.optimizer_params["epochs"])
 
         loss_vals = []
@@ -128,7 +128,7 @@ class NNFE_base():
 
         try:
             path = self.utility.parent / self.utility.dirs_params["model_dir"]
-            eqx.tree_serialise_leaves(path / "model_test.eqx", self.ml.network)
+            eqx.tree_serialise_leaves(path / "model.eqx", self.ml.network)
         except KeyError:
             print("No model_dir set in utility parameters, skipping save")
             return
@@ -136,9 +136,9 @@ class NNFE_base():
         if forced:
             try:
                 path = self.utility.parent / self.utility.dirs_params["model_dir"]
-                eqx.tree_serialise_leaves(path / "model_test.eqx", self.ml.network)
+                eqx.tree_serialise_leaves(path / "model.eqx", self.ml.network)
             except KeyError:
-                eqx.tree_serialise_leaves(self.utility.parent / "model_test.eqx", self.ml.network)
+                eqx.tree_serialise_leaves(self.utility.parent / "model.eqx", self.ml.network)
                 print("Forced save if forgot to assign model_dir")
 
 
@@ -190,25 +190,33 @@ def load_nnfe(param_file):
     """
 
     param_file = Path(param_file)
+    parent = param_file.parent
 
     # Read in the parameter file
     with open(param_file, "r") as f:
         params = yaml.safe_load(f)
 
     # Load the Problem object defining the appropriate PDE
-
-    fe_handler = FE_Handler(params["fe_input_file"])
-
     utility = Utilities(params["Project_Utility"])
 
-    ml = ML(params["ml_input_file"], fe_handler.problem.num_total_dofs_all_vars, utility.key)
+    fe_manager = FE_manager(parent / Path(params["fe_input_file"]),
+                            savedir=utility.savedir)
+
+    model_path = utility.parent / utility.dirs_params["model_dir"]
+    ml = ML(Path(parent / params["ml_input_file"]), int(fe_manager.problem.num_total_dofs_all_vars),
+            utility.key, savedir=utility.savedir, model_path=model_path / "model.eqx")
 
     sampler = Sampler(params["Sampler"])
 
     plotter = Plotter(params["Plotting"], utility)
 
     if params["Project_Utility"]["save"]:
-        with open(utility.parent / param_file, "w") as f:
+        params["Project_Utility"]["save"] = False
+        
+        with open(utility.savedir / param_file.name, "w") as f:
             yaml.dump(params, f)
+        
+    else:
+        input_dirs = None
 
-    return fe_handler, ml, sampler, utility, plotter
+    return fe_manager, ml, sampler, utility, plotter

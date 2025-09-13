@@ -17,27 +17,37 @@ import nnfe.networks as networks
 from nnfe.plotter import *
 
 class ML():
-    def __init__(self, param_file, out_size=None, key=0):
+    def __init__(self, param_file, out_size=None, default_key=0, savedir=None, model_path=None):
 
         param_file = Path(param_file)
         with open(param_file) as f:
-            ml_params = yaml.safe_load(f)
+            params = yaml.safe_load(f)
 
-        if type(ml_params["Networks"]["key"]) == int:
+        try:
+            key_val = params["Networks"]["key"]
+            del params["Networks"]["key"]
+        except KeyError:
+            key_val = default_key
+
+        if type(key_val) == int:
             # Make random key, use random directory key as prev
-            key = jax.random.PRNGKey(ml_params["Networks"]["key"])
-        elif ml_params["Networks"]["key"] == "random":
-            key = jax.random.PRNGKey(key)
-        else:
-            raise ValueError("Key must be 'random' or an integer")
-        del ml_params["Networks"]["key"]
-
-        self.network_params = ml_params["Networks"]
-        self.optimizer_params = ml_params["Optimizer"]
+            key = jax.random.PRNGKey(key_val)
+        elif key_val == "random":
+            key = jax.random.PRNGKey(default_key)
+        
+        self.network_params = params["Networks"]
+        self.optimizer_params = params["Optimizer"]
 
         self.network, self.filter = self.create_network(self.network_params, out_size, key)
-        self.optimizer = self.create_optimizer(self.optimizer_params)
+        self.optimizer, self.lr_scheduler = self.create_optimizer(self.optimizer_params)
         self.opt_state = self.optimizer.init(eqx.filter(self.network, eqx.is_array))
+
+        if savedir is not None:
+            for net in params["Networks"]:
+                params["Networks"][net]["load_model"] = str(model_path)
+            with open(savedir / param_file.name, "w") as f:
+                yaml.dump(params, f)
+
         return
 
     def trunc_weight(self, weight: jax.Array, key: jax.random.PRNGKey) -> jax.Array:
@@ -95,9 +105,9 @@ class ML():
 
     def filtering(self, filter, model_ind):
         filter = eqx.tree_at(
-            lambda tree: tree.models[model_ind],
+            lambda tree: (tree.models[model_ind]),
             filter,
-            replace=False
+            replace=(False)
         )
         return filter
 
@@ -137,9 +147,10 @@ class ML():
             scheduler = optax.join_schedules(schedulers, boundaries)
 
         else:
-            scheduler = optax.constant_schedule(params["options"]["learning_rate"])
+            scheduler = optax.constant_schedule(params["learning_rate"])
 
-        params["options"]["learning_rate"] = scheduler
-        optimizer = getattr(optax, params["name"])(**params["options"])
-
-        return optimizer
+        params["kwargs"]["learning_rate"] = scheduler
+        optimizer = getattr(optax, params["name"])(**params["kwargs"])
+        del params["kwargs"]["learning_rate"]
+        
+        return optimizer, scheduler
