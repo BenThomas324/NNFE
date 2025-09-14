@@ -7,7 +7,7 @@ from nnfe.control.natural import NNFE
 from cardiax.solvers.newton import Newton_Solver
 import pyvista as pv
 
-nnfe = NNFE("test/53236/test_params.yaml")
+nnfe = NNFE("test/81661/input_files/test_params.yaml")
 
 nnfe.problem = nnfe.fe_handler.problem
 
@@ -38,21 +38,11 @@ pvmesh = pv.from_meshio(nnfe.problem.mesh[0])
 
 # Create a plotter with off-screen rendering
 pl = pv.Plotter(off_screen=True)
-pl.open_gif("solutions.gif", fps=4)
+pvmesh.point_data["nn_sol"] = onp.array(nn_sols[i]).reshape(-1, 3)
+pvmesh.point_data["fe_sol"] = onp.array(fe_sols[i]).reshape(-1, 3)
+warped_fe = pvmesh.warp_by_vector("fe_sol", factor=1.0)
+warped_nn = pvmesh.warp_by_vector("nn_sol", factor=1.0)
 
-for i in range(len(nnfe.sampler.Y)):
-    # Update point data for each solution
-    pvmesh.point_data["nn_sol"] = onp.array(nn_sols[i]).reshape(-1, 3)
-    pvmesh.point_data["fe_sol"] = onp.array(fe_sols[i]).reshape(-1, 3)
-    warped_fe = pvmesh.warp_by_vector("fe_sol", factor=1.0)
-    warped_nn = pvmesh.warp_by_vector("nn_sol", factor=1.0)
-    warped_fe.set_active_scalars(None)
-
-    pl.clear()
-    pl.add_mesh(warped_fe, opacity=0.8, color="gainsboro", show_edges=True, scalars=None)
-    # pl.add_mesh(warped_nn, style="points", render_points_as_spheres=True, point_size=5, color="red")
-    pl.camera_position = [1.5, 1., 1.2]
-    pl.camera.focal_point = [0.5, 0.5, 0.5]
-    pl.write_frame()
-
-pl.close()
+pl.add_mesh(warped_fe, opacity=0.8, color="gainsboro", show_edges=True, scalars=None)
+pl.add_mesh(warped_nn, style="points", render_points_as_spheres=True, point_size=5, color="red")
+pl.screenshot('test.png')
