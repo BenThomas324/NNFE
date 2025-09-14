@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as onp
 
 from nnfe.ml import ML
-from cardiax.Input_file.input_file_reader import FE_manager
+from cardiax import FE_manager
 from nnfe.sampling import Sampler
 from nnfe.utils import Utilities
 from nnfe.plotter import Plotter

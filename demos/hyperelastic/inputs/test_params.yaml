@@ -17,10 +17,10 @@ Project_Utility:
     saveat: 1.0e+3 # When to save the parameters and update plots
 
 # FE Problem to solve defined in a separate yaml file
-fe_input_file: "inputs/fe_input_file.yaml"
+fe_input_file: "fe_input_file.yaml"
 
 # ML parameters
-ml_input_file: "inputs/ml_input_file.yaml"
+ml_input_file: "ml_input_file.yaml"
 
 Sampler:
   training:
