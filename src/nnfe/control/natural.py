@@ -45,7 +45,7 @@ class NNFE(NNFE_base):
 
     def calc_res(self, model, x):
         dofs = model(x)
-        int_vars_surfaces = [[[x * self.fe_handler.problem.internal_vars_surfaces[0][0][0]]]]
+        int_vars_surfaces = {"u": {"bc2": {"t": x * self.fe_handler.problem.internal_vars_surfaces["u"]["bc2"]["t"]}}}
         res_vec = self.fe_handler.problem.compute_residual_helper(dofs, self.fe_handler.problem.internal_vars, int_vars_surfaces)
         # Bottom goes to 0
         res_vec = res_vec.at[self.dirichlet_dofs].set(dofs[self.dirichlet_dofs])

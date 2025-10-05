@@ -7,9 +7,8 @@ src/NNFE.egg-info/dependency_links.txt
 src/NNFE.egg-info/requires.txt
 src/NNFE.egg-info/top_level.txt
 src/nnfe/__init__.py
-src/nnfe/check.py
+src/nnfe/_control.py
 src/nnfe/ml.py
-src/nnfe/models.py
 src/nnfe/networks.py
 src/nnfe/nnfe_object.py
 src/nnfe/plotter.py

@@ -22,6 +22,20 @@ fe_input_file: "fe_input_file.yaml"
 # ML parameters
 ml_input_file: "ml_input_file.yaml"
 
+NNFE:
+  # Number of variables to train
+  natural:
+    internal:
+      u:
+
+    surface:
+      u:
+        bc2: ["t"]
+
+  essential:
+
+  order: ["t"]
+
 Sampler:
   training:
     name: "uniform"

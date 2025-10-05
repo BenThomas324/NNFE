@@ -40,14 +40,14 @@ AQAAAACAAACYKQAAMwAAAA==eJzt17ERADAIAzHYf2k2gBJykZrv3Tmil0PpTfv9XgAAAN6y/SNVAQAA
 </DataArray>
 </PointData>
 <CellData>
-<DataArray type="Float64" Name="fibers" NumberOfComponents="3" format="binary">
-AQAAAACAAADAXQAAHAEAAA==eJztz8EqhGEUgGE7alZuAFnMgoXYzEZ9dyArFpLZWbgAKU0mNuYGpqb/BliMiJo0splsJWU2U0qJ6S/CDVj833xl4Q6es3wX55yndvreXbt7CautnWyjP7wdizO30J/sdN/CzHYlO9h6Tf3naWn36CQPF829xYmv59Qbh/v3D9WPkGeb42c3j6lPtcu95d5nuCzl64Or69SnY+8UPYz68d89qX/Hu+fF3dTn45+zxZ+p16NrpXClXuPl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl/cf7C8PHh38=
+<DataArray type="Float32" Name="fibers" NumberOfComponents="3" format="binary">
+AQAAAACAAADgLgAApgAAAA==eJztza0NwmAQgGEMjIAnQSHx7ReCJWzAFBiCQNfABl2hDgQJP0tUg6CyGzQpbUkThnhOveLunvN8HF7X9WPQzLOIwqiadT1dbcIiqe9tn0bbsCvTrovJIXyy/Nb3O8ujto/Nzr5M4/52mdRx/3NYzULbl5/V9ZnL5XK5XC6Xy+VyuVwul8vlcrlcLpfL5XK5XC6Xy+VyuVwul8vlcrncP/cLjZD7lw==
 </DataArray>
-<DataArray type="Float64" Name="sheets" NumberOfComponents="3" format="binary">
-AQAAAACAAADAXQAAGwEAAA==eJztz8EqRGEUwHE7ysoLMFnMgoXY2Ex9b6BZjYVkdhYeQEoTseEFlO4LsJiJqEkzfZvJVlJmo5QSukV4AYs73cVX3uB3lv/FOedXP93K1oYfoXX+3mvcvoSx0VQ2l7O9jdcwtzCc6vbeyn55srM48f0cfh+Xtg/P8rLn2fp4p/8Qjg927+6bn2W/msxXn65vwnS7OqgNvsreLXqcSfpoTzxK9lwUd+NPcne2+DPOJ3+uFK64n7jqvLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLz/eP8ALo6Hfw==
+<DataArray type="Float32" Name="sheets" NumberOfComponents="3" format="binary">
+AQAAAACAAADgLgAApQAAAA==eJztzaENwmAQgFEMHQFPgqrEQ0OwpBswBYYg0BjYoCvUgWhCyxLVRYDsBk0K+UMThninPnF3rynS5DqfJKPvRF2cPN6L0KtTv5xttqH3bba8RLvQr7xevKfH0M+8vg99aLPy/NtZn/pyuB13cTX8bIq0uv2shsvlcrlcLpfL5XK5XC6Xy+VyuVwul8vlcrlcLpfL5XK5XC6Xy+Vyudw/9wNVffuX
 </DataArray>
-<DataArray type="Float64" Name="normals" NumberOfComponents="3" format="binary">
-AQAAAACAAADAXQAAWQAAAA==eJztyEERAAAIA6A1s38bI1hgCTx4kjQ7tb333nvvvffee++9995777333nvvvffee++9995777333nvvvffee++9995777333nvvvffee++99/7xH9GCn9U=
+<DataArray type="Float32" Name="normals" NumberOfComponents="3" format="binary">
+AQAAAACAAADgLgAANAAAAA==eJztxiEBAAAIA7A3oxrRr8iA2dSSsxN3d3d3d3d3d3d3d3d3d3d3d3d3d3d396cXIwLqNw==
 </DataArray>
 </CellData>
 </Piece>

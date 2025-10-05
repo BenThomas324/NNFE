@@ -5,6 +5,7 @@ import equinox as eqx
 import time
 from pathlib import Path
 import numpy as onp
+from copy import deepcopy
 
 from nnfe.ml import ML
 from cardiax import FE_manager
@@ -43,18 +44,53 @@ class NNFE_base():
             sampler (_type_): _description_
         """
 
-        self.fe_handler, self.ml, self.sampler, self.utility, self.plotter = load_nnfe(param_file)
+        self.fe_handler, self.ml, self.sampler, self.utility, self.plotter, self.nnfe_params = load_nnfe(param_file)
         self.problem = self.fe_handler.problem
+        self.template_int_vars = deepcopy(self.problem.internal_vars)
+        self.template_int_vars_surfaces = deepcopy(self.problem.internal_vars_surfaces)
+        self.setup(self.nnfe_params)
         self.val_and_grads = eqx.filter_value_and_grad(self.loss_fct)
 
         return
     
     
-    def setup(self):
+    def setup(self, params):
         """
-        Setup directories and other things required for NNFE
+        Setup requirements for NNFE
         """
+
+        inds = {k: i for i, k in enumerate(params["order"])}
+
+        # Create function to set appropriate values with NN inputs
+        if params["natural"]:
+            if params["natural"]["internal"]:
+                int_vars = self.problem.internal_vars
+
+                def nnfe_set_int_vars(x):
+                    for fe_key, fe_params in params["natural"]["internal"].items():
+                        for var in fe_params:
+                            int_vars[fe_key][var] = x[inds[var]] * self.template_int_vars[fe_key][var]
+                    return int_vars
+
+            if params["natural"]["surface"]:
+                int_vars_surfaces = self.problem.internal_vars_surfaces
+
+                def nnfe_set_int_vars_surf(x):
+                    for fe_key, fe_params in params["natural"]["surface"].items():
+                        for bc, vars in fe_params.items():
+                            for var in vars:
+                                int_vars_surfaces[fe_key][bc][var] = x[inds[var]] * self.template_int_vars_surfaces[fe_key][bc][var]
+                    return int_vars_surfaces
+
+                pass
+
+        # Add stuff here for dirichlet bcs
         
+
+
+        self.nnfe_set_int_vars = nnfe_set_int_vars
+        self.nnfe_set_int_vars_surf = nnfe_set_int_vars_surf
+        self.nnfe_set_bc_vars = lambda x: None
 
         return
     
@@ -196,6 +232,8 @@ def load_nnfe(param_file):
     with open(param_file, "r") as f:
         params = yaml.safe_load(f)
 
+    nnfe_params = params["NNFE"]
+
     # Load the Problem object defining the appropriate PDE
     utility = Utilities(params["Project_Utility"])
 
@@ -219,4 +257,4 @@ def load_nnfe(param_file):
     else:
         input_dirs = None
 
-    return fe_manager, ml, sampler, utility, plotter
+    return fe_manager, ml, sampler, utility, plotter, nnfe_params
