@@ -94,7 +94,18 @@ class ML():
         if params["load_model"] is None:
             model = self.init_linear_weight(model, key)
         else:
-            model = eqx.tree_deserialise_leaves(params["load_model"], model)
+            try:
+                model = eqx.tree_deserialise_leaves(params["load_model"], model)
+            except RuntimeError:
+                # Define a function to cast an array to float32
+                def to_float32(x):
+                    if eqx.is_array(x):
+                        return x.astype(np.float32)
+                    return x
+
+                # Apply the function to the model
+                model_float32 = jax.tree.map(to_float32, model)
+                model = eqx.tree_deserialise_leaves(params["load_model"], model_float32)
 
         del params["kwargs"]["key"]
         params["kwargs"]["activation"] = params["kwargs"]["activation"].__name__

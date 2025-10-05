@@ -37,7 +37,7 @@ Networks:
 Optimizer:
   name: "adam"
   learning_rate: 1.0e-3
-  epochs: 2.5e+3
+  epochs: 2.5e+4
   batch_size: 1.
 
   scheduler:
