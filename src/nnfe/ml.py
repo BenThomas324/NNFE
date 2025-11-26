@@ -17,23 +17,23 @@ import nnfe.networks as networks
 from nnfe.plotter import *
 
 class ML():
-    def __init__(self, param_file, out_size=None, default_key=0, savedir=None, model_path=None):
+    def __init__(self, param_file, out_size=None, rng_key=0, savedir=None, model_path=None):
 
         param_file = Path(param_file)
         with open(param_file) as f:
             params = yaml.safe_load(f)
 
         try:
-            key_val = params["Networks"]["key"]
-            del params["Networks"]["key"]
+            key_val = params["Networks"]["rng_key"]
+            del params["Networks"]["rng_key"]
         except KeyError:
-            key_val = default_key
+            key_val = rng_key
 
         if type(key_val) == int:
             # Make random key, use random directory key as prev
             key = jax.random.PRNGKey(key_val)
         elif key_val == "random":
-            key = jax.random.PRNGKey(default_key)
+            key = jax.random.PRNGKey(rng_key)
         
         self.network_params = params["Networks"]
         self.optimizer_params = params["Optimizer"]

@@ -1,6 +1,7 @@
 
 import yaml
-import abc
+import jax
+import jax.numpy as np
 import equinox as eqx
 import time
 from pathlib import Path
@@ -13,7 +14,7 @@ from nnfe.sampling import Sampler
 from nnfe.utils import Utilities
 from nnfe.plotter import Plotter
 
-class NNFE_base():
+class NNFE():
     """
     Base class for the NNFE object.
     There is a LOT of customization that can occur here, 
@@ -46,10 +47,15 @@ class NNFE_base():
 
         self.fe_handler, self.ml, self.sampler, self.utility, self.plotter, self.nnfe_params = load_nnfe(param_file)
         self.problem = self.fe_handler.problem
+        self.dirichlet_dofs, self.dirichlet_vals = self.fe_handler.problem.get_boundary_data()
         self.template_int_vars = deepcopy(self.problem.internal_vars)
         self.template_int_vars_surfaces = deepcopy(self.problem.internal_vars_surfaces)
+        self.template_bc_vals = deepcopy(self.problem.bc_vals)
         self.setup(self.nnfe_params)
+        self.construct_calc_res()
+        self.construct_evaluate()
         self.val_and_grads = eqx.filter_value_and_grad(self.loss_fct)
+        self.vcalc_res = jax.vmap(self.calc_res, in_axes=(None, 0), out_axes=0)
 
         return
     
@@ -59,7 +65,7 @@ class NNFE_base():
         Setup requirements for NNFE
         """
 
-        inds = {k: i for i, k in enumerate(params["order"])}
+        natural_inds = {k: i for i, k in enumerate(params["natural_order"])}
 
         # Create function to set appropriate values with NN inputs
         if params["natural"]:
@@ -69,23 +75,29 @@ class NNFE_base():
                 def nnfe_set_int_vars(x):
                     for fe_key, fe_params in params["natural"]["internal"].items():
                         for var in fe_params:
-                            int_vars[fe_key][var] = x[inds[var]] * self.template_int_vars[fe_key][var]
+                            int_vars[fe_key][var] = x[natural_inds[var]] * self.template_int_vars[fe_key][var]
                     return int_vars
 
-            if params["natural"]["surface"]:
+            if params["natural"]["surface"]: 
                 int_vars_surfaces = self.problem.internal_vars_surfaces
 
                 def nnfe_set_int_vars_surf(x):
                     for fe_key, fe_params in params["natural"]["surface"].items():
                         for bc, vars in fe_params.items():
                             for var in vars:
-                                int_vars_surfaces[fe_key][bc][var] = x[inds[var]] * self.template_int_vars_surfaces[fe_key][bc][var]
+                                int_vars_surfaces[fe_key][bc][var] = x[natural_inds[var]] * self.template_int_vars_surfaces[fe_key][bc][var]
                     return int_vars_surfaces
 
-                pass
+        # Currently making dirichlet only work with 1 control variable
+        # That moves all values together, so nothing to do here
+        # if params["essential"]:
+        #     for fe_key, fe_params in params["essential"].items():
+        #         pass                        
 
-        # Add stuff here for dirichlet bcs
-        
+        if self.nnfe_params["essential_order"] == []:
+            self.train_dirichlet = False
+        else:
+            self.train_dirichlet = True
 
 
         self.nnfe_set_int_vars = nnfe_set_int_vars
@@ -94,6 +106,54 @@ class NNFE_base():
 
         return
     
+    def construct_calc_res(self):
+
+        if self.train_dirichlet:
+            def calc_res(self, model, ctrl_vars):
+                # Evaluate model to get dofs
+                dofs = model(ctrl_vars)
+                # Set internal variables
+                int_vars = self.nnfe_set_int_vars(ctrl_vars)
+                int_vars_surfaces = self.nnfe_set_int_vars_surf(ctrl_vars)
+                # Compute residual
+                res_vec = self.fe_handler.problem.compute_residual_helper(dofs, int_vars, int_vars_surfaces)
+
+                # Perform lift of dirichlet dofs
+                res_vec = res_vec.at[self.dirichlet_dofs].set(dofs[self.dirichlet_dofs])
+                res_vec = res_vec.at[self.dirichlet_dofs].add(ctrl_vars[-1] * -self.template_bc_vals, unique_indices=True)
+                return res_vec
+
+        else:
+            def calc_res(self, model, ctrl_vars):
+                # Evaluate model to get dofs
+                dofs = model(ctrl_vars)
+                # Set internal variables
+                int_vars = self.nnfe_set_int_vars(ctrl_vars)
+                int_vars_surfaces = self.nnfe_set_int_vars_surf(ctrl_vars)
+                # Compute residual
+                res_vec = self.fe_handler.problem.compute_residual_helper(dofs, int_vars, int_vars_surfaces)
+
+                # Perform lift of dirichlet dofs
+                res_vec = res_vec.at[self.dirichlet_dofs].set(dofs[self.dirichlet_dofs])
+                res_vec = res_vec.at[self.dirichlet_dofs].add(-self.dirichlet_vals, unique_indices=True)
+                return res_vec
+
+        self.calc_res = calc_res.__get__(self)
+        return
+
+    def loss_fct(self, diff_model, static_model, x):
+        model = eqx.combine(diff_model, static_model)
+        vres = self.vcalc_res(model, x)
+        return np.mean(np.linalg.norm(vres, axis=1))
+
+    @eqx.filter_jit
+    def make_step(self, model, x, opt_state):
+        diff_model, static_model = eqx.partition(model, self.ml.filter)
+        loss_val, grads = self.val_and_grads(diff_model, static_model, x)
+        updates, opt_state = self.ml.optimizer.update(grads, opt_state, eqx.filter(model, eqx.is_array))
+        model = eqx.apply_updates(model, updates)
+        return model, opt_state, loss_val
+
     def train(self):
         """
         Main training loop for NNFE
@@ -103,10 +163,12 @@ class NNFE_base():
                            self.ml.optimizer_params["epochs"])
 
         loss_vals = []
-
+        rng_key = jax.random.key(self.utility.key)
         toc = time.time()
         for i in range(1, int(self.ml.optimizer_params["epochs"]) + 1):
-            self.ml.network, self.ml.opt_state, train_loss = self.make_step(self.ml.network, self.sampler.X, self.ml.opt_state)
+            
+            rng_key, batch = self.sampler.draw_batch(rng_key)
+            self.ml.network, self.ml.opt_state, train_loss = self.make_step(self.ml.network, batch, self.ml.opt_state)
             loss_vals.append(train_loss)
             if i % self.utility.print == 0:
                 print("Iteration: ", i, " Loss: ", train_loss)
@@ -137,23 +199,23 @@ class NNFE_base():
 
         return
 
-    def test(self):
+    def test(self, x):
         """
         Test the accuracy of the model after training
         """
 
-        print("Training Error")
-        res_vecs = self.vcalc_res(self.ml.network, self.sampler.X)
-        mean_vecs = (res_vecs**2).mean(axis=1)
-        print("Average Residuals: ", mean_vecs)
-        print("Max Residuals: ", res_vecs.max(axis=1))
+        nn_sol = self.evaluate(x)
+        # Update internal vars
+        self.fe_handler.problem.set_internal_vars(self.nnfe_set_int_vars(x))
+        self.fe_handler.problem.set_internal_vars_surfaces(self.nnfe_set_int_vars_surf(x))
+        # Update BCs
+        if self.train_dirichlet:
+            self.fe_handler.problem.set_bc_vals(x[-1] * self.template_bc_vals)
+        self.fe_handler.solver.initial_guess = nn_sol
+        fe_sol, info = self.fe_handler.solver.solve(max_iter=40)
+        assert info[0]
 
-        print("Testing Error")
-        res_vecs = self.vcalc_res(self.ml.network, self.sampler.Y)
-        mean_vecs = (res_vecs**2).mean(axis=1)
-        print("Average Residuals: ", mean_vecs)
-        print("Max Residuals: ", res_vecs.max(axis=1))
-        return
+        return nn_sol, fe_sol
 
     def save(self, forced=False):
         """
@@ -179,34 +241,35 @@ class NNFE_base():
 
 
         return
+    
+    def construct_evaluate(self):
+        if self.train_dirichlet:
+            def evaluate(self, x):
+                """
+                Evaluate the model at a given point x.
+                Args:
+                    x: The input point to evaluate the model at.
+                Returns:
+                    The output of the model at the input point x.
+                """
+                dofs = self.ml.network(x)
+                dofs = dofs.at[self.dirichlet_dofs].set(x[-1] * self.template_bc_vals)
+                return dofs
+        else:
+            def evaluate(self, x):
+                """
+                Evaluate the model at a given point x.
+                Args:
+                    x: The input point to evaluate the model at.
+                Returns:
+                    The output of the model at the input point x.
+                """
+                dofs = self.ml.network(x)
+                dofs = dofs.at[self.dirichlet_dofs].set(self.dirichlet_vals)
+                return dofs
 
-    @abc.abstractmethod
-    def calc_res(self):
-        """
-        Calculate the residuals for the PDE
-        This is done by calling the FE_handler object
-        and passing in the ML object
-        """
-
-        pass
-
-    @abc.abstractmethod
-    def loss_fct(self):
-        """
-        Calculate the residuals for the PDE
-        This is done by calling the FE_handler object
-        and passing in the ML object
-        """
-
-        pass
-
-    @eqx.filter_jit
-    def make_step(self, model, x, opt_state):
-        diff_model, static_model = eqx.partition(model, self.ml.filter)
-        loss_val, grads = self.val_and_grads(diff_model, static_model, x)
-        updates, opt_state = self.ml.optimizer.update(grads, opt_state, eqx.filter(model, eqx.is_array))
-        model = eqx.apply_updates(model, updates)
-        return model, opt_state, loss_val
+        self.evaluate = evaluate.__get__(self)
+        return
 
 def load_nnfe(param_file):
     """
@@ -244,7 +307,7 @@ def load_nnfe(param_file):
     ml = ML(Path(parent / params["ml_input_file"]), int(fe_manager.problem.num_total_dofs_all_vars),
             utility.key, savedir=utility.savedir, model_path=model_path / "model.eqx")
 
-    sampler = Sampler(params["Sampler"])
+    sampler = Sampler(params["Sampler"], utility.key)
 
     plotter = Plotter(params["Plotting"], utility)
 
