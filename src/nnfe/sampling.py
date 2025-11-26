@@ -6,10 +6,12 @@ in the future.
 """
 
 import numpy as onp
+import jax.numpy as np
+import jax
 
 class Sampler():
 
-    def __init__(self, params):
+    def __init__(self, params, rng_key=0):
 
         if not hasattr(self, params["training"]["name"]):
             raise ValueError("Sampler not found: ", params["training"]["name"])
@@ -24,6 +26,13 @@ class Sampler():
         self.X = self.training_sampler(**params["training"]["kwargs"])
         self.Y = self.testing_sampler(**params["testing"]["kwargs"])
 
+        batch_size = params.get("batch_size", 1)
+        if batch_size <= 1.:
+            self.batch_size = int(batch_size * self.X.shape[0])
+        else: self.batch_size = batch_size
+
+        self.rng_key = jax.random.key(rng_key)
+        self.draw_batch = jax.jit(self.draw_batch)
         return
 
     def safe_eval(self, expr):
@@ -56,4 +65,7 @@ class Sampler():
 
         return onp.vstack([g.flatten() for g in grid]).T
 
-
+    def draw_batch(self, rng_key):
+        rng_key, subkey = jax.random.split(rng_key)
+        batch = jax.random.choice(subkey, self.X, (self.batch_size,), replace=False)
+        return rng_key, batch

@@ -43,27 +43,14 @@ class NNFE(NNFE_base):
         vres = self.vcalc_res(model, x)
         return np.mean(np.linalg.norm(vres, axis=1))
 
-    def calc_res(self, model, x):
-        dofs = model(x)
+    def calc_res(self, model, natural_ctrls, dirichlet_ctrls):
+        dofs = model(natural_ctrls, dirichlet_ctrls)
         # Need to customize
-        int_vars = self.nnfe_set_int_vars(x)
-        int_vars_surfaces = self.nnfe_set_int_vars_surf(x)        
+        int_vars = self.nnfe_set_int_vars(natural_ctrls)
+        int_vars_surfaces = self.nnfe_set_int_vars_surf(natural_ctrls)      
         res_vec = self.fe_handler.problem.compute_residual_helper(dofs, int_vars, int_vars_surfaces)
 
         # Bottom goes to 0
         res_vec = res_vec.at[self.dirichlet_dofs].set(dofs[self.dirichlet_dofs])
-        res_vec = res_vec.at[self.dirichlet_dofs].add(-self.dirichlet_vals, unique_indices=True)
+        res_vec = res_vec.at[self.dirichlet_dofs].add(dirichlet_ctrls * -self.dirichlet_vals, unique_indices=True)
         return res_vec
-
-    # Partial out dirichlet vars if dirichlet is static
-    def evaluate(self, x):
-        """
-        Evaluate the model at a given point x.
-        Args:
-            x: The input point to evaluate the model at.
-        Returns:
-            The output of the model at the input point x.
-        """
-        dofs = self.ml.network(x)
-        dofs = dofs.at[self.dirichlet_dofs].set(self.dirichlet_vals)
-        return dofs
