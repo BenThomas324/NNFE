@@ -1,3 +1,0 @@
-If building docs remotely through ssh
-Run the following command in build/html:
-pushd index.html;  python3 -m http.server 9999; popd;
