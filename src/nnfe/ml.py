@@ -52,12 +52,12 @@ class ML():
 
     def trunc_weight(self, weight: jax.Array, key: jax.random.PRNGKey) -> jax.Array:
         out, in_ = weight.shape
-        stddev = 1e-5
+        stddev = 1e-6
         return stddev * jax.random.truncated_normal(key, shape=(out, in_), lower=-1, upper=1)
 
     def trunc_bias(self, bias: jax.Array, key: jax.random.PRNGKey) -> jax.Array:
         out = bias.shape
-        stddev = 1e-5
+        stddev = 1e-6
         return stddev * jax.random.truncated_normal(key, shape=(out), lower=-1, upper=1)
 
     def init_linear_weight(self, model, key):
