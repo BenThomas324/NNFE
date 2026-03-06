@@ -11,7 +11,7 @@ cardiax.set_jax_enable_x64(False)
 
 os.makedirs("results", exist_ok=True)
 
-nnfe = NNFE("inputs/nnfe_params.yaml")
+nnfe = NNFE.from_yaml("inputs/nnfe_params.yaml")
 
 toc = time.time()
 nnfe.train()

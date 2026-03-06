@@ -4,7 +4,10 @@ This file creates/loads the neural network, optimizer, and initializes the weigh
 Can be used generically, not just for NNFE, pulls models from equinox and models.py
 """
 
+from dataclasses import asdict
+
 import equinox as eqx
+from .ml_config import MLConfig
 import optax
 import jax
 import jax.numpy as np
@@ -12,43 +15,47 @@ import equinox as eqx
 import yaml
 from pathlib import Path
 import jax.tree_util as jtu
+import copy
 
 import nnfe.networks as networks
-from nnfe.plotter import *
+from .plotter import *
 
-class ML():
-    def __init__(self, param_file, out_size=None, rng_key=0, savedir=None, model_path=None):
+class MLManager():
+    def __init__(self, 
+                 MLConfig, 
+                **kwargs):
 
-        param_file = Path(param_file)
-        with open(param_file) as f:
-            params = yaml.safe_load(f)
+        # Store config object
+        self.config = MLConfig
 
-        try:
-            key_val = params["Networks"]["rng_key"]
-            del params["Networks"]["rng_key"]
-        except KeyError:
-            key_val = rng_key
+        # Generate key
+        if type(MLConfig.rng_key) == int:
+            key = jax.random.PRNGKey(MLConfig.rng_key)
+        else:
+            key = jax.random.PRNGKey(0)
 
-        if type(key_val) == int:
-            # Make random key, use random directory key as prev
-            key = jax.random.PRNGKey(key_val)
-        elif key_val == "random":
-            key = jax.random.PRNGKey(rng_key)
-        
-        self.network_params = params["Networks"]
-        self.optimizer_params = params["Optimizer"]
+        # Parse DoF kwarg if needed
+        temp = ["dofs" == net_kwargs.kwargs["out_size"] for net_key, net_kwargs in MLConfig.networks.items()]
+        if any(temp):
+            out_size = kwargs["out_size"]
 
-        self.network, self.filter = self.create_network(self.network_params, out_size, key)
-        self.optimizer, self.lr_scheduler = self.create_optimizer(self.optimizer_params)
+        self.network, self.filter = self.create_network(MLConfig.networks, out_size, key)
+        self.optimizer, self.lr_scheduler = self.create_optimizer(MLConfig.optimizer)
         self.opt_state = self.optimizer.init(eqx.filter(self.network, eqx.is_array))
 
-        if savedir is not None:
-            for net in params["Networks"]:
-                params["Networks"][net]["load_model"] = str(model_path)
-            with open(savedir / param_file.name, "w") as f:
-                yaml.dump(params, f)
+        self.epochs = int(MLConfig.epochs)
+        self.batch_size = int(MLConfig.batch_size)
 
         return
+    
+    @classmethod
+    def from_config(cls, MLConfig, **kwargs):        
+        return cls(MLConfig=MLConfig, **kwargs)
+    
+    @classmethod
+    def from_yaml(cls, param_file, **kwargs):
+        param_file = Path(param_file)
+        return cls.from_config(MLConfig=MLConfig.from_yaml(param_file), **kwargs)
 
     def trunc_weight(self, weight: jax.Array, key: jax.random.PRNGKey) -> jax.Array:
         out, in_ = weight.shape
@@ -82,33 +89,41 @@ class ML():
         model = eqx.tree_at(get_weights, model, new_weights)
         return model
 
-    def network_from_params(self, params, out_size, key):
+    def load_network(self, network, path):
+        try:
+            network = eqx.tree_deserialise_leaves(path, network)
+        except RuntimeError:
+            # Define a function to cast an array to float32
+            def to_float32(x):
+                if eqx.is_array(x):
+                    return x.astype(np.float32)
+                return x
 
-        if params["kwargs"]["out_size"] == "dofs":
-            params["kwargs"]["out_size"] = out_size
+            # Apply the function to the model
+            network_float32 = jax.tree.map(to_float32, network)
+            network = eqx.tree_deserialise_leaves(path, network_float32)
 
-        params["kwargs"]["key"] = key
-        params["kwargs"]["activation"] = getattr(jax.nn, params["kwargs"]["activation"])
-        model = getattr(networks, params["name"])(**params["kwargs"])
+        return network
 
-        if params["load_model"] is None:
-            model = self.init_linear_weight(model, key)
+    def network_from_config(self, 
+                            NetworkConfig, 
+                            **kwargs):
+
+        network_kwargs = copy.deepcopy(NetworkConfig.kwargs)
+        if network_kwargs["out_size"] == "dofs":
+            network_kwargs["out_size"] = kwargs["out_size"]
+        network_kwargs["key"] = kwargs["key"]
+
+        network_kwargs["activation"] = getattr(jax.nn, network_kwargs["activation"])
+        model = getattr(networks, NetworkConfig.name)(**network_kwargs)
+
+        if NetworkConfig.load_model is None:
+            model = self.init_linear_weight(model, kwargs["key"])
         else:
-            try:
-                model = eqx.tree_deserialise_leaves(params["load_model"], model)
-            except RuntimeError:
-                # Define a function to cast an array to float32
-                def to_float32(x):
-                    if eqx.is_array(x):
-                        return x.astype(np.float32)
-                    return x
+            model = self.load_network(model, NetworkConfig.load_model)
 
-                # Apply the function to the model
-                model_float32 = jax.tree.map(to_float32, model)
-                model = eqx.tree_deserialise_leaves(params["load_model"], model_float32)
-
-        del params["kwargs"]["key"]
-        params["kwargs"]["activation"] = params["kwargs"]["activation"].__name__
+        del network_kwargs["key"]
+        network_kwargs["activation"] = network_kwargs["activation"].__name__
         model_num = jax.tree.leaves(eqx.filter(model, eqx.is_array))
         model_num = [len(np.ravel(a)) for a in model_num]
         print("Number of parameters: ", sum(model_num))
@@ -125,10 +140,10 @@ class ML():
     def create_network(self, params, out_size, key=0):
         models = []
         filter_inds = []
-        for i, p in enumerate(params):
+        for i, net_vals in enumerate(params.values()):
             key, subkey = jax.random.split(key)
-            models.append(self.network_from_params(params[p], out_size, subkey))
-            if params[p].get("static", False):
+            models.append(self.network_from_config(net_vals, out_size=out_size, key=subkey))
+            if net_vals.static:
                 filter_inds.append(i)
             else:
                 filter_inds.append(False)
@@ -145,23 +160,29 @@ class ML():
 
         return model, filter
 
-    def create_optimizer(self, params):
+    def create_optimizer(self, OptimizerConfig):
 
-        if params["scheduler"]["toggle"]:
-            boundaries = params["scheduler"]["boundaries"]
+        if OptimizerConfig.lr_scheduler:
+            schedule_params = copy.deepcopy(OptimizerConfig.scheduler)
+            boundaries = schedule_params["boundaries"]
             schedulers = []
-            for s in params["scheduler"]["schedules"]:
-                p = params["scheduler"]["schedules"][s]
+            for s in schedule_params["schedules"]:
+                p = schedule_params["schedules"][s]
                 sched = getattr(optax, p["name"])
                 schedulers.append(sched(**p["kwargs"]))
 
             scheduler = optax.join_schedules(schedulers, boundaries)
 
-        else:
-            scheduler = optax.constant_schedule(params["learning_rate"])
+        optimizer_kwargs = copy.deepcopy(OptimizerConfig.optimizer_kwargs)
+        optimizer_kwargs["learning_rate"] = scheduler
+        optimizer = getattr(optax, OptimizerConfig.name)(**optimizer_kwargs)
 
-        params["kwargs"]["learning_rate"] = scheduler
-        optimizer = getattr(optax, params["name"])(**params["kwargs"])
-        del params["kwargs"]["learning_rate"]
-        
         return optimizer, scheduler
+
+    def dump_config(self, save_dir: Path, filename: str):
+        """Dumps this specific manager's configuration to a YAML file."""
+        save_dir.mkdir(parents=True, exist_ok=True)
+        file_path = save_dir / filename
+        
+        with open(file_path, "w") as f:
+            yaml.safe_dump(asdict(self.config), f, sort_keys=False)

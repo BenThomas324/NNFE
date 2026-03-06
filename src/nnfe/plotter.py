@@ -6,33 +6,13 @@ import pyvista as pv
 
 class Plotter():
 
-    def __init__(self, params, utils):
+    def __init__(self, config, save_dir=None):
         """
         
         """
 
-        self.params = params
-        if self.params["loss"]:
-            self.plot_loss = self.plot_loss
-            try: 
-                self.loss_path = utils.parent / utils.dirs_params["plot_dir"] / "loss.png"
-            except:
-                pass
-
-        else:
-            self.plot_loss = lambda x: None
-        
-        if self.params["learning_rate"]:
-            self.plot_learning_rate = self.plot_learning_rate
-            try: 
-                self.lr_path = utils.parent / utils.dirs_params["plot_dir"] / "LR_plot.png"
-            except:
-                pass
-            
-        else:
-            self.plot_learning_rate = lambda scheduler, epochs: None
-
-
+        self.config = config
+        self.save_dir = save_dir
         return
 
     def plot_loss(self, loss_vec):
@@ -41,7 +21,7 @@ class Plotter():
         ax.set_title("Loss vs. Epochs")
         ax.set_xlabel("Epoch")
         ax.set_ylabel("Loss")
-        plt.savefig(self.loss_path)
+        plt.savefig(self.save_dir / "loss.png")
         
         return
 
@@ -55,7 +35,7 @@ class Plotter():
         ax.set_title("Learning rate vs. Epochs")
         ax.set_xlabel("Epoch")
         ax.set_ylabel("Learning rate")
-        plt.savefig(self.lr_path)
+        plt.savefig(self.save_dir / "lr.png")
         
         return
 

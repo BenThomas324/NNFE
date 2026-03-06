@@ -8,37 +8,23 @@ in the future.
 import numpy as onp
 import jax.numpy as np
 import jax
+from .utils import validate_sampler
 
 class Sampler():
 
-    def __init__(self, params, rng_key=0):
+    def __init__(self, config, rng_key=0):
 
-        if not hasattr(self, params["training"]["name"]):
-            raise ValueError("Sampler not found: ", params["training"]["name"])
-        else:
-            self.training_sampler = getattr(self, params["training"]["name"])
+        self.config = config
 
-        if not hasattr(self, params["testing"]["name"]):
-            raise ValueError("Sampler not found: ", params["testing"]["name"])
-        else:
-            self.testing_sampler = getattr(self, params["testing"]["name"])
+        self.training_sampler = getattr(self, validate_sampler(config.training_sampler))
+        self.testing_sampler = getattr(self, validate_sampler(config.testing_sampler))
 
-        self.X = self.training_sampler(**params["training"]["kwargs"])
-        self.Y = self.testing_sampler(**params["testing"]["kwargs"])
-
-        batch_size = params.get("batch_size", 1)
-        if batch_size <= 1.:
-            self.batch_size = int(batch_size * self.X.shape[0])
-        else: self.batch_size = batch_size
-
-        self.rng_key = jax.random.key(rng_key)
-        self.draw_batch = jax.jit(self.draw_batch)
+        self.X = self.training_sampler(**config.training_kwargs)
+        self.Y = self.testing_sampler(**config.testing_kwargs)
         return
 
     def safe_eval(self, expr):
-        if type(expr) is str:
-            return eval(expr)
-        elif type(expr) in [float, int]:
+        if type(expr) in [float, int]:
             return expr
         else:
             raise ValueError("Expression must be a valid string, float, or int")
@@ -65,7 +51,7 @@ class Sampler():
 
         return onp.vstack([g.flatten() for g in grid]).T
 
-    def draw_batch(self, rng_key):
+    def draw_batch(self, rng_key, batch_size):
         rng_key, subkey = jax.random.split(rng_key)
-        batch = jax.random.choice(subkey, self.X, (self.batch_size,), replace=False)
+        batch = jax.random.choice(subkey, self.X, (batch_size,), replace=False)
         return rng_key, batch

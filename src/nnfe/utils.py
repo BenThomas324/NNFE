@@ -1,74 +1,52 @@
-"""
-This file is meant to handle all aspects of handling the filesystem.
-It will create directories, save models, and load files.
-(May want to rename)
-"""
 
-import yaml
-import numpy as onp
 from pathlib import Path
+import yaml
+import jax.numpy as np
 
-class Utilities:
+valid_samplers = ["uniform"]
+valid_PDEs = [""]
 
-    def __init__(self, utility_params):
-        
-        self.output_params = utility_params["output"]
-        self.dirs_params = utility_params["extra_dirs"]
+def validate_sampler(sampler):
+    if sampler not in valid_samplers:
+        raise ValueError(f"Sampler '{sampler}' not recognized. \n"
+                         f"Valid options are: {valid_samplers}")
+    return sampler
 
-        if utility_params["save"]:
-            parent = Path(utility_params["parent_dir"]) / Path(utility_params["name"])
+# Tell PyYAML to treat Path objects exactly like normal strings when dumping
+def path_representer(dumper, data):
+    return dumper.represent_scalar('tag:yaml.org,2002:str', str(data))
 
-            temp_key = onp.random.randint(1e5)
-            while (parent / f"/{temp_key}").exists():
-                temp_key = onp.random.randint(1e5)
-            self.parent = parent / Path(f"{temp_key}")
+# Register it for both standard and safe dumpers
+yaml.add_multi_representer(Path, path_representer)
+yaml.add_multi_representer(Path, path_representer, Dumper=yaml.SafeDumper)
 
-            self.key = temp_key
+# --- NumPy Handling ---
+def numpy_int_representer(dumper, data):
+    return dumper.represent_int(int(data))
 
-            for dir_path in self.dirs_params.values():
-                dir_path = self.parent / dir_path
-                if not dir_path.exists():
-                    dir_path.mkdir(parents=True, exist_ok=True)
+def numpy_float_representer(dumper, data):
+    return dumper.represent_float(float(data))
 
-            onp.savetxt(self.parent / "running.txt", onp.array([1]))
-            self.savedir = self.parent / self.dirs_params["input_dir"]
+def numpy_array_representer(dumper, data):
+    return dumper.represent_list(data.tolist())
 
-        else:
-            # Figure out what else to do here...
-            self.parent = Path(".")
-            self.key = 0
-            self.savedir = None
+# Register them with the SafeDumper
+yaml.add_multi_representer(np.integer, numpy_int_representer, Dumper=yaml.SafeDumper)
+yaml.add_multi_representer(np.floating, numpy_float_representer, Dumper=yaml.SafeDumper)
+yaml.add_multi_representer(np.ndarray, numpy_array_representer, Dumper=yaml.SafeDumper)
 
-        self.output_params = utility_params["output"]
+def get_dict(d: dict, key: str) -> dict:
+    """
+    Safely retrieves a sub-dictionary. 
+    If the key is missing OR the value is None, returns {}.
+    """
+    val = d.get(key)
+    return val if val is not None else {}
 
-        if self.output_params["print"]:
-            self.print = self.output_params["print"]
-        else:
-            self.print = False
-
-        if self.output_params["saveat"]:
-            self.save = self.output_params["saveat"]
-        else:
-            self.save = False
-
-        return
-
-# def create_dirs(params, results_dir):
-#     # Currently done via RNG, but should change to user specified file
-#     # and throw error if it already exists
-#     temp_key = onp.random.randint(1e5)
-#     while (results_dir / f"/{temp_key}").exists():
-#         temp_key = onp.random.randint(1e5)
-
-#     results_dir += f"/{temp_key}"
-#     (results_dir).mkdir()
-#     (results_dir + "/plots").mkdir()
-#     (results_dir + "/values").mkdir()
-    
-#     with open(results_dir / "/params.yaml", "w") as f:
-#         yaml.dump(params, f)
-
-#     onp.savetxt(results_dir + "/running.txt", onp.array([0]))
-
-#     return results_dir, temp_key
-
+def get_Path(d: dict, key: str) -> Path:
+    """
+    Safely retrieves a Path object from a dictionary. 
+    If the key is missing OR the value is None, returns None.
+    """
+    val = d.get(key)
+    return Path(val) if val is not None else None

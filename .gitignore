@@ -11,8 +11,6 @@ __pycache__/
 **/*.yaml
 site/**
 
-/problems/*/*/*/data
-/results/*
 **/*.vtk
 **/*.vtu
 **/*.msh
