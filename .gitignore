@@ -10,8 +10,11 @@ __pycache__/
 **/*.txt
 **/*.yaml
 site/**
-
+**/egg-info
 **/*.vtk
 **/*.vtu
 **/*.msh
 .vscode/*
+
+!demos/hyperelastic/neumann/inputs/*
+!demos/prolate_spheroid/configs/*

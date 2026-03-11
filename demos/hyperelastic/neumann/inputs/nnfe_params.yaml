@@ -1,0 +1,60 @@
+
+# Generic things to save for the run
+project:
+  name: test # Project title
+  parent_dir: "."
+  save: True # Set to False if testing
+  print_progress: 1.0e+1 # When to print the loss and other information
+  save_progress: 1.0e+3 # When to save the parameters and update plots
+
+  extra_dirs:
+    results_dir: "results" # Directory to save results
+    model_dir: "models" # Directory to save models
+    plot_dir: "plots" # Directory to save plots
+    log_dir: "logs" # Directory to save logs
+    config_dir: "config_files"
+
+# FE Problem to solve defined in a separate yaml file
+FE: "fe_input_file.yaml"
+
+# ML parameters
+ML: "ml_input_file.yaml"
+
+NNFE:
+  # Identify which variables belong to which kernels
+  natural:
+    internal:
+      u: []
+
+    surface:
+      u:
+        bc2: ["t"]
+
+  # Identify essential boundary conditions
+  essential:
+    u: 
+
+  # Ordering that goes into neural network
+  natural_order: ["t"]
+  essential_order: []
+
+sampler:
+  training_sampler: "uniform"
+  training_kwargs:
+      mins: [0.] # List of min values
+      maxes: [2.] # List of max values
+      samples: [10] # List of number of samples
+  
+  testing_sampler: "uniform"
+  testing_kwargs:
+      between_training: True
+      mins: [0.] # List of min values
+      maxes: [2.] # List of max values
+      samples: [10] # List of number of samples
+
+# Controls what should be plotted through the run
+# could add custom plots here to be triggered
+plotter:
+  plot_loss: True
+  plot_lr: True
+  plot_sample: True

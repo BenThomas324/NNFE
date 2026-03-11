@@ -8,6 +8,3 @@ Place figure here to help explain
 ## Finite Element Setup
 
 The finite element controller is built off the input files used in CARDIAX.
-
-
-
