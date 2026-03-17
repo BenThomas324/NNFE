@@ -2,14 +2,11 @@
 import numpy as onp
 import jax
 import equinox as eqx
-import matplotlib.pyplot as plt
 import time
-import glob
 import os
 
 from nnfe import NNFE
 from cardiax import Newton_Solver
-from cardiax import get_T
     
 parent = "Results/xxxxx/"
 nnfe = NNFE.from_yaml(parent + "config_files/resolved_nnfe_config.yaml")

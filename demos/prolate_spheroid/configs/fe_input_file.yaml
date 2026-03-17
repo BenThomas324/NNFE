@@ -23,7 +23,7 @@ pde_config:
   pde_info:
     pde_class: "Hyperelasticity"
     pde_type: "Hao_active"
-    material_constants:
+    constants:
     internal_vars:
       u:
         fibers:
