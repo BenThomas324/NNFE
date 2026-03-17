@@ -18,3 +18,4 @@ site/**
 
 !demos/hyperelastic/neumann/inputs/*
 !demos/prolate_spheroid/configs/*
+!docs/tutorials/figures/*

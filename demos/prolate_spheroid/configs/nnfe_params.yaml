@@ -23,7 +23,6 @@ ML: "ml_input_file.yaml"
 
 # Controls the overall control need for NNFE
 NNFE:
-  # Number of variables to train
   natural:
     internal:
       u: ["TCa"]
@@ -41,16 +40,16 @@ NNFE:
 sampler:
   training_sampler: "uniform"
   training_kwargs:
-    mins: [0., 0.] # List of min values
-    maxes: [120., 60.] # List of max values
-    samples: [6, 5] # List of number of samples
+    mins: [0., 0.]
+    maxes: [120., 60.]
+    samples: [6, 5]
   
   testing_sampler: "uniform"
   testing_kwargs:
     between_training: True
-    mins: [0., 0.] # List of min values
-    maxes: [120., 60.] # List of max values
-    samples: [6, 5] # List of number of samples
+    mins: [0., 0.]
+    maxes: [120., 60.]
+    samples: [6, 5]
 
 # Controls what should be plotted through the run
 # could add custom plots here to be triggered

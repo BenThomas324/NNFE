@@ -4,7 +4,7 @@ import numpy as onp
 
 from nnfe import NNFE
 
-parent = "test/28504/"
+parent = "test/57312/"
 nnfe = NNFE.from_yaml(parent + "config_files/resolved_nnfe_config.yaml")
 
 diffs = []

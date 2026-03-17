@@ -107,8 +107,13 @@ class NNFE():
 
         sampler = Sampler(config.sampler)
 
+        try:
+            save_dir = project_manager.parent / config.project.extra_dirs["plot_dir"]
+        except TypeError:
+            save_dir = None
+
         plotter = Plotter(config.plotter, 
-                          save_dir=project_manager.parent / config.project.extra_dirs["plot_dir"])
+                          save_dir=save_dir)
 
         if project_manager.config.save and project_manager.parent is not None:
             # You can save it in the root run folder, or inside project_manager.paths.get("config_dir")
@@ -254,7 +259,8 @@ class NNFE():
 
         updated_project_config = dataclasses.replace(
             self.project.config, 
-            trained_weights_path=f"./{self.project.paths['model_dir'] / 'model.eqx'}" if self.project.save else None
+            trained_weights_path=f"./{self.project.paths['model_dir'] / 'model.eqx'}" if self.project.save else None,
+            save=False
         )
         
         # Update the main config object

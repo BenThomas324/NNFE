@@ -1,42 +1,54 @@
-site_name: My Docs
+site_name: CARDIAX Documentation
+
+theme:
+    name: material  # Recommended for use with pymdownx extensions
+    palette:
+    - scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
+nav:
+    - Home: index.md
+    - API: 
+        - Main Functionality: api/main_functionality.md
+        - Networks: api/networks.md
+
+    - Tutorials:
+        - Overview: tutorials/overview.md
+        - Configurations: tutorials/configurations.md
+        - Prolate Spheroid: tutorials/prolate_spheroid.md
 
 markdown_extensions:
-    - pymdownx.arithmatex:  # Render LaTeX via MathJax
+    - pymdownx.arithmatex:
         generic: true
-    - pymdownx.superfences  # Seems to enable syntax highlighting when used with the Material theme.
-    - pymdownx.details  # Allowing hidden expandable regions denoted by ???
-    - pymdownx.snippets:  # Include one Markdown file into another
+    - pymdownx.superfences
+    - pymdownx.details
+    - pymdownx.snippets:
         base_path: docs
     - admonition
     - toc:
-        permalink: "¤"  # Adds a clickable permalink to each section heading
+        permalink: "¤"
         toc_depth: 4
+
+# This section tells the browser to load MathJax and your custom config
+extra_javascript:
+    - javascripts/mathjax.js
+    - https://polyfill.io/v3/polyfill.min.js?features=es6
+    - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 plugins:
     - search:
-        # See https://github.com/squidfunk/mkdocs-material/discussions/8116#discussioncomment-12632752
-        # and https://github.com/patrick-kidger/equinox/issues/984
-        # In particular this allows for searching e.g. 'filter_grad' and to match 'equinox.filter_grad'.
         separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
-    # - include_exclude_files:
-    #     include:
-    #         - ".htaccess"
-    #     exclude:
-    #         - "_overrides"
-    #         - "examples/.ipynb_checkpoints/"
-    #         - "examples/MNIST"
-    #         - "examples/bert_checkpoint.eqx"
-    # - ipynb
-    # - hippogriffe:
-    #     extra_public_objects:
-    #         - equinox.if_array
-    #         - jax.ShapeDtypeStruct
-    #         - jax.extend.core.ClosedJaxpr
-    #         - jax.Device
-    #         - jax.sharding.Sharding
     - mkdocstrings:
+        default_handler: python
         handlers:
             python:
+                paths: ["src"]
                 options:
                     force_inspection: true
                     heading_level: 4
@@ -50,8 +62,3 @@ plugins:
                     show_source: false
                     show_symbol_type_heading: true
                     show_symbol_type_toc: true
-
-nav:
-  - Home: index.md
-
-  - API: test.md

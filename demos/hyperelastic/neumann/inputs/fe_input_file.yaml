@@ -38,7 +38,6 @@ pde_config:
   dirichlet_bc_info:
     u:
       bc1:
-        type: "Dirichlet"
         component: [0, 1, 2]
         value: [0.0, 0.0, 0.0]
         surface_tag: "bottom"

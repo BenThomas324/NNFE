@@ -13,7 +13,7 @@ from cardiax import get_T
 
 jax.config.update("jax_debug_nans", True)
     
-parent = "Results/99783/"
+parent = "Results/6913/"
 nnfe = NNFE.from_yaml(parent + "config_files/resolved_nnfe_config.yaml")
 nnfe.ml.network = eqx.tree_deserialise_leaves(parent + "models/model.eqx", nnfe.ml.network)
 
