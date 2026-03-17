@@ -19,4 +19,5 @@ src/*.egg-info
 
 !demos/hyperelastic/neumann/inputs/*
 !demos/prolate_spheroid/configs/*
+!demos/prolate_spheroid/LV.vtk
 !docs/tutorials/figures/*
