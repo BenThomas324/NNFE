@@ -5,7 +5,7 @@ Here, we will describe in more detail the prolate spheroidal example presented i
 
 ## Prolate Spheroidal Model
 
-The PDE being solved is a hyperelastic material model which is the same as the one used in \textcolor{red}{Cite Hao}. The strain energy function is split into deviatoric and volumetric componenets
+The PDE being solved is a hyperelastic material model which is the same as the one used [here](https://www.nature.com/articles/s41598-021-92810-y). The strain energy function is split into deviatoric and volumetric componenets
 
 $$
     \Psi = \Psi_{dev} + \Psi_{vol}.
@@ -28,7 +28,7 @@ where $J = \det(\mathbf{F})$ is the determinant of the deformation gradient. The
 
 \begin{equation}
   \mathbf{S}_{act} = T_{Ca} \left( \frac{1 + \beta(\lambda - 1)}{\lambda^2} \right) \mathbf{f} \otimes \mathbf{f}
-\label{eq: active}
+\label{eq:active}
 \end{equation}
 
 \begin{equation*}
@@ -39,7 +39,7 @@ where $\mathbf{f}$ is the fiber direction and $T_{Ca}$ is the magnitude of activ
 
 \begin{equation}
   \int_\Omega (\mathbf{P} + \mathbf{P}_{act}) : \nabla \mathbf{v} dX - p \int_\Gamma J \mathbf{F}^{-T} \mathbf{n} \cdot \mathbf{v} dS = 0
-\label{eq: PDE}
+\label{eq:PDE}
 \end{equation}
 
 ## Configuration File Specifications
@@ -64,7 +64,7 @@ fe_config:
     vec: 3
 ```
 
-The base, which we hold fixed in all directions, is colored blue, and the red is the endocardium where the pressure is applied. These will be our two boundary conditions, one static Dirichlet, the other functional surface integral. The PDE \ref{eq: PDE} is already predefined with `Hao_active` in `CARDIAX`. The internal variables for fiber, sheet, and normal directions are all predefined on the mesh, so they just take the mesh value. The `TCa` variable is being changed, so we make it default to 1. to just scale appropriately.
+The base, which we hold fixed in all directions, is colored blue, and the red is the endocardium where the pressure is applied. These will be our two boundary conditions, one static Dirichlet, the other functional surface integral. The PDE $\eqref{eq:PDE}$ is already predefined with `Hao_active` in `CARDIAX`. The internal variables for fiber, sheet, and normal directions are all predefined on the mesh, so they just take the mesh value. The `TCa` variable is being changed, so we make it default to 1. to just scale appropriately.
 
 ![alt text](../figures/tutorials/prolate_spheroid/LV.png)
 
@@ -198,7 +198,7 @@ FE: "fe_input_file.yaml"
 ML: "ml_input_file.yaml"
 ```
 
-Here, we are determining which parameters we are learning with the network. We want to learn the $T_{Ca}$ values defined in Equation \ref{eq: active}, and the pressure $p$ in Equation \ref{eq: PDE}. Thus, we point to $T_{Ca}$ under `internal` and $p$ under `surface`, and we have no essential boundaries to train.
+Here, we are determining which parameters we are learning with the network. We want to learn the $T_{Ca}$ values defined in $\eqref{eq:active}$, and the pressure $p$ in $\eqref{eq:PDE}$. Thus, we point to $T_{Ca}$ under `internal` and $p$ under `surface`, and we have no essential boundaries to train.
 
 ```yaml
 # Controls the overall control need for NNFE

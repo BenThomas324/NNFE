@@ -8,7 +8,7 @@ authors:
   given-names: "Benjamin J."
 - family-names: "Sacks"
   given-names: "Michael S."
-title: "Unknown so far"
+title: "CARDIAX-NNFE: A Scientific Machine Learning Framework for Cardiac Mechanics"
 notes: "Paper being submitted to softwareX."
 version: 0.1.0
 date-released: "2026-02-06"

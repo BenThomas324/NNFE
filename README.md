@@ -1,6 +1,6 @@
-# NNFE
+# CARDIAX-NNFE
 
-NNFE is a GPU-accelerated scientific machine learning framework specifically for the Neural Network Finite Element method based on [JAX](https://github.com/google/jax). The major dependencies along with `JAX` are `Equinox` for network creation, `Optax` for optimization procedures, and `CARDIAX` for finite element residual computation. This package is actively managed by the [Willerson Center for Cardiovascular Modeling and Simulation (WCCMS)](https://oden.utexas.edu/research/centers-and-groups/willerson-center-for-cardiovascular-modeling-and-simulation/) and is constantly adapting to accommodate the suite of problems we are intereseted in solving. **We are only focused on GPU development**.
+CARDIAX-NNFE is a GPU-accelerated scientific machine learning framework specifically for the Neural Network Finite Element method based on [JAX](https://github.com/google/jax). The major dependencies along with `JAX` are `Equinox` for network creation, `Optax` for optimization procedures, and `CARDIAX` for finite element residual computation. This package is actively managed by the [Willerson Center for Cardiovascular Modeling and Simulation (WCCMS)](https://oden.utexas.edu/research/centers-and-groups/willerson-center-for-cardiovascular-modeling-and-simulation/) and is constantly adapting to accommodate the suite of problems we are intereseted in solving. **We are only focused on GPU development**.
 
 ## Installation
 
@@ -17,13 +17,10 @@ Once the `jax` installation is working, the easiest option is to build all the d
 pip install -e .
 ```
 
-**Warning: JAX just upgraded to 0.9, so we haven't created the latest environment yet.**
 
 ## Examples
 
-**TBD**
-
-In the documentation, there are be examples that walk through how to use the code. These are under tutorials, but the files are markdown format to explain functionality. The corresponding `*.py` files live in the `NNFE/tutorials` directory. More examples are also given in the demos but without the lengthy markdown explanations.
+In the documentation, there are examples that walk through how to use the code. These are under demos, but the files are markdown format to explain functionality. The corresponding `*.py` files live in the `NNFE/demos` directory. The main demo currently is the prolate spheroid, which is the illustrative example in SoftwareX submission.
 
 ## Limitations
 

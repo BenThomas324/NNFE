@@ -15,6 +15,7 @@ site/**
 **/*.vtu
 **/*.msh
 .vscode/*
+src/*.egg-info
 
 !demos/hyperelastic/neumann/inputs/*
 !demos/prolate_spheroid/configs/*

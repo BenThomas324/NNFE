@@ -7,9 +7,8 @@ import matplotlib.pyplot as plt
 import time
 
 from nnfe import NNFE
-from cardiax import Newton_Solver
     
-parent = "Results/6913/"
+parent = "Results/xxxxx/"
 nnfe = NNFE.from_yaml(parent + "config_files/resolved_nnfe_config.yaml")
 nnfe.ml.network = eqx.tree_deserialise_leaves(parent + "models/model.eqx", nnfe.ml.network)
 

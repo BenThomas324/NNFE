@@ -1,4 +1,4 @@
-site_name: CARDIAX Documentation
+site_name: CARDIAX-NNFE Documentation
 
 theme:
     name: material  # Recommended for use with pymdownx extensions

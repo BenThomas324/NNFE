@@ -32,11 +32,6 @@ class NNFE():
     - Training loop
     - Testing loop
     - Saving/loading model
-    TODO:
-    - Make compatible with future refactor
-    - Add more documentation
-    - Add checkpointing
-    - Add or extend logger
     """
 
 

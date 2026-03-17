@@ -10,10 +10,8 @@ import os
 from nnfe import NNFE
 from cardiax import Newton_Solver
 from cardiax import get_T
-
-jax.config.update("jax_debug_nans", True)
     
-parent = "Results/6913/"
+parent = "Results/xxxxx/"
 nnfe = NNFE.from_yaml(parent + "config_files/resolved_nnfe_config.yaml")
 nnfe.ml.network = eqx.tree_deserialise_leaves(parent + "models/model.eqx", nnfe.ml.network)
 
@@ -21,10 +19,6 @@ solver = Newton_Solver(nnfe.problem, onp.zeros((nnfe.problem.num_total_dofs_all_
 
 pv_error = []
 pv_times = []
-pv_stress_mean = []
-pv_stress_std = []
-pv_stress_max = []
-max_stress_val = []
 for j in [1, 2, 3]:
     jit_times = []
     os.makedirs(parent + f"results/pv_loop_{j}", exist_ok=True)
@@ -55,14 +49,6 @@ for j in [1, 2, 3]:
         assert info[0]
 
         fe_sols.append(sol)
-        # T_nn = get_T(nnfe.fe_handler.fes["u"], nnfe.problem.get_tensor_map(), nn_sols[i], int_vars).mean(axis=1)
-        # T_fe = get_T(nnfe.fe_handler.fes["u"], nnfe.problem.get_tensor_map(), sol, int_vars).mean(axis=1)
-        # stress_diff = onp.linalg.norm(T_nn - T_fe, ord="fro", axis=(1, 2)).mean()
-        # stress_diff = T_nn - T_fe
-        # stress_mean.append(stress_diff.mean())
-        # stress_std.append(stress_diff.std())
-        # stress_max.append(stress_diff.max())
-        # max_vals.append(onp.abs(T_fe.mean(axis=1)).max())
 
     pv_array = onp.zeros((len(data), 2))
     for i in range(len(data)):
@@ -76,15 +62,8 @@ for j in [1, 2, 3]:
     
     pv_error.append(pv_array)
     pv_times.append(onp.array(jit_times))
-    # pv_stress_mean.append(onp.array(stress_mean))
-    # pv_stress_std.append(onp.array(stress_std))
-    # pv_stress_max.append(onp.array(stress_max))
-    # max_stress_val.append(onp.array(max_vals))
 
 for j in [0, 1, 2]:
     print(pv_times[j])
     print("Mean L2 error:   ", pv_error[j][:, 0].mean())
     print("Mean Linf error: ", pv_error[j][:, 1].mean())
-    # print("Mean stress diff:", pv_stress_mean[j].mean(), "+-", pv_stress_std[j].mean())
-    # print("Max stress diff:", pv_stress_max[j].max())
-    # print("Max stress val:", max_stress_val[j].max())
