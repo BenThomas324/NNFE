@@ -1,0 +1,1013 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../overview/">
+      
+      
+        <link rel="next" href="../prolate_spheroid/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Configurations - CARDIAX-NNFE Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#configuration-files" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="CARDIAX-NNFE Documentation" class="md-header__button md-logo" aria-label="CARDIAX-NNFE Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CARDIAX-NNFE Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Configurations
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="CARDIAX-NNFE Documentation" class="md-nav__button md-logo" aria-label="CARDIAX-NNFE Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CARDIAX-NNFE Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/main_functionality/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Main Functionality
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configurations
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configurations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Walkthrough
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration Walkthrough">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finite-element" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finite Element
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sampler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sampler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#machine-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Machine Learning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nnfe-params" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NNFE Params
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plotter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plotter
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prolate_spheroid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prolate Spheroid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Walkthrough
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration Walkthrough">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finite-element" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finite Element
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sampler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sampler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#machine-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Machine Learning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nnfe-params" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NNFE Params
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plotter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plotter
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="configuration-files">Configuration Files<a class="headerlink" href="#configuration-files" title="Permanent link">¤</a></h1>
+<p>Configurations for CARDIAX-NNFE are a user friendly way of training a network on basic solution mappings. While they aren't required, the configuration structure is what allows for reproducibility, which is crucial for developing new methodoligies. The config files that then generate the appropriate managers can be used independently as well.</p>
+<p>The main structure for NNFE follows the figure below. A master configuration file is created to begin. This file is what generates <code>NNFE</code> through the <code>from_yaml</code> class method. Then in the <code>from_yaml</code> function, the yaml file parses into appropriate subdictionaries to spawn the relevant Manager objects. These objects are then passed to <code>NNFE</code>, initializing the object.</p>
+<p><img alt="alt text" src="../../figures/tutorials/configs.png" /></p>
+<h2 id="configuration-walkthrough">Configuration Walkthrough<a class="headerlink" href="#configuration-walkthrough" title="Permanent link">¤</a></h2>
+<p>Here, we will explain the generic aspects of each component of the configuration files. While the configuration file can be just one large yaml file, we broke it into three pieces for convience. There is the main NNFE file that handles more of the high level architecture. Then this main file points to the FE and ML configuration files, so these can be manipulated more easily. For more concrete examples, please look at the demos.</p>
+<h3 id="project">Project<a class="headerlink" href="#project" title="Permanent link">¤</a></h3>
+<p>The first manager to spawn is the <code>ProjectManager</code>. This object helps maintain the reproducible results by spawning a new directory at each instance. A parent directory is chosen, and on each run inside <code>/parent_dir/name/...</code>, a random key is created. This random key makes sure that each run is unique and prevents accidentally overwriting previous tests. A directory structure is then created to store relevant information.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">project</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Name of the project repo where to spawn new directory</span>
+<span class="w">  </span><span class="nt">parent_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Parent directory to save the Results to: /parent_dir/Results/...</span>
+<span class="w">  </span><span class="nt">save</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bool</span><span class="w"> </span><span class="c1"># Whether to save the run or not</span>
+<span class="w">  </span><span class="nt">print_progress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">int</span><span class="w"> </span><span class="c1"># How often to print loss</span>
+<span class="w">  </span><span class="nt">save_progress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">int</span><span class="w"> </span><span class="c1"># When to save the model</span>
+<span class="w">  </span><span class="nt">extra_dirs</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">results_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Save post-process results</span>
+<span class="w">    </span><span class="nt">model_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Save models</span>
+<span class="w">    </span><span class="nt">plot_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Save plots</span>
+<span class="w">    </span><span class="nt">log_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Save logs</span>
+<span class="w">    </span><span class="nt">config_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Save configs</span>
+<span class="w">  </span><span class="nt">trained_weights_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Load trained weights</span>
+</code></pre></div>
+<h3 id="finite-element">Finite Element<a class="headerlink" href="#finite-element" title="Permanent link">¤</a></h3>
+<p>The finite element configuration file is responsible for spawning the object responsible for the residual construction of NNFE. It's also described in more depth in <code>CARDIAX</code> because it's the same as the input files used there. We will show it here as well for completeness, but for more details on the FE implementation, please look at the <code>CARDIAX</code> repo.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">FE</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Config file for FE</span>
+</code></pre></div>
+<p>This is the contents of the FE config file.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Directory of project with mesh file, etc.</span>
+<span class="nt">directory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+
+<span class="nt">fe_config</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">var</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># FE variable name</span>
+<span class="w">  </span><span class="nt">mesh_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Mesh file path</span>
+<span class="w">  </span><span class="nt">mesh_generator</span><span class="p">:</span><span class="w"> </span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Name of mesh generation fct</span>
+<span class="w">    </span><span class="nt">kwargs</span><span class="p">:</span><span class="w"> </span><span class="c1"># Kwargs of mesh_gen</span>
+
+<span class="w">  </span><span class="nt">kwargs</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ele_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Element type to use</span>
+<span class="w">    </span><span class="nt">gauss_order</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">int</span><span class="w"> </span><span class="c1"># gauss order element</span>
+<span class="w">    </span><span class="nt">dim</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">int</span><span class="w"> </span><span class="c1"># Dimension of mesh</span>
+<span class="w">    </span><span class="nt">vec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">int</span><span class="w"> </span><span class="c1"># Dimension of FE variable</span>
+
+<span class="nt">pde_config</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pde_info</span><span class="p">:</span>
+
+<span class="w">    </span><span class="nt">pde_class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># The directory of the PDE to load</span>
+<span class="w">    </span><span class="nt">pde_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># The specific PDE to load</span>
+
+<span class="w">    </span><span class="nt">material_constants</span><span class="p">:</span>
+<span class="w">      </span><span class="c1"># param will be name of parameter in PDE</span>
+<span class="w">      </span><span class="c1"># value will be the numeric or mesh value of the param</span>
+<span class="w">      </span><span class="nt">param</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">value</span>
+
+<span class="w">    </span><span class="nt">internal_vars</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">u</span><span class="p">:</span><span class="w"> </span><span class="c1"># this should match the fe_config.var mentioned above</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="c1"># The name of the parameter to be filled (these are functional)</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="c1"># The value of the parameter</span>
+<span class="w">          </span><span class="nt">vec</span><span class="p">:</span><span class="w"> </span><span class="c1"># Size of the parameter vec</span>
+
+<span class="w">  </span><span class="nt">dirichlet_bc_info</span><span class="p">:</span><span class="w"> </span><span class="c1"># Info regarding dirichlet BCs</span>
+<span class="w">    </span><span class="nt">u</span><span class="p">:</span><span class="w"> </span><span class="c1"># this should match the fe_config.var mentioned above</span>
+<span class="w">      </span><span class="nt">bc1</span><span class="p">:</span><span class="w"> </span><span class="c1"># First BC to set</span>
+<span class="w">        </span><span class="c1"># Vector inds to set BC</span>
+<span class="w">        </span><span class="nt">component</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">int</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">...</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="c1"># Values to set at corresponding inds</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">float</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">...</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">surface_tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Mesh tag to describe surface</span>
+<span class="w">        </span><span class="nt">static</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bool</span><span class="w"> </span><span class="c1"># Whether to make static or functional</span>
+<span class="w">  </span><span class="nt">surface_maps_info</span><span class="p">:</span><span class="w"> </span><span class="c1"># Info for surface integrals in PDE</span>
+<span class="w">    </span><span class="nt">u</span><span class="p">:</span><span class="w"> </span><span class="c1"># this should match the fe_config.var mentioned above</span>
+<span class="w">      </span><span class="nt">bc2</span><span class="p">:</span><span class="w"> </span><span class="c1"># New BC to set</span>
+<span class="w">        </span><span class="c1"># keys for functional parameters of surface map</span>
+<span class="w">        </span><span class="nt">var</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">str</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">...</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="c1"># Type of surface integral (see preset list)</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span>
+<span class="w">        </span><span class="c1"># Value to set of funtional parameter</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">float</span>
+<span class="w">        </span><span class="nt">surface_tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Mesh tag to describe surface</span>
+<span class="w">        </span><span class="nt">static</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bool</span><span class="w"> </span><span class="c1"># Whether to make static or functional</span>
+
+<span class="nt">solver_config</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Name of solver</span>
+<span class="w">  </span><span class="nt">kwargs</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">max_iter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">int</span><span class="w"> </span><span class="c1"># Number of maximal iterations</span>
+<span class="w">    </span><span class="nt">atol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">float</span><span class="w"> </span><span class="c1"># Absolute tolerance for solver</span>
+</code></pre></div>
+<h3 id="sampler">Sampler<a class="headerlink" href="#sampler" title="Permanent link">¤</a></h3>
+<p>The sampler is used to create the object responsible for drawing samples of the chosen parameters. The configuration is vague because it matters which sampler you choose. Only uniform is implemented currently, but others are in the works.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">sampler</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Type of sampler for training</span>
+<span class="w">  </span><span class="nt">training_sampler</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span>
+<span class="w">  </span><span class="c1"># kwargs associated with the chosen sampler</span>
+<span class="w">  </span><span class="nt">training_kwargs</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Type of sampler for testing</span>
+<span class="w">  </span><span class="nt">testing_sampler</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span>
+<span class="w">  </span><span class="c1"># kwargs associated with the chosen sampler</span>
+<span class="w">  </span><span class="nt">testing_kwargs</span><span class="p">:</span>
+</code></pre></div>
+<h3 id="machine-learning">Machine Learning<a class="headerlink" href="#machine-learning" title="Permanent link">¤</a></h3>
+<p>The machine learning config file handles the creation of the network and optimizer and defines the parameters for the training.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">ML</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ml_input_file.yaml&quot;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nt">epochs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">int/float</span><span class="w"> </span><span class="c1"># Number of epochs for training</span>
+<span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">int/float</span><span class="w"> </span><span class="c1"># Batch size of training</span>
+<span class="nt">rng_key</span><span class="p">:</span><span class="w"> </span><span class="c1"># Rng_key for reproducibility</span>
+
+<span class="nt">networks</span><span class="p">:</span><span class="w"> </span><span class="c1"># Neural network info</span>
+
+<span class="w">  </span><span class="c1"># Can create multiple networks for more custom models</span>
+<span class="w">  </span><span class="nt">Network1</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Name of network architecture</span>
+<span class="w">    </span><span class="nt">kwargs</span><span class="p">:</span><span class="w"> </span><span class="c1"># Associated kwargs of network</span>
+
+<span class="w">    </span><span class="nt">load_model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Can load trained model</span>
+<span class="w">    </span><span class="nt">static</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bool</span><span class="w"> </span><span class="c1"># Holds model weights fixed or not</span>
+
+<span class="nt">optimizer</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Name of optimizer</span>
+
+<span class="w">  </span><span class="c1"># LR scheduler params</span>
+<span class="w">  </span><span class="nt">scheduler</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">toggle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bool</span><span class="w"> </span><span class="c1"># Whether to use scheduler</span>
+<span class="w">    </span><span class="nt">boundaries</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w"> </span><span class="c1"># boundaries if multiple schedules</span>
+<span class="w">    </span><span class="nt">schedules</span><span class="p">:</span><span class="w"> </span><span class="c1"># Creates the schedules</span>
+<span class="w">      </span><span class="nt">s1</span><span class="p">:</span><span class="w"> </span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span><span class="w"> </span><span class="c1"># Scheduler name</span>
+<span class="w">        </span><span class="nt">kwargs</span><span class="p">:</span><span class="w"> </span><span class="c1"># Scheduler kwargs</span>
+
+<span class="w">  </span><span class="nt">optimizer_kwargs</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">learning_rate</span><span class="p">:</span><span class="w"> </span><span class="c1"># Always need LR</span>
+</code></pre></div>
+<h3 id="nnfe-params">NNFE Params<a class="headerlink" href="#nnfe-params" title="Permanent link">¤</a></h3>
+<p>The NNFE parameters are the ones we're training over. These are divided into essential and natural parameters because of the implementations in how these are trained. Natural parameters are easier because they naturally become part of the PDE in the weak form. Essential parameters are more difficult because they are implemented through a "lifting" of the solution. </p>
+<div class="highlight"><pre><span></span><code><span class="nt">NNFE</span><span class="p">:</span><span class="w"> </span><span class="c1"># NNFE params to train</span>
+<span class="w">  </span><span class="nt">natural</span><span class="p">:</span><span class="w"> </span><span class="c1"># Natural variables</span>
+<span class="w">    </span><span class="nt">internal</span><span class="p">:</span><span class="w"> </span><span class="c1"># If internal cell variables</span>
+<span class="w">      </span><span class="c1"># key matches fe_config.var</span>
+<span class="w">      </span><span class="c1"># value the parameters described in PDE</span>
+<span class="w">      </span><span class="nt">u</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">str</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">...</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">surface</span><span class="p">:</span><span class="w"> </span><span class="c1"># If surface variables</span>
+<span class="w">      </span><span class="nt">u</span><span class="p">:</span><span class="w"> </span><span class="c1"># matches fe_config.var</span>
+<span class="w">        </span><span class="c1"># key is the same as surface key</span>
+<span class="w">        </span><span class="c1"># value is param described in surface key</span>
+<span class="w">        </span><span class="nt">bc2</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">str</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">...</span><span class="p p-Indicator">]</span>
+
+<span class="w">  </span><span class="nt">essential</span><span class="p">:</span><span class="w"> </span><span class="c1"># Essential variables</span>
+<span class="w">    </span><span class="nt">u</span><span class="p">:</span><span class="w"> </span><span class="c1"># matches fe_config.var</span>
+<span class="w">    </span><span class="c1"># If training, similar setup as &quot;surface&quot;</span>
+
+<span class="w">  </span><span class="c1"># Ordering of natural and essential BCs for training</span>
+<span class="w">  </span><span class="c1"># Mainly used to the order of parameters going into the network</span>
+<span class="w">  </span><span class="c1"># for potential post-processing</span>
+<span class="w">  </span><span class="nt">natural_order</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">str</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">...</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">essential_order</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">str</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">...</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<h3 id="plotter">Plotter<a class="headerlink" href="#plotter" title="Permanent link">¤</a></h3>
+<p>The plotter object is used to create plots for comparing various runs and results. Fairly basic now but can be modified depending on the problem being learned.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">plotter</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">plot_loss</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bool</span><span class="w"> </span><span class="c1"># Plots the loss after training</span>
+<span class="w">  </span><span class="nt">plot_lr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bool</span><span class="w"> </span><span class="c1"># Plot LR prior to training</span>
+</code></pre></div>
+<h2 id="demo">Demo<a class="headerlink" href="#demo" title="Permanent link">¤</a></h2>
+<p>Now, we will showcase how to fill in these areas for a specific example where we solve the pressure-volume loop of the prolate spheroid <a href="../prolate_spheroid/">here</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
