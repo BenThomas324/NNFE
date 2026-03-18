@@ -1,13 +1,14 @@
 
+# Networks
 
-# Multi-layer perceptron
+## Multi-layer perceptron
 
 ::: nnfe.networks.DNN
 
-# ResNet Architecture
+## ResNet Architecture
 
 ::: nnfe.networks.ResNet
 
-# DenseNet Architecture
+## DenseNet Architecture
 
 ::: nnfe.networks.DenseNet

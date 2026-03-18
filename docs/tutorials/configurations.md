@@ -4,7 +4,7 @@ Configurations for CARDIAX-NNFE are a user friendly way of training a network on
 
 The main structure for NNFE follows the figure below. A master configuration file is created to begin. This file is what generates `NNFE` through the `from_yaml` class method. Then in the `from_yaml` function, the yaml file parses into appropriate subdictionaries to spawn the relevant Manager objects. These objects are then passed to `NNFE`, initializing the object.
 
-![alt text](figures/tutorials/configs.png)
+![alt text](../figures/tutorials/configs.png)
 
 ## Configuration Walkthrough
 
@@ -201,4 +201,4 @@ plotter:
 
 ## Demo
 
-Now, we will showcase how to fill in these areas for a specific example where we solve the pressure-volume loop of the prolate spheroid [here](tutorials/prolate_spheroid.md)
+Now, we will showcase how to fill in these areas for a specific example where we solve the pressure-volume loop of the prolate spheroid [here](prolate_spheroid.md)
