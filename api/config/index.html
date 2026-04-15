@@ -1,0 +1,3062 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../networks/">
+      
+      
+        <link rel="next" href="../ml/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../figures/assets/logo_heart.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Configuration - CARDIAX-NNFE Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#configuration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="CARDIAX-NNFE Documentation" class="md-header__button md-logo" aria-label="CARDIAX-NNFE Documentation" data-md-component="logo">
+      
+  <img src="../../figures/assets/logo_heart.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CARDIAX-NNFE Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Configuration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../main_functionality/" class="md-tabs__link">
+          
+  
+  
+  API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../tutorials/overview/" class="md-tabs__link">
+          
+  
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="CARDIAX-NNFE Documentation" class="md-nav__button md-logo" aria-label="CARDIAX-NNFE Documentation" data-md-component="logo">
+      
+  <img src="../../figures/assets/logo_heart.png" alt="logo">
+
+    </a>
+    CARDIAX-NNFE Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../main_functionality/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Main Functionality
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nnfeconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NNFEConfig
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NNFEConfig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nnfe.nnfe_config.NNFEConfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;NNFEConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#projectconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ProjectConfig
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ProjectConfig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nnfe.nnfe_config.ProjectConfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ProjectConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plotterconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PlotterConfig
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PlotterConfig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nnfe.nnfe_config.PlotterConfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;PlotterConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#samplerconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SamplerConfig
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SamplerConfig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nnfe.nnfe_config.SamplerConfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;SamplerConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nnfeparamsconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NNFEParamsConfig
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NNFEParamsConfig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nnfe.nnfe_config.NNFEParamsConfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;NNFEParamsConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mlconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLConfig
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MLConfig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nnfe.ml_config.MLConfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;MLConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#networkconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NetworkConfig
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NetworkConfig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nnfe.ml_config.NetworkConfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;NetworkConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optimizerconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OptimizerConfig
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OptimizerConfig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nnfe.ml_config.OptimizerConfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;OptimizerConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ML Manager
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sampling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sampling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plotter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plotter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../project_manager/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Manager
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/configurations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configurations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/prolate_spheroid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prolate Spheroid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¤</a></h1>
+<p>NNFE uses a hierarchy of frozen dataclasses to represent the full run
+configuration.  All classes can be constructed programmatically or loaded
+from YAML via the top-level <a class="autorefs autorefs-internal" title="            from_yaml(path: Path) -> NNFEConfig
+
+  
+      classmethod
+  " href="#nnfe.nnfe_config.NNFEConfig.from_yaml"><code>NNFEConfig.from_yaml</code></a>
+class method.</p>
+<h2 id="nnfeconfig">NNFEConfig<a class="headerlink" href="#nnfeconfig" title="Permanent link">¤</a></h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="nnfe.nnfe_config.NNFEConfig" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>nnfe.nnfe_config.NNFEConfig</code>
+
+
+<a href="#nnfe.nnfe_config.NNFEConfig" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Top-level configuration for the full NNFE solver.</p>
+<p>Aggregates all sub-configs required to instantiate
+:class:<code>~nnfe.nnfe_object.NNFE</code> via :meth:<code>NNFE.from_config</code>.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.nnfe_config.NNFEConfig.project">project</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Filesystem and run-management settings.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.nnfe_config.NNFEConfig.plotter">plotter</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Diagnostic plot settings.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.nnfe_config.NNFEConfig.sampler">sampler</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Training/testing point sampler settings.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.nnfe_config.NNFEConfig.FE">FE</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Finite element problem configuration (from <code>cardiax</code>).</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.nnfe_config.NNFEConfig.ML">ML</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Neural network and optimizer configuration.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.nnfe_config.NNFEConfig.NNFE">NNFE</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>NNFE-specific parameter mapping configuration.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="nnfe.nnfe_config.NNFEConfig.from_yaml" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">from_yaml</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NNFEConfig</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#nnfe.nnfe_config.NNFEConfig.from_yaml" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Load a complete :class:<code>NNFEConfig</code> from a YAML file.</p>
+<p>The <code>FE</code> and <code>ML</code> sections may either be inlined in the main YAML
+or provided as paths to separate <code>.yaml</code> files.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>path</code>
+            </td>
+            <td>
+                  <code><span title="pathlib._local.Path">Path</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Path to the top-level NNFE config YAML file.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            nnfe.nnfe_config.NNFEConfig" href="#nnfe.nnfe_config.NNFEConfig">NNFEConfig</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A fully populated :class:<code>NNFEConfig</code> instance.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="projectconfig">ProjectConfig<a class="headerlink" href="#projectconfig" title="Permanent link">¤</a></h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="nnfe.nnfe_config.ProjectConfig" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>nnfe.nnfe_config.ProjectConfig</code>
+
+
+<a href="#nnfe.nnfe_config.ProjectConfig" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Filesystem and run-management settings.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><a class="autorefs autorefs-internal" title="            name = 'Project'
+
+  
+      class-attribute
+   (nnfe.nnfe_config.ProjectConfig.name)" href="#nnfe.nnfe_config.ProjectConfig.name">name</a></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Human-readable project name; used as a directory prefix.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><a class="autorefs autorefs-internal" title="            parent_dir = PosixPath('.')
+
+  
+      class-attribute
+   (nnfe.nnfe_config.ProjectConfig.parent_dir)" href="#nnfe.nnfe_config.ProjectConfig.parent_dir">parent_dir</a></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Root directory under which the run folder is created.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><a class="autorefs autorefs-internal" title="            save = True
+
+  
+      class-attribute
+   (nnfe.nnfe_config.ProjectConfig.save)" href="#nnfe.nnfe_config.ProjectConfig.save">save</a></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to persist model weights and configuration to disk.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.nnfe_config.ProjectConfig.print_progress">print_progress</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Print loss to stdout every <em>N</em> epochs.  <code>None</code>
+disables printing.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.nnfe_config.ProjectConfig.save_progress">save_progress</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Save model weights every <em>N</em> epochs during training.
+<code>None</code> disables intermediate saves.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.nnfe_config.ProjectConfig.extra_dirs">extra_dirs</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Mapping of logical names (e.g. <code>"model_dir"</code>,
+<code>"plot_dir"</code>) to subdirectory paths relative to the run root.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.nnfe_config.ProjectConfig.trained_weights_path">trained_weights_path</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Optional path to pre-trained model weights
+loaded at startup (before training).</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="nnfe.nnfe_config.ProjectConfig.name" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <code class="highlight language-python"><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Project&#39;</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+<a href="#nnfe.nnfe_config.ProjectConfig.name" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to 'utf-8'.
+errors defaults to 'strict'.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="nnfe.nnfe_config.ProjectConfig.parent_dir" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <code class="highlight language-python"><span class="n">parent_dir</span> <span class="o">=</span> <span class="n">PosixPath</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+<a href="#nnfe.nnfe_config.ProjectConfig.parent_dir" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Path subclass for non-Windows systems.</p>
+<p>On a POSIX system, instantiating a Path should return this object.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="nnfe.nnfe_config.ProjectConfig.save" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <code class="highlight language-python"><span class="n">save</span> <span class="o">=</span> <span class="kc">True</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+<a href="#nnfe.nnfe_config.ProjectConfig.save" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Returns True when the argument is true, False otherwise.
+The builtins True and False are the only two instances of the class bool.
+The class bool is a subclass of the class int, and cannot be subclassed.</p>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="nnfe.nnfe_config.ProjectConfig.from_dict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">from_dict</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProjectConfig</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#nnfe.nnfe_config.ProjectConfig.from_dict" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Construct a :class:<code>ProjectConfig</code> from a raw config dictionary.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>params</code>
+            </td>
+            <td>
+                  <code><span title="dict">dict</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dict with keys <code>name</code>, <code>parent_dir</code>, <code>save</code>,
+<code>print_progress</code>, <code>save_progress</code>, and optionally
+<code>extra_dirs</code> and <code>trained_weights_path</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            nnfe.nnfe_config.ProjectConfig" href="#nnfe.nnfe_config.ProjectConfig">ProjectConfig</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A new :class:<code>ProjectConfig</code> instance.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="plotterconfig">PlotterConfig<a class="headerlink" href="#plotterconfig" title="Permanent link">¤</a></h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="nnfe.nnfe_config.PlotterConfig" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>nnfe.nnfe_config.PlotterConfig</code>
+
+
+<a href="#nnfe.nnfe_config.PlotterConfig" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Settings controlling which diagnostic plots are generated.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><a class="autorefs autorefs-internal" title="            plot_loss = True
+
+  
+      class-attribute
+   (nnfe.nnfe_config.PlotterConfig.plot_loss)" href="#nnfe.nnfe_config.PlotterConfig.plot_loss">plot_loss</a></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to plot the training loss curve.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><a class="autorefs autorefs-internal" title="            plot_lr = True
+
+  
+      class-attribute
+   (nnfe.nnfe_config.PlotterConfig.plot_lr)" href="#nnfe.nnfe_config.PlotterConfig.plot_lr">plot_lr</a></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to plot the learning-rate schedule.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><a class="autorefs autorefs-internal" title="            plot_sample = True
+
+  
+      class-attribute
+   (nnfe.nnfe_config.PlotterConfig.plot_sample)" href="#nnfe.nnfe_config.PlotterConfig.plot_sample">plot_sample</a></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to plot the sampling distribution (currently
+unused but reserved for future use).</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="nnfe.nnfe_config.PlotterConfig.plot_loss" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <code class="highlight language-python"><span class="n">plot_loss</span> <span class="o">=</span> <span class="kc">True</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+<a href="#nnfe.nnfe_config.PlotterConfig.plot_loss" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Returns True when the argument is true, False otherwise.
+The builtins True and False are the only two instances of the class bool.
+The class bool is a subclass of the class int, and cannot be subclassed.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="nnfe.nnfe_config.PlotterConfig.plot_lr" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <code class="highlight language-python"><span class="n">plot_lr</span> <span class="o">=</span> <span class="kc">True</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+<a href="#nnfe.nnfe_config.PlotterConfig.plot_lr" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Returns True when the argument is true, False otherwise.
+The builtins True and False are the only two instances of the class bool.
+The class bool is a subclass of the class int, and cannot be subclassed.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="nnfe.nnfe_config.PlotterConfig.plot_sample" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <code class="highlight language-python"><span class="n">plot_sample</span> <span class="o">=</span> <span class="kc">True</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+<a href="#nnfe.nnfe_config.PlotterConfig.plot_sample" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Returns True when the argument is true, False otherwise.
+The builtins True and False are the only two instances of the class bool.
+The class bool is a subclass of the class int, and cannot be subclassed.</p>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="nnfe.nnfe_config.PlotterConfig.from_dict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">from_dict</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PlotterConfig</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#nnfe.nnfe_config.PlotterConfig.from_dict" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Construct a :class:<code>PlotterConfig</code> from a raw config dictionary.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>params</code>
+            </td>
+            <td>
+                  <code><span title="dict">dict</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dict with keys <code>plot_loss</code> and <code>plot_lr</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            nnfe.nnfe_config.PlotterConfig" href="#nnfe.nnfe_config.PlotterConfig">PlotterConfig</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A new :class:<code>PlotterConfig</code> instance.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="samplerconfig">SamplerConfig<a class="headerlink" href="#samplerconfig" title="Permanent link">¤</a></h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="nnfe.nnfe_config.SamplerConfig" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>nnfe.nnfe_config.SamplerConfig</code>
+
+
+<a href="#nnfe.nnfe_config.SamplerConfig" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Configuration for the training and testing point samplers.</p>
+<p>Stores <em>what</em> to sample (sampler type and bounds); the actual sampling is
+performed by :class:<code>~nnfe.sampling.Sampler</code>.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><a class="autorefs autorefs-internal" title="            training_sampler = 'uniform'
+
+  
+      class-attribute
+   (nnfe.nnfe_config.SamplerConfig.training_sampler)" href="#nnfe.nnfe_config.SamplerConfig.training_sampler">training_sampler</a></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Name of the sampler used for training points.
+Currently only <code>"uniform"</code> is supported.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.nnfe_config.SamplerConfig.training_kwargs">training_kwargs</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Keyword arguments forwarded to the training sampler
+(e.g. <code>mins</code>, <code>maxes</code>, <code>samples</code>).</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><a class="autorefs autorefs-internal" title="            testing_sampler = 'uniform'
+
+  
+      class-attribute
+   (nnfe.nnfe_config.SamplerConfig.testing_sampler)" href="#nnfe.nnfe_config.SamplerConfig.testing_sampler">testing_sampler</a></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Name of the sampler used for test points.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.nnfe_config.SamplerConfig.testing_kwargs">testing_kwargs</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Keyword arguments forwarded to the testing sampler.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="nnfe.nnfe_config.SamplerConfig.testing_sampler" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <code class="highlight language-python"><span class="n">testing_sampler</span> <span class="o">=</span> <span class="s1">&#39;uniform&#39;</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+<a href="#nnfe.nnfe_config.SamplerConfig.testing_sampler" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to 'utf-8'.
+errors defaults to 'strict'.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="nnfe.nnfe_config.SamplerConfig.training_sampler" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <code class="highlight language-python"><span class="n">training_sampler</span> <span class="o">=</span> <span class="s1">&#39;uniform&#39;</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+<a href="#nnfe.nnfe_config.SamplerConfig.training_sampler" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to 'utf-8'.
+errors defaults to 'strict'.</p>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="nnfe.nnfe_config.SamplerConfig.from_dict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">from_dict</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SamplerConfig</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#nnfe.nnfe_config.SamplerConfig.from_dict" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Construct a :class:<code>SamplerConfig</code> from a raw config dictionary.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>params</code>
+            </td>
+            <td>
+                  <code><span title="dict">dict</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dict with keys <code>training_sampler</code>, <code>testing_sampler</code>,
+<code>training_kwargs</code>, and <code>testing_kwargs</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            nnfe.nnfe_config.SamplerConfig" href="#nnfe.nnfe_config.SamplerConfig">SamplerConfig</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A new :class:<code>SamplerConfig</code> instance.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If either sampler name is not recognised.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="nnfeparamsconfig">NNFEParamsConfig<a class="headerlink" href="#nnfeparamsconfig" title="Permanent link">¤</a></h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="nnfe.nnfe_config.NNFEParamsConfig" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>nnfe.nnfe_config.NNFEParamsConfig</code>
+
+
+<a href="#nnfe.nnfe_config.NNFEParamsConfig" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>NNFE-specific parameter configuration describing which FE quantities
+the network controls.</p>
+<p>The NNFE method parameterises FE internal variables and/or Dirichlet
+boundary conditions with the neural network output.  This config specifies
+<em>which</em> variables are parameterised and in what order they appear in the
+network output vector.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.nnfe_config.NNFEParamsConfig.natural">natural</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Nested dict mapping FE keys to the internal variables
+(volumetric or surface) that are controlled by the natural
+(Neumann-type) outputs of the network.  Structure::</p>
+<div class="highlight"><pre><span></span><code>natural:
+  internal:
+    &lt;fe_key&gt;:
+      &lt;var_name&gt;: ...
+  surface:
+    &lt;fe_key&gt;:
+      &lt;bc_name&gt;:
+        &lt;var_name&gt;: ...
+</code></pre></div>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.nnfe_config.NNFEParamsConfig.essential">essential</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Nested dict for Dirichlet (essential) boundary condition
+outputs (currently unused in the gradient computation but
+reserved).</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.nnfe_config.NNFEParamsConfig.natural_order">natural_order</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Ordered list of variable names that maps network output
+indices to natural variables (used for slicing the output vector).</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.nnfe_config.NNFEParamsConfig.essential_order">essential_order</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Ordered list of variable names for essential
+(Dirichlet) outputs.  An empty list disables Dirichlet training.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="nnfe.nnfe_config.NNFEParamsConfig.from_dict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">from_dict</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NNFEParamsConfig</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#nnfe.nnfe_config.NNFEParamsConfig.from_dict" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Construct an :class:<code>NNFEParamsConfig</code> from a raw config dictionary.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>params</code>
+            </td>
+            <td>
+                  <code><span title="dict">dict</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dict with keys <code>natural_order</code>, <code>essential_order</code>,
+and optionally <code>natural</code> and <code>essential</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            nnfe.nnfe_config.NNFEParamsConfig" href="#nnfe.nnfe_config.NNFEParamsConfig">NNFEParamsConfig</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A new :class:<code>NNFEParamsConfig</code> instance.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="mlconfig">MLConfig<a class="headerlink" href="#mlconfig" title="Permanent link">¤</a></h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="nnfe.ml_config.MLConfig" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>nnfe.ml_config.MLConfig</code>
+
+
+<a href="#nnfe.ml_config.MLConfig" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Top-level machine-learning configuration consumed by
+:class:<code>~nnfe.ml.MLManager</code>.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.ml_config.MLConfig.networks">networks</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Ordered mapping of network names to their
+:class:<code>NetworkConfig</code> objects.  When more than one network is
+present they are combined additively via
+:class:<code>~nnfe.networks.Sum_models</code>.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.ml_config.MLConfig.optimizer">optimizer</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Optimizer and learning-rate schedule configuration.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.ml_config.MLConfig.epochs">epochs</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Total number of training iterations.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.ml_config.MLConfig.batch_size">batch_size</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Fraction of the training set to sample per step
+(value in <code>(0, 1]</code>).</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><a class="autorefs autorefs-internal" title="            rng_key = 0
+
+  
+      class-attribute
+   (nnfe.ml_config.MLConfig.rng_key)" href="#nnfe.ml_config.MLConfig.rng_key">rng_key</a></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Integer seed for JAX PRNG initialisation.  Defaults to
+<code>0</code>; may also be set to a project-level key at runtime.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="nnfe.ml_config.MLConfig.rng_key" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <code class="highlight language-python"><span class="n">rng_key</span> <span class="o">=</span> <span class="mi">0</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+<a href="#nnfe.ml_config.MLConfig.rng_key" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>int([x]) -&gt; integer
+int(x, base=10) -&gt; integer</p>
+<p>Convert a number or string to an integer, or return 0 if no arguments
+are given.  If x is a number, return x.<strong>int</strong>().  For floating-point
+numbers, this truncates towards zero.</p>
+<p>If x is not a number or if base is given, then x must be a string,
+bytes, or bytearray instance representing an integer literal in the
+given base.  The literal can be preceded by '+' or '-' and be surrounded
+by whitespace.  The base defaults to 10.  Valid bases are 0 and 2-36.
+Base 0 means to interpret the base from the string as an integer literal.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>int('0b100', base=0)
+4</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="nnfe.ml_config.MLConfig.from_dict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">from_dict</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MLConfig</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#nnfe.ml_config.MLConfig.from_dict" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Construct an :class:<code>MLConfig</code> from a raw config dictionary.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>params</code>
+            </td>
+            <td>
+                  <code><span title="dict">dict</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dict with keys <code>networks</code>, <code>optimizer</code>, <code>epochs</code>,
+<code>batch_size</code>, and optionally <code>rng_key</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            nnfe.ml_config.MLConfig" href="#nnfe.ml_config.MLConfig">MLConfig</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A new :class:<code>MLConfig</code> instance.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="nnfe.ml_config.MLConfig.from_yaml" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">from_yaml</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MLConfig</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#nnfe.ml_config.MLConfig.from_yaml" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Load an :class:<code>MLConfig</code> from a YAML file.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>path</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Path to the YAML file.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            nnfe.ml_config.MLConfig" href="#nnfe.ml_config.MLConfig">MLConfig</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A new :class:<code>MLConfig</code> instance.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="networkconfig">NetworkConfig<a class="headerlink" href="#networkconfig" title="Permanent link">¤</a></h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="nnfe.ml_config.NetworkConfig" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>nnfe.ml_config.NetworkConfig</code>
+
+
+<a href="#nnfe.ml_config.NetworkConfig" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Configuration for a single neural network.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.ml_config.NetworkConfig.name">name</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Name of the network class in :mod:<code>nnfe.networks</code>
+(e.g. <code>"DNN"</code>, <code>"ResNet"</code>).</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.ml_config.NetworkConfig.kwargs">kwargs</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Keyword arguments forwarded to the network constructor.
+The special value <code>"dofs"</code> for <code>out_size</code> is resolved at
+runtime by :class:<code>~nnfe.ml.MLManager</code> to the problem's total DoF
+count.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.ml_config.NetworkConfig.load_model">load_model</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Optional path to a serialised Equinox model file
+(<code>.eqx</code>).  When set, weights are loaded instead of randomly
+initialised.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><a class="autorefs autorefs-internal" title="            static = False
+
+  
+      class-attribute
+   (nnfe.ml_config.NetworkConfig.static)" href="#nnfe.ml_config.NetworkConfig.static">static</a></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If <code>True</code>, the network's parameters are frozen during
+training (excluded from gradient updates).</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="nnfe.ml_config.NetworkConfig.static" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <code class="highlight language-python"><span class="n">static</span> <span class="o">=</span> <span class="kc">False</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+<a href="#nnfe.ml_config.NetworkConfig.static" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Returns True when the argument is true, False otherwise.
+The builtins True and False are the only two instances of the class bool.
+The class bool is a subclass of the class int, and cannot be subclassed.</p>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="nnfe.ml_config.NetworkConfig.from_dict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">from_dict</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NetworkConfig</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#nnfe.ml_config.NetworkConfig.from_dict" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Construct a :class:<code>NetworkConfig</code> from a raw config dictionary.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>params</code>
+            </td>
+            <td>
+                  <code><span title="dict">dict</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dict with keys <code>name</code>, <code>kwargs</code>, and optionally
+<code>load_model</code> and <code>static</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            nnfe.ml_config.NetworkConfig" href="#nnfe.ml_config.NetworkConfig">NetworkConfig</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A new :class:<code>NetworkConfig</code> instance.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="optimizerconfig">OptimizerConfig<a class="headerlink" href="#optimizerconfig" title="Permanent link">¤</a></h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="nnfe.ml_config.OptimizerConfig" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>nnfe.ml_config.OptimizerConfig</code>
+
+
+<a href="#nnfe.ml_config.OptimizerConfig" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Configuration for the Optax optimizer and its learning-rate schedule.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.ml_config.OptimizerConfig.name">name</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Name of the Optax optimizer (e.g. <code>"adam"</code>).</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><a class="autorefs autorefs-internal" title="            lr_scheduler = True
+
+  
+      class-attribute
+   (nnfe.ml_config.OptimizerConfig.lr_scheduler)" href="#nnfe.ml_config.OptimizerConfig.lr_scheduler">lr_scheduler</a></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to use a learning-rate schedule.  When
+<code>True</code>, <code>scheduler</code> must be supplied.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.ml_config.OptimizerConfig.optimizer_kwargs">optimizer_kwargs</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Extra keyword arguments forwarded to the Optax
+optimizer (excluding <code>learning_rate</code>, which is injected from
+the scheduler).</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nnfe.ml_config.OptimizerConfig.scheduler">scheduler</span></code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Nested dict describing a
+:func:<code>optax.join_schedules</code> setup.  Expected structure::</p>
+<div class="highlight"><pre><span></span><code>boundaries: [&lt;step&gt;, ...]
+schedules:
+  s0:
+    name: &lt;optax schedule name&gt;
+    kwargs: {...}
+  ...
+</code></pre></div>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="nnfe.ml_config.OptimizerConfig.lr_scheduler" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <code class="highlight language-python"><span class="n">lr_scheduler</span> <span class="o">=</span> <span class="kc">True</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+<a href="#nnfe.ml_config.OptimizerConfig.lr_scheduler" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Returns True when the argument is true, False otherwise.
+The builtins True and False are the only two instances of the class bool.
+The class bool is a subclass of the class int, and cannot be subclassed.</p>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="nnfe.ml_config.OptimizerConfig.from_dict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">from_dict</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OptimizerConfig</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#nnfe.ml_config.OptimizerConfig.from_dict" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Construct an :class:<code>OptimizerConfig</code> from a raw config dictionary.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>params</code>
+            </td>
+            <td>
+                  <code><span title="dict">dict</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dict with keys <code>name</code> and optionally <code>lr_scheduler</code>,
+<code>optimizer_kwargs</code>, and <code>scheduler</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            nnfe.ml_config.OptimizerConfig" href="#nnfe.ml_config.OptimizerConfig">OptimizerConfig</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A new :class:<code>OptimizerConfig</code> instance.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.top", "toc.integrate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

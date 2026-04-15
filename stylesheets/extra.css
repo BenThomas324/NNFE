@@ -1,0 +1,164 @@
+/* ─── WCCMS Brand Colors ─────────────────────────────────────────────────── */
+:root {
+    --wccms-orange:       #FF8000;
+    --wccms-orange-light: #FF9933;
+    --wccms-orange-dark:  #CC6600;
+    --wccms-orange-muted: rgba(255, 128, 0, 0.12);
+}
+
+/* ─── Light Mode ─────────────────────────────────────────────────────────── */
+[data-md-color-scheme="default"] {
+    --md-primary-fg-color:        var(--wccms-orange);
+    --md-primary-fg-color--light: var(--wccms-orange-light);
+    --md-primary-fg-color--dark:  var(--wccms-orange-dark);
+    --md-primary-bg-color:        #ffffff;
+    --md-accent-fg-color:         var(--wccms-orange);
+    --md-typeset-a-color:         var(--wccms-orange-dark);
+}
+
+/* ─── Dark Mode ──────────────────────────────────────────────────────────── */
+[data-md-color-scheme="slate"] {
+    --md-primary-fg-color:        var(--wccms-orange);
+    --md-primary-fg-color--light: var(--wccms-orange-light);
+    --md-primary-fg-color--dark:  var(--wccms-orange-dark);
+    --md-accent-fg-color:         var(--wccms-orange-light);
+    --md-typeset-a-color:         var(--wccms-orange-light);
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+.md-header {
+    background-color: #1a1a1a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.md-header__title {
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+/* Logo sizing — adjust if the lab logo renders too large/small */
+.md-header__button.md-logo img {
+    height: 36px;
+    width: auto;
+}
+
+/* ─── Navigation Tabs ────────────────────────────────────────────────────── */
+.md-tabs {
+    background-color: #1a1a1a;
+    border-top: 1px solid rgba(255, 128, 0, 0.3);
+}
+
+.md-tabs__link--active,
+.md-tabs__link:hover {
+    color: var(--wccms-orange);
+}
+
+/* ─── Sidebar ────────────────────────────────────────────────────────────── */
+.md-nav__link--active {
+    color: var(--wccms-orange-dark);
+    font-weight: 600;
+}
+
+.md-nav__link:hover {
+    color: var(--wccms-orange);
+}
+
+/* ─── Code Blocks ────────────────────────────────────────────────────────── */
+.md-typeset code {
+    background-color: #f5f5f5;
+    border-radius: 3px;
+    font-size: 0.88em;
+}
+
+[data-md-color-scheme="slate"] .md-typeset code {
+    background-color: #2a2a2a;
+}
+
+/* Highlighted code block header accent */
+.md-typeset .highlight > pre {
+    border-left: 3px solid var(--wccms-orange);
+}
+
+/* ─── Admonitions ────────────────────────────────────────────────────────── */
+/* Repurpose "note" admonition as WCCMS-styled callout */
+.md-typeset .admonition.note,
+.md-typeset details.note {
+    border-color: var(--wccms-orange);
+}
+
+.md-typeset .note > .admonition-title,
+.md-typeset .note > summary {
+    background-color: var(--wccms-orange-muted);
+}
+
+.md-typeset .note > .admonition-title::before,
+.md-typeset .note > summary::before {
+    background-color: var(--wccms-orange);
+}
+
+/* ─── Tables ─────────────────────────────────────────────────────────────── */
+.md-typeset table:not([class]) th {
+    background-color: var(--wccms-orange);
+    color: #ffffff;
+}
+
+/* ─── Footer ─────────────────────────────────────────────────────────────── */
+.md-footer {
+    background-color: #1a1a1a;
+}
+
+.md-footer-meta {
+    background-color: #111111;
+}
+
+/* ─── Search ─────────────────────────────────────────────────────────────── */
+.md-search__input:focus {
+    border-color: var(--wccms-orange);
+}
+
+/* ─── Homepage Hero ──────────────────────────────────────────────────────── */
+.wccms-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 2rem 0 2.5rem;
+    border-bottom: 2px solid var(--wccms-orange);
+    margin-bottom: 2rem;
+}
+
+.wccms-hero__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.wccms-hero__logo img {
+    width: 280px;
+    height: auto;
+}
+
+.wccms-hero__text h1 {
+    margin-top: 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.wccms-hero__text p {
+    font-size: 1.05rem;
+    color: var(--md-default-fg-color--light);
+    margin-bottom: 1.2rem;
+}
+
+@media (max-width: 640px) {
+    .wccms-hero {
+        flex-direction: column;
+        text-align: center;
+    }
+}

@@ -16,7 +16,7 @@
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../figures/assets/logo_heart.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
@@ -42,12 +42,14 @@
         
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
       
     
     
       <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -65,7 +67,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -86,14 +88,11 @@
     
       
 
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="CARDIAX-NNFE Documentation" class="md-header__button md-logo" aria-label="CARDIAX-NNFE Documentation" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../figures/assets/logo_heart.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -123,7 +122,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
     
       <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
@@ -133,7 +132,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
     
       <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
@@ -198,6 +197,76 @@
       
         
           
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../api/main_functionality/" class="md-tabs__link">
+          
+  
+  
+  API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../overview/" class="md-tabs__link">
+          
+  
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -211,13 +280,16 @@
                     
 
 
+  
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="CARDIAX-NNFE Documentation" class="md-nav__button md-logo" aria-label="CARDIAX-NNFE Documentation" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../figures/assets/logo_heart.png" alt="logo">
 
     </a>
     CARDIAX-NNFE Documentation
@@ -261,6 +333,9 @@
     
     
     
+    
+      
+      
     
     
     <li class="md-nav__item md-nav__item--nested">
@@ -355,6 +430,146 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ML Manager
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/sampling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sampling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/plotter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plotter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/project_manager/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Manager
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -374,15 +589,21 @@
     
     
     
+      
+        
+        
+      
+      
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   
@@ -639,115 +860,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#prolate-spheroidal-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prolate Spheroidal Model
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration-file-specifications" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Configuration File Specifications
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Configuration File Specifications">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fe-config" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        FE Config
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ml-config" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ML Config
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nnfe-config" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        NNFE Config
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#training-script" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Training Script
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#results" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Results
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -790,192 +902,192 @@
 <h2 id="configuration-file-specifications">Configuration File Specifications<a class="headerlink" href="#configuration-file-specifications" title="Permanent link">¤</a></h2>
 <h3 id="fe-config">FE Config<a class="headerlink" href="#fe-config" title="Permanent link">¤</a></h3>
 <p>Now, we have to create a configuration file that mimics the above model. This will be the FE component of the project in building the residual. We want to solve for the displacement field <span class="arithmatex">\(\mathbf{u}(\mathbf{x}) \in \mathbb{R}^3\)</span>, <span class="arithmatex">\(vec=3\)</span>, over the mesh <span class="arithmatex">\(\Omega \in \mathbb{R}^3\)</span>, <span class="arithmatex">\(dim=3\)</span>. We are pulling the LV mesh, displayed below, which has linear tets, <span class="arithmatex">\(gauss\_order=1\)</span>.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">fe_config</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">var</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;u&quot;</span>
-<span class="w">  </span><span class="nt">mesh_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;LV.vtk&quot;</span>
-
-<span class="w">  </span><span class="nt">mesh_generator</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">kwargs</span><span class="p">:</span>
-
-<span class="w">  </span><span class="nt">kwargs</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">ele_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tetrahedron&quot;</span>
-<span class="w">    </span><span class="nt">gauss_order</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<span class="w">    </span><span class="nt">dim</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
-<span class="w">    </span><span class="nt">vec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">fe_config</span><span class="p">:</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">var</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;u&quot;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">mesh_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;LV.vtk&quot;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">mesh_generator</span><span class="p">:</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="nt">kwargs</span><span class="p">:</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nt">kwargs</span><span class="p">:</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="nt">ele_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tetrahedron&quot;</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="nt">gauss_order</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="nt">dim</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="nt">vec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
 </code></pre></div>
 <p>The base, which we hold fixed in all directions, is colored blue, and the red is the endocardium where the pressure is applied. These will be our two boundary conditions, one static Dirichlet, the other functional surface integral. The PDE <span class="arithmatex">\(\eqref{eq:PDE}\)</span> is already predefined with <code>Hao_active</code> in <code>CARDIAX</code>. The internal variables for fiber, sheet, and normal directions are all predefined on the mesh, so they just take the mesh value. The <code>TCa</code> variable is being changed, so we make it default to 1. to just scale appropriately.</p>
 <p><img alt="alt text" src="../../figures/tutorials/prolate_spheroid/LV.png" /></p>
-<div class="highlight"><pre><span></span><code><span class="nt">pde_config</span><span class="p">:</span>
-
-<span class="w">  </span><span class="nt">pde_info</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">pde_class</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hyperelasticity&quot;</span>
-<span class="w">    </span><span class="nt">pde_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hao_active&quot;</span>
-<span class="w">    </span><span class="nt">material_constants</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">internal_vars</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">u</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">fibers</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mesh&quot;</span>
-<span class="w">        </span><span class="nt">sheets</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mesh&quot;</span>
-<span class="w">        </span><span class="nt">normals</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mesh&quot;</span>
-<span class="w">        </span><span class="nt">TCa</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.</span>
-<span class="w">          </span><span class="nt">vec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-
-<span class="w">  </span><span class="nt">dirichlet_bc_info</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">u</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">bc1</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Dirichlet&quot;</span>
-<span class="w">        </span><span class="nt">component</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">2</span><span class="p p-Indicator">]</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">]</span>
-<span class="w">        </span><span class="nt">surface_tag</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;base&quot;</span>
-<span class="w">        </span><span class="nt">static</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-
-<span class="w">  </span><span class="nt">surface_maps_info</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">u</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">bc2</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">var</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;n&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;p&quot;</span><span class="p p-Indicator">]</span>
-<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Pressure&quot;</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.</span>
-<span class="w">        </span><span class="nt">surface_tag</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;endo&quot;</span>
-<span class="w">        </span><span class="nt">static</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">pde_config</span><span class="p">:</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">pde_info</span><span class="p">:</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">pde_class</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hyperelasticity&quot;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="nt">pde_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hao_active&quot;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="nt">material_constants</span><span class="p">:</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="nt">internal_vars</span><span class="p">:</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">      </span><span class="nt">u</span><span class="p">:</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">        </span><span class="nt">fibers</span><span class="p">:</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mesh&quot;</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">        </span><span class="nt">sheets</span><span class="p">:</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mesh&quot;</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">        </span><span class="nt">normals</span><span class="p">:</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mesh&quot;</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">        </span><span class="nt">TCa</span><span class="p">:</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">          </span><span class="nt">vec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">  </span><span class="nt">dirichlet_bc_info</span><span class="p">:</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="nt">u</span><span class="p">:</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">      </span><span class="nt">bc1</span><span class="p">:</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Dirichlet&quot;</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">        </span><span class="nt">component</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">2</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">        </span><span class="nt">surface_tag</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;base&quot;</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w">        </span><span class="nt">static</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">  </span><span class="nt">surface_maps_info</span><span class="p">:</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w">    </span><span class="nt">u</span><span class="p">:</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">      </span><span class="nt">bc2</span><span class="p">:</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">        </span><span class="nt">var</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;n&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;p&quot;</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Pressure&quot;</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">        </span><span class="nt">surface_tag</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;endo&quot;</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w">        </span><span class="nt">static</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 </code></pre></div>
 <p>Lastly, the solver won't be used for the training but will be used in post-processing. Here, we use Newton with only 20 max iterations because we're hoping the network will give us good approximations.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">solver_config</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Newton&quot;</span>
-<span class="w">  </span><span class="nt">kwargs</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">max_iter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
-<span class="w">    </span><span class="nt">atol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0e-6</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">solver_config</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Newton&quot;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">kwargs</span><span class="p">:</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">max_iter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="nt">atol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0e-6</span>
 </code></pre></div>
 <h3 id="ml-config">ML Config<a class="headerlink" href="#ml-config" title="Permanent link">¤</a></h3>
 <p>Now that we have defined the PDE and other FE variables, we must define the machine learning components. These values were mostly taken from experimental trial and error. It was found that 1e5 epochs worked well enough for our application. Since we don't have many variables to train over, we can use full gradient descent here. When <span class="arithmatex">\(batch\_size \in [0, 1]\)</span>, it's treated as a percentage of the dataset, thus we're using 100%.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">epochs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.e+5</span>
-<span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.</span>
-<span class="nt">rng_key</span><span class="p">:</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">epochs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.e+5</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nt">rng_key</span><span class="p">:</span><span class="w"> </span>
 </code></pre></div>
 <p>For the network architecture, we're using the <code>ResNet</code> defined in <code>networks.py</code>. The kwargs for that function are matched here to be unpacked. The model is also not static because these are the parameter weights we are training.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">networks</span><span class="p">:</span>
-
-<span class="w">  </span><span class="nt">Network1</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ResNet&quot;</span>
-<span class="w">    </span><span class="nt">kwargs</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">in_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
-<span class="w">      </span><span class="nt">out_size</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;dofs&quot;</span>
-<span class="w">      </span><span class="nt">width_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">128</span>
-<span class="w">      </span><span class="nt">depth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span>
-<span class="w">      </span><span class="nt">activation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;swish&quot;</span>
-<span class="w">      </span><span class="nt">use_bias</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-<span class="w">      </span><span class="nt">use_final_bias</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-
-<span class="w">    </span><span class="nt">load_model</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">static</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">networks</span><span class="p">:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">Network1</span><span class="p">:</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ResNet&quot;</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="nt">kwargs</span><span class="p">:</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">      </span><span class="nt">in_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">      </span><span class="nt">out_size</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;dofs&quot;</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">      </span><span class="nt">width_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">128</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">      </span><span class="nt">depth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">      </span><span class="nt">activation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;swish&quot;</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">      </span><span class="nt">use_bias</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">      </span><span class="nt">use_final_bias</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">    </span><span class="nt">load_model</span><span class="p">:</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="nt">static</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 </code></pre></div>
 <p>The best optimizer was <code>adam</code> with a <code>warmup</code> learning rate scheduler. Other options are shown in <code>optax</code> if you want to try out others.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">optimizer</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;adam&quot;</span>
-<span class="w">  </span><span class="nt">learning_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0e-1</span>
-
-<span class="w">  </span><span class="nt">scheduler</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">toggle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-<span class="w">    </span><span class="nt">boundaries</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
-<span class="w">    </span><span class="nt">schedules</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">s1</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;warmup_exponential_decay_schedule&quot;</span>
-<span class="w">        </span><span class="nt">kwargs</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">transition_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.e+5</span>
-<span class="w">          </span><span class="nt">decay_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0e-02</span>
-<span class="w">          </span><span class="nt">init_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0e-04</span>
-<span class="w">          </span><span class="nt">peak_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0e-03</span>
-<span class="w">          </span><span class="nt">warmup_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
-
-<span class="w">  </span><span class="nt">optimizer_kwargs</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">learning_rate</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">optimizer</span><span class="p">:</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;adam&quot;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">learning_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0e-1</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="nt">scheduler</span><span class="p">:</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="nt">toggle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="nt">boundaries</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="nt">schedules</span><span class="p">:</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">      </span><span class="nt">s1</span><span class="p">:</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;warmup_exponential_decay_schedule&quot;</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">        </span><span class="nt">kwargs</span><span class="p">:</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">          </span><span class="nt">transition_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.e+5</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">          </span><span class="nt">decay_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0e-02</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">          </span><span class="nt">init_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0e-04</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">          </span><span class="nt">peak_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0e-03</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">          </span><span class="nt">warmup_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">  </span><span class="nt">optimizer_kwargs</span><span class="p">:</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">    </span><span class="nt">learning_rate</span><span class="p">:</span>
 </code></pre></div>
 <h3 id="nnfe-config">NNFE Config<a class="headerlink" href="#nnfe-config" title="Permanent link">¤</a></h3>
 <p>Now we pull the above two configuration files with the NNFE params. The project section just defines the directory structure of each run.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">project</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Results</span><span class="w"> </span><span class="c1"># Project title</span>
-<span class="w">  </span><span class="nt">parent_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;.&quot;</span>
-<span class="w">  </span><span class="nt">save</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"> </span><span class="c1"># Set to False if testing</span>
-<span class="w">  </span><span class="nt">print_progress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0e+1</span><span class="w"> </span><span class="c1"># When to print the loss and other information</span>
-<span class="w">  </span><span class="nt">save_progress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0e+4</span><span class="w"> </span><span class="c1"># When to save the parameters and update plots</span>
-
-<span class="w">  </span><span class="nt">extra_dirs</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">results_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;results&quot;</span><span class="w"> </span><span class="c1"># Directory to save results</span>
-<span class="w">    </span><span class="nt">model_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;models&quot;</span><span class="w"> </span><span class="c1"># Directory to save models</span>
-<span class="w">    </span><span class="nt">plot_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;plots&quot;</span><span class="w"> </span><span class="c1"># Directory to save plots</span>
-<span class="w">    </span><span class="nt">log_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;logs&quot;</span><span class="w"> </span><span class="c1"># Directory to save logs</span>
-<span class="w">    </span><span class="nt">config_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;config_files&quot;</span><span class="w"> </span><span class="c1"># Directory to save input files</span>
-
-<span class="c1"># FE Problem to solve defined in a separate yaml file</span>
-<span class="nt">FE</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;fe_input_file.yaml&quot;</span>
-
-<span class="c1"># All parameters associated with the machine learning part of NNFE</span>
-<span class="c1"># Split into Network and Optimizer</span>
-<span class="nt">ML</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ml_input_file.yaml&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">project</span><span class="p">:</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Results</span><span class="w"> </span><span class="c1"># Project title</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">parent_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;.&quot;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">save</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"> </span><span class="c1"># Set to False if testing</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nt">print_progress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0e+1</span><span class="w"> </span><span class="c1"># When to print the loss and other information</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="nt">save_progress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0e+4</span><span class="w"> </span><span class="c1"># When to save the parameters and update plots</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nt">extra_dirs</span><span class="p">:</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span><span class="nt">results_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;results&quot;</span><span class="w"> </span><span class="c1"># Directory to save results</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span><span class="nt">model_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;models&quot;</span><span class="w"> </span><span class="c1"># Directory to save models</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">    </span><span class="nt">plot_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;plots&quot;</span><span class="w"> </span><span class="c1"># Directory to save plots</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span><span class="nt">log_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;logs&quot;</span><span class="w"> </span><span class="c1"># Directory to save logs</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="nt">config_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;config_files&quot;</span><span class="w"> </span><span class="c1"># Directory to save input files</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="c1"># FE Problem to solve defined in a separate yaml file</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="nt">FE</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;fe_input_file.yaml&quot;</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="c1"># All parameters associated with the machine learning part of NNFE</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="c1"># Split into Network and Optimizer</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="nt">ML</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ml_input_file.yaml&quot;</span>
 </code></pre></div>
 <p>Here, we are determining which parameters we are learning with the network. We want to learn the <span class="arithmatex">\(T_{Ca}\)</span> values defined in <span class="arithmatex">\(\eqref{eq:active}\)</span>, and the pressure <span class="arithmatex">\(p\)</span> in <span class="arithmatex">\(\eqref{eq:PDE}\)</span>. Thus, we point to <span class="arithmatex">\(T_{Ca}\)</span> under <code>internal</code> and <span class="arithmatex">\(p\)</span> under <code>surface</code>, and we have no essential boundaries to train.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Controls the overall control need for NNFE</span>
-<span class="nt">NNFE</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">natural</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">internal</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">u</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;TCa&quot;</span><span class="p p-Indicator">]</span>
-
-<span class="w">    </span><span class="nt">surface</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">u</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">bc2</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;p&quot;</span><span class="p p-Indicator">]</span>
-
-<span class="w">  </span><span class="nt">essential</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">u</span><span class="p">:</span>
-
-<span class="w">  </span><span class="nt">natural_order</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;p&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;TCa&quot;</span><span class="p p-Indicator">]</span>
-<span class="w">  </span><span class="nt">essential_order</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Controls the overall control need for NNFE</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nt">NNFE</span><span class="p">:</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">natural</span><span class="p">:</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nt">internal</span><span class="p">:</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">      </span><span class="nt">u</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;TCa&quot;</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="nt">surface</span><span class="p">:</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">      </span><span class="nt">u</span><span class="p">:</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">        </span><span class="nt">bc2</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;p&quot;</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">  </span><span class="nt">essential</span><span class="p">:</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span><span class="nt">u</span><span class="p">:</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">  </span><span class="nt">natural_order</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;p&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;TCa&quot;</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">  </span><span class="nt">essential_order</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
 </code></pre></div>
 <p>With the parameters tagged, we now need to set the range of the parameters. Here, we want up to 120 mmHg for the pressure (in spot 1 as shown above) and up to 60 kPa for the active stress. We then take 6 samples of pressure and 5 of active stress. The testing sampler can then line up between the training samples to show a maximal interpolation error since these points will be farthest from the trained ones.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">sampler</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">training_sampler</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;uniform&quot;</span>
-<span class="w">  </span><span class="nt">training_kwargs</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">mins</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.</span><span class="p p-Indicator">]</span>
-<span class="w">    </span><span class="nt">maxes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">120.</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">60.</span><span class="p p-Indicator">]</span>
-<span class="w">    </span><span class="nt">samples</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">6</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">5</span><span class="p p-Indicator">]</span>
-
-<span class="w">  </span><span class="nt">testing_sampler</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;uniform&quot;</span>
-<span class="w">  </span><span class="nt">testing_kwargs</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">between_training</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-<span class="w">    </span><span class="nt">mins</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.</span><span class="p p-Indicator">]</span>
-<span class="w">    </span><span class="nt">maxes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">120.</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">60.</span><span class="p p-Indicator">]</span>
-<span class="w">    </span><span class="nt">samples</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">6</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">5</span><span class="p p-Indicator">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">sampler</span><span class="p">:</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">training_sampler</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;uniform&quot;</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">training_kwargs</span><span class="p">:</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="nt">mins</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="nt">maxes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">120.</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">60.</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="nt">samples</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">6</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">5</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">  </span><span class="nt">testing_sampler</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;uniform&quot;</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">  </span><span class="nt">testing_kwargs</span><span class="p">:</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="nt">between_training</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">    </span><span class="nt">mins</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="nt">maxes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">120.</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">60.</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">    </span><span class="nt">samples</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">6</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">5</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 <h2 id="training-script">Training Script<a class="headerlink" href="#training-script" title="Permanent link">¤</a></h2>
 <p>Given how much effort goes into the configuration files, we expect the actual script to be manageable. In fact, it's very minimal for training. We just use <code>os</code> to make sure we run on the appropriate GPU and <code>jax</code> to toggle off <code>x64</code>. Then we need only <code>train</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">nnfe</span><span class="w"> </span><span class="kn">import</span> <span class="n">NNFE</span>
-
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;CUDA_VISIBLE_DEVICES&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
-
-<span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_enable_x64&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-
-<span class="n">nnfe</span> <span class="o">=</span> <span class="n">NNFE</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;configs/nnfe_params.yaml&quot;</span><span class="p">)</span>
-
-<span class="n">nnfe</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nnfe</span><span class="w"> </span><span class="kn">import</span> <span class="n">NNFE</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;CUDA_VISIBLE_DEVICES&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_enable_x64&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="n">nnfe</span> <span class="o">=</span> <span class="n">NNFE</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;configs/nnfe_params.yaml&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="n">nnfe</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 </code></pre></div>
 <h2 id="results">Results<a class="headerlink" href="#results" title="Permanent link">¤</a></h2>
 <p>After training, we have a new directory created in the demos folder titled <code>Results</code> with the random number, in this case 6913. The config file was dumped in one large file as <code>resolved_nnfe_config.yaml</code>. The model was saved as <code>model.eqx</code>, and two plots showing some training metrics are under <code>plots</code>. Lastly, <code>running.txt</code> will have nothing while the model is training but output the training time once completed.</p>
-<div class="highlight"><pre><span></span><code>Results/
-├── 6913/
-│   ├── config_files/
-│   │   └── resolved_nnfe_config.yaml
-│   ├── models/
-│   │   └── model.eqx
-│   ├── plots/
-│   │   ├── loss.png
-│   │   └── LR.png
-│   ├── logs/
-|   ├── results/
-│   └── running.txt
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Results/
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>├── 6913/
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>│   ├── config_files/
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>│   │   └── resolved_nnfe_config.yaml
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>│   ├── models/
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>│   │   └── model.eqx
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>│   ├── plots/
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>│   │   ├── loss.png
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>│   │   └── LR.png
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>│   ├── logs/
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>|   ├── results/
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>│   └── running.txt
 </code></pre></div>
 <p>The two plots shown are the learning rate and loss</p>
 <p><img alt="alt text" src="../../figures/tutorials/prolate_spheroid/lr.png" />
@@ -1006,6 +1118,12 @@
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
       </main>
       
         <footer class="md-footer">
@@ -1035,7 +1153,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.top", "toc.integrate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
