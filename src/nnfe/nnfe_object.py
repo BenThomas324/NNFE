@@ -19,24 +19,36 @@ from nnfe.plotter import Plotter
 from nnfe.nnfe_config import NNFEConfig, NNFEParamsConfig
 
 class NNFE():
+    """Top-level NNFE solver object.
+
+    Couples a finite-element problem with a neural network that is trained to
+    minimise the FE residual over a prescribed parameter space.  The class
+    orchestrates:
+
+    - Problem definition — mesh, boundary conditions, and residual evaluation.
+    - Machine learning model — network, optimizer, and training state.
+    - Sampler — control-variable point sets for training and testing.
+    - Training and testing loops.
+    - Saving / loading model weights and configuration.
+
+    Prefer :meth:`from_yaml` or :meth:`from_config` for typical use.  The
+    direct constructor is available for cases where sub-components are built
+    manually.
+
+    Args:
+        problem_manager: Wraps the FE problem definition (mesh, BCs,
+            and residual computation).
+        ml_manager: Owns the neural network, optimizer, and training state.
+        sampler: Provides training and testing point sets.
+        plotter: Handles diagnostic plot generation.
+        project_manager: Manages the run directory, keys, and saving.
+        nnfe_params: Specifies which FE variables the network controls
+            and their ordering in the output vector.
+        config: The full :class:`~nnfe.nnfe_config.NNFEConfig` used to build
+            this object; stored for later serialisation.
     """
-    Base class for the NNFE object.
-    There is a LOT of customization that can occur here, 
-    making it more important than ever to create input files for 
-    reproducibility and tracking.
-    This class is the organizational structure that handles the subparts
-    of the NNFE method. This includes:
-    - Problem definition (problem)
-    - Machine Learning model (ml)
-    - Sampler for training/testing data (sampler)
-    - Training loop
-    - Testing loop
-    - Saving/loading model
-    """
 
-
-
-    def __init__(self, 
+    def __init__(self,
                  problem_manager: ProblemManager,
                  ml_manager: MLManager,
                  sampler: Sampler,
@@ -44,25 +56,6 @@ class NNFE():
                  project_manager: ProjectManager,
                  nnfe_params: NNFEParamsConfig,
                  config: NNFEConfig = None):
-        """Initialise the NNFE solver from pre-built sub-components.
-
-        Prefer :meth:`from_yaml` or :meth:`from_config` for typical use;
-        this constructor is exposed for cases where the sub-components are
-        constructed manually.
-
-        Args:
-            problem_manager: Wraps the FE problem definition (mesh, BCs,
-                residual computation).
-            ml_manager: Owns the neural network, optimizer, and training
-                state.
-            sampler: Provides training and testing point sets.
-            plotter: Handles diagnostic plot generation.
-            project_manager: Manages the run directory, keys, and saving.
-            nnfe_params: Specifies which FE variables the network controls
-                and their ordering in the output vector.
-            config: The full :class:`~nnfe.nnfe_config.NNFEConfig` used to
-                build this object; stored for later serialisation.
-        """
 
         self.problem_manager = problem_manager
         self.ml = ml_manager

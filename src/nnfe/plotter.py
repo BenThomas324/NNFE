@@ -15,6 +15,11 @@ import pyvista as pv
 class Plotter():
     """Generates and saves diagnostic plots for an NNFE training run.
 
+    Args:
+        config: :class:`~nnfe.nnfe_config.PlotterConfig` instance.
+        save_dir: Directory path for saving plot files.  Should be a
+            :class:`pathlib.Path`.
+
     Attributes:
         config: :class:`~nnfe.nnfe_config.PlotterConfig` controlling which
             plots are produced.
@@ -23,13 +28,6 @@ class Plotter():
     """
 
     def __init__(self, config, save_dir=None):
-        """Initialise the plotter.
-
-        Args:
-            config: :class:`~nnfe.nnfe_config.PlotterConfig` instance.
-            save_dir: Directory path for saving plot files.  Should be a
-                :class:`pathlib.Path`.
-        """
         self.config = config
         self.save_dir = save_dir
         return

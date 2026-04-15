@@ -19,6 +19,12 @@ from pathlib import Path
 class ProjectManager:
     """Manages the on-disk run directory and associated metadata.
 
+    Args:
+        config: :class:`~nnfe.nnfe_config.ProjectConfig` instance.  If
+            ``config.save`` is ``True``, a unique subdirectory is created
+            under ``config.parent_dir / config.name`` and all extra
+            directories listed in ``config.extra_dirs`` are created inside it.
+
     Attributes:
         config: :class:`~nnfe.nnfe_config.ProjectConfig` used to build this
             manager.
@@ -38,15 +44,6 @@ class ProjectManager:
     """
 
     def __init__(self, config):
-        """Initialise the project manager and create the run directory.
-
-        If ``config.save`` is ``True``, a unique subdirectory is created
-        under ``config.parent_dir / config.name`` and all extra directories
-        listed in ``config.extra_dirs`` are created inside it.
-
-        Args:
-            config: :class:`~nnfe.nnfe_config.ProjectConfig` instance.
-        """
         self.config = config
         self.save = config.save if config.save is not None else False
 

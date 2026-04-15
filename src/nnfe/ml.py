@@ -38,6 +38,12 @@ class MLManager():
     3. Builds the Optax optimizer and its learning-rate schedule.
     4. Initialises the optimizer state.
 
+    Args:
+        MLConfig: An :class:`~nnfe.ml_config.MLConfig` instance describing
+            the networks, optimizer, and training hyperparameters.
+        **kwargs: Must include ``out_size`` (int) when any network specifies
+            ``out_size: "dofs"`` in its config.
+
     Attributes:
         config: The :class:`~nnfe.ml_config.MLConfig` used to build this
             manager.

@@ -28,9 +28,14 @@ theme:
 
 nav:
     - Home: index.md
-    - API: 
+    - API:
         - Main Functionality: api/main_functionality.md
         - Networks: api/networks.md
+        - Configuration: api/config.md
+        - ML Manager: api/ml.md
+        - Sampling: api/sampling.md
+        - Plotter: api/plotter.md
+        - Project Manager: api/project_manager.md
 
     - Tutorials:
         - Overview: tutorials/overview.md
@@ -77,7 +82,7 @@ plugins:
                 options:
                     force_inspection: true
                     heading_level: 4
-                    inherited_members: true
+                    inherited_members: false
                     members_order: source
                     show_bases: false
                     show_if_no_docstring: true
@@ -87,3 +92,6 @@ plugins:
                     show_source: false
                     show_symbol_type_heading: true
                     show_symbol_type_toc: true
+                    filters:
+                        - "!^__(?!init)"
+                        - "!^_"

@@ -68,7 +68,46 @@ class Sum_models(eqx.Module, strict=True):
         return y
 
 class DNN(eqx.Module, strict=True):
-    """Standard Multi-Layer Perceptron; also known as a feed-forward network.
+    """Standard feed-forward deep neural network (DNN) with variable hidden-layer widths.    
+    
+    Attributes:
+        in_size: The input size. The input to the module should be a vector of
+            shape `(in_features,)`
+
+        out_size: The output size. The output from the module will be a vector
+        of shape `(out_features,)`.
+
+        width_size`: The size of each hidden layer.
+        
+        depth: The number of hidden layers, including the output layer.
+            For example, `depth=2` results in an network with layers:
+            [`Linear(in_size, width_size)`, `Linear(width_size, width_size)`,
+            `Linear(width_size, out_size)`].
+        
+        activation: The activation function after each hidden layer. Defaults to
+            ReLU.
+        
+        final_activation: The activation function after the output layer. Defaults
+            to the identity.
+    
+        use_bias: Whether to add on a bias to internal layers. Defaults
+            to `True`.
+    
+        use_final_bias: Whether to add on a bias to the final layer. Defaults
+            to `True`.
+        
+        dtype: The dtype to use for all the weights and biases in this MLP.
+            Defaults to either `jax.numpy.float32` or `jax.numpy.float64` depending
+            on whether JAX is in 64-bit mode.
+        
+        key: A `jax.random.PRNGKey` used to provide randomness for parameter
+            initialisation. (Keyword only argument.)
+
+    Note that `in_size` also supports the string `"scalar"` as a special value.
+    In this case the input to the module should be of shape `()`.
+
+    Likewise `out_size` can also be a string `"scalar"`, in which case the
+    output from the module will have shape `()`.
 
     !!! faq
 
@@ -97,37 +136,7 @@ class DNN(eqx.Module, strict=True):
         *,
         key: PRNGKeyArray,
     ):
-        """**Arguments**:
 
-        - `in_size`: The input size. The input to the module should be a vector of
-            shape `(in_features,)`
-        - `out_size`: The output size. The output from the module will be a vector
-            of shape `(out_features,)`.
-        - `width_size`: The size of each hidden layer.
-        - `depth`: The number of hidden layers, including the output layer.
-            For example, `depth=2` results in an network with layers:
-            [`Linear(in_size, width_size)`, `Linear(width_size, width_size)`,
-            `Linear(width_size, out_size)`].
-        - `activation`: The activation function after each hidden layer. Defaults to
-            ReLU.
-        - `final_activation`: The activation function after the output layer. Defaults
-            to the identity.
-        - `use_bias`: Whether to add on a bias to internal layers. Defaults
-            to `True`.
-        - `use_final_bias`: Whether to add on a bias to the final layer. Defaults
-            to `True`.
-        - `dtype`: The dtype to use for all the weights and biases in this MLP.
-            Defaults to either `jax.numpy.float32` or `jax.numpy.float64` depending
-            on whether JAX is in 64-bit mode.
-        - `key`: A `jax.random.PRNGKey` used to provide randomness for parameter
-            initialisation. (Keyword only argument.)
-
-        Note that `in_size` also supports the string `"scalar"` as a special value.
-        In this case the input to the module should be of shape `()`.
-
-        Likewise `out_size` can also be a string `"scalar"`, in which case the
-        output from the module will have shape `()`.
-        """
         dtype = jax.numpy.float64 if dtype is None else dtype
         keys = jrandom.split(key, len(hidden_layers) + 1)
         layers = []
@@ -192,6 +201,45 @@ class ResNet(eqx.Module, strict=True):
     (skip connection), which helps gradient flow and allows training of deeper
     networks.  All hidden layers share the same ``width_size``.
 
+    Attributes:
+        in_size: The input size. The input to the module should be a vector of
+            shape `(in_features,)`
+        
+        out_size: The output size. The output from the module will be a vector
+            of shape `(out_features,)`.
+        
+        width_size: The size of each hidden layer.
+        
+        depth: The number of hidden layers, including the output layer.
+            For example, `depth=2` results in an network with layers:
+            [`Linear(in_size, width_size)`, `Linear(width_size, width_size)`,
+            `Linear(width_size, out_size)`].
+        
+        activation: The activation function after each hidden layer. Defaults to
+            ReLU.
+        
+        final_activation: The activation function after the output layer. Defaults
+            to the identity.
+        
+        use_bias: Whether to add on a bias to internal layers. Defaults
+            to `True`.
+        
+        use_final_bias: Whether to add on a bias to the final layer. Defaults
+            to `True`.
+        
+        dtype: The dtype to use for all the weights and biases in this MLP.
+            Defaults to either `jax.numpy.float32` or `jax.numpy.float64` depending
+            on whether JAX is in 64-bit mode.
+        
+        key: A `jax.random.PRNGKey` used to provide randomness for parameter
+            initialisation. (Keyword only argument.)
+
+        Note that `in_size` also supports the string `"scalar"` as a special value.
+        In this case the input to the module should be of shape `()`.
+
+        Likewise `out_size` can also be a string `"scalar"`, in which case the
+        output from the module will have shape `()`.
+
     !!! faq
 
         If you get a TypeError saying an object is not a valid JAX type, see the
@@ -221,37 +269,7 @@ class ResNet(eqx.Module, strict=True):
         *,
         key: PRNGKeyArray,
     ):
-        """**Arguments**:
 
-        - `in_size`: The input size. The input to the module should be a vector of
-            shape `(in_features,)`
-        - `out_size`: The output size. The output from the module will be a vector
-            of shape `(out_features,)`.
-        - `width_size`: The size of each hidden layer.
-        - `depth`: The number of hidden layers, including the output layer.
-            For example, `depth=2` results in an network with layers:
-            [`Linear(in_size, width_size)`, `Linear(width_size, width_size)`,
-            `Linear(width_size, out_size)`].
-        - `activation`: The activation function after each hidden layer. Defaults to
-            ReLU.
-        - `final_activation`: The activation function after the output layer. Defaults
-            to the identity.
-        - `use_bias`: Whether to add on a bias to internal layers. Defaults
-            to `True`.
-        - `use_final_bias`: Whether to add on a bias to the final layer. Defaults
-            to `True`.
-        - `dtype`: The dtype to use for all the weights and biases in this MLP.
-            Defaults to either `jax.numpy.float32` or `jax.numpy.float64` depending
-            on whether JAX is in 64-bit mode.
-        - `key`: A `jax.random.PRNGKey` used to provide randomness for parameter
-            initialisation. (Keyword only argument.)
-
-        Note that `in_size` also supports the string `"scalar"` as a special value.
-        In this case the input to the module should be of shape `()`.
-
-        Likewise `out_size` can also be a string `"scalar"`, in which case the
-        output from the module will have shape `()`.
-        """
         dtype = jax.numpy.float64 if dtype is None else dtype
         keys = jrandom.split(key, depth + 1)
         layers = []
@@ -327,6 +345,44 @@ class DenseNet(eqx.Module, strict=True):
     feature maps of all preceding layers as additional input.  This maximises
     feature reuse and provides strong gradient flow throughout the network.
 
+    Attributes:
+        in_size: The input size. The input to the module should be a vector of
+            shape `(in_features,)`
+        
+        out_size: The output size. The output from the module will be a vector
+            of shape `(out_features,)`.
+        
+        width_size: The size of each hidden layer.
+        
+        depth: The number of hidden layers, including the output layer.
+            For example, `depth=2` results in an network with layers:
+            [`Linear(in_size, width_size)`, `Linear(width_size, width_size)`,
+            `Linear(width_size, out_size)`].
+        
+        activation: The activation function after each hidden layer. Defaults to
+            ReLU.
+        
+        final_activation: The activation function after the output layer. Defaults
+            to the identity.
+        use_bias: Whether to add on a bias to internal layers. Defaults
+            to `True`.
+        
+        use_final_bias: Whether to add on a bias to the final layer. Defaults
+            to `True`.
+        
+        dtype: The dtype to use for all the weights and biases in this MLP.
+            Defaults to either `jax.numpy.float32` or `jax.numpy.float64` depending
+            on whether JAX is in 64-bit mode.
+        
+        key: A `jax.random.PRNGKey` used to provide randomness for parameter
+            initialisation. (Keyword only argument.)
+
+        Note that `in_size` also supports the string `"scalar"` as a special value.
+        In this case the input to the module should be of shape `()`.
+
+        Likewise `out_size` can also be a string `"scalar"`, in which case the
+        output from the module will have shape `()`.
+
     !!! faq
 
         If you get a TypeError saying an object is not a valid JAX type, see the
@@ -356,37 +412,7 @@ class DenseNet(eqx.Module, strict=True):
         *,
         key: PRNGKeyArray,
     ):
-        """**Arguments**:
-
-        - `in_size`: The input size. The input to the module should be a vector of
-            shape `(in_features,)`
-        - `out_size`: The output size. The output from the module will be a vector
-            of shape `(out_features,)`.
-        - `width_size`: The size of each hidden layer.
-        - `depth`: The number of hidden layers, including the output layer.
-            For example, `depth=2` results in an network with layers:
-            [`Linear(in_size, width_size)`, `Linear(width_size, width_size)`,
-            `Linear(width_size, out_size)`].
-        - `activation`: The activation function after each hidden layer. Defaults to
-            ReLU.
-        - `final_activation`: The activation function after the output layer. Defaults
-            to the identity.
-        - `use_bias`: Whether to add on a bias to internal layers. Defaults
-            to `True`.
-        - `use_final_bias`: Whether to add on a bias to the final layer. Defaults
-            to `True`.
-        - `dtype`: The dtype to use for all the weights and biases in this MLP.
-            Defaults to either `jax.numpy.float32` or `jax.numpy.float64` depending
-            on whether JAX is in 64-bit mode.
-        - `key`: A `jax.random.PRNGKey` used to provide randomness for parameter
-            initialisation. (Keyword only argument.)
-
-        Note that `in_size` also supports the string `"scalar"` as a special value.
-        In this case the input to the module should be of shape `()`.
-
-        Likewise `out_size` can also be a string `"scalar"`, in which case the
-        output from the module will have shape `()`.
-        """
+        
         dtype = jax.numpy.float64 if dtype is None else dtype
         num_keys = int((depth + 1) * (depth + 2) / 2)
         keys = jrandom.split(key, num_keys)

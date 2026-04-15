@@ -26,6 +26,11 @@ class Sampler():
     generated and stored as NumPy arrays.  During training, mini-batches are
     drawn from ``X`` without replacement via :meth:`draw_batch`.
 
+    Args:
+        config: :class:`~nnfe.nnfe_config.SamplerConfig` instance.
+        rng_key: Integer seed (currently unused; JAX-based batching is
+            seeded at draw time).
+
     Attributes:
         config: :class:`~nnfe.nnfe_config.SamplerConfig` used to build this
             sampler.
@@ -36,13 +41,6 @@ class Sampler():
     """
 
     def __init__(self, config, rng_key=0):
-        """Initialise and pre-generate both point sets.
-
-        Args:
-            config: :class:`~nnfe.nnfe_config.SamplerConfig` instance.
-            rng_key: Integer seed (currently unused; JAX-based batching is
-                seeded at draw time).
-        """
         self.config = config
 
         self.training_sampler = getattr(self, validate_sampler(config.training_sampler))
