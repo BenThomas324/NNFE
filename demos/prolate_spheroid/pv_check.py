@@ -22,7 +22,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     run_num = args.run_num
 
-    parent = "Results/" + run_num + "/"
+    parent = "Results/" + "6913" + "/"
     nnfe = NNFE.from_yaml(parent + "config_files/resolved_nnfe_config.yaml")
     nnfe.ml.network = eqx.tree_deserialise_leaves(parent + "models/model.eqx", nnfe.ml.network)
 

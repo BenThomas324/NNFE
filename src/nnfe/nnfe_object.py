@@ -44,13 +44,24 @@ class NNFE():
                  project_manager: ProjectManager,
                  nnfe_params: NNFEParamsConfig,
                  config: NNFEConfig = None):
-        """
-        Initialization of NNFE object, 
-        will have to look more into what is needed here
+        """Initialise the NNFE solver from pre-built sub-components.
+
+        Prefer :meth:`from_yaml` or :meth:`from_config` for typical use;
+        this constructor is exposed for cases where the sub-components are
+        constructed manually.
+
         Args:
-            fe_handler (_type_): _description_
-            ml (_type_): _description_
-            sampler (_type_): _description_
+            problem_manager: Wraps the FE problem definition (mesh, BCs,
+                residual computation).
+            ml_manager: Owns the neural network, optimizer, and training
+                state.
+            sampler: Provides training and testing point sets.
+            plotter: Handles diagnostic plot generation.
+            project_manager: Manages the run directory, keys, and saving.
+            nnfe_params: Specifies which FE variables the network controls
+                and their ordering in the output vector.
+            config: The full :class:`~nnfe.nnfe_config.NNFEConfig` used to
+                build this object; stored for later serialisation.
         """
 
         self.problem_manager = problem_manager
@@ -125,8 +136,16 @@ class NNFE():
                    config=config)
 
     def setup(self, config: NNFEParamsConfig):
-        """
-        Setup requirements for NNFE
+        """Wire up the NNFE-specific internal-variable setters.
+
+        Builds closures that map the network output vector to the FE problem's
+        internal variables (volumetric and surface) and boundary condition
+        values, using the orderings defined in *config*.  Also JIT-compiles
+        the batch-drawing function and computes the integer batch size.
+
+        Args:
+            config: NNFE parameter config specifying which FE variables are
+                controlled and in what order they appear in the output vector.
         """
 
         natural_inds = {k: i for i, k in enumerate(config.natural_order)}
@@ -174,6 +193,22 @@ class NNFE():
         return
     
     def calc_res(self, model: eqx.Module, ctrl_vars: ArrayLike):
+        """Compute the FE residual for a single control-variable sample.
+
+        Evaluates the network to get the DoF vector, updates the FE internal
+        variables accordingly, computes the global residual, and enforces
+        Dirichlet boundary conditions via a lifting approach (strong
+        enforcement).
+
+        Args:
+            model: Current Equinox network.
+            ctrl_vars: 1-D array of control variables (network input) for
+                this sample.
+
+        Returns:
+            Residual vector with Dirichlet rows replaced by
+            ``dofs[dirichlet_dofs] - dirichlet_vals``.
+        """
         # Evaluate model to get dofs
         dofs = model(ctrl_vars)
         # Set internal variables
@@ -191,12 +226,41 @@ class NNFE():
         return res_vec
 
     def loss_fct(self, diff_model: eqx.Module, static_model: eqx.Module, x: ArrayLike):
+        """Batch loss: mean residual norm over a mini-batch.
+
+        Recombines the differentiable and static model partitions, vectorises
+        :meth:`calc_res` over the batch axis, and returns the mean
+        :math:`\\ell_2` residual norm.
+
+        Args:
+            diff_model: Differentiable (trainable) partition of the network.
+            static_model: Frozen (static) partition of the network.
+            x: Batch of control-variable samples with shape
+                ``(batch_size, n_ctrl_vars)``.
+
+        Returns:
+            Scalar mean residual norm for the batch.
+        """
         model = eqx.combine(diff_model, static_model)
         vres = self.vcalc_res(model, x)
         return np.mean(np.linalg.norm(vres, axis=1))
 
     @eqx.filter_jit
     def make_step(self, model: eqx.Module, x: ArrayLike, opt_state: tuple):
+        """Perform a single gradient-descent update step (JIT-compiled).
+
+        Partitions the model into trainable and frozen parts, computes the
+        loss and its gradient with respect to the trainable part, applies the
+        Optax optimizer update, and returns the updated model and state.
+
+        Args:
+            model: Current Equinox network.
+            x: Mini-batch of control-variable samples.
+            opt_state: Current Optax optimizer state.
+
+        Returns:
+            Tuple of ``(updated_model, updated_opt_state, loss_value)``.
+        """
         diff_model, static_model = eqx.partition(model, self.ml.filter)
         loss_val, grads = self.val_and_grads(diff_model, static_model, x)
         updates, opt_state = self.ml.optimizer.update(grads, opt_state, eqx.filter(model, eqx.is_array))

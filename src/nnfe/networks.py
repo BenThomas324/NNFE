@@ -1,5 +1,16 @@
 """
-This file contains custom NN architectures to be used for NNFE
+Neural network architectures for NNFE.
+
+All models are Equinox modules and are therefore JAX-compatible (JIT,
+``vmap``, ``grad``, etc.).  The public API exported by :mod:`nnfe` is:
+
+- :data:`MLP` — alias for :class:`equinox.nn.MLP`.
+- :class:`DNN` — feed-forward network with variable hidden-layer widths.
+- :class:`ResNet` — residual network with skip connections.
+- :class:`DenseNet` — densely connected network where each layer receives
+  the outputs of all previous layers.
+- :class:`Sum_models` — combines several models by summing their outputs,
+  used when ``MLConfig`` specifies multiple networks.
 """
 
 import equinox as eqx
@@ -175,7 +186,11 @@ class DNN(eqx.Module, strict=True):
         return x
 
 class ResNet(eqx.Module, strict=True):
-    """Standard Multi-Layer Perceptron; also known as a feed-forward network.
+    """Residual network (ResNet) with element-wise skip connections.
+
+    Each hidden layer adds its output to the previous hidden-layer output
+    (skip connection), which helps gradient flow and allows training of deeper
+    networks.  All hidden layers share the same ``width_size``.
 
     !!! faq
 
@@ -306,7 +321,11 @@ class ResNet(eqx.Module, strict=True):
         return x
     
 class DenseNet(eqx.Module, strict=True):
-    """DenseNet
+    """Densely connected network (DenseNet).
+
+    Inspired by DenseNet (Huang et al. 2017): every layer receives the
+    feature maps of all preceding layers as additional input.  This maximises
+    feature reuse and provides strong gradient flow throughout the network.
 
     !!! faq
 

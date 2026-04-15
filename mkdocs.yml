@@ -1,16 +1,30 @@
 site_name: CARDIAX-NNFE Documentation
 
 theme:
-    name: material  # Recommended for use with pymdownx extensions
+    name: material
+    logo: figures/assets/logo_heart.png
+    favicon: figures/assets/logo_heart.png
+    font:
+        text: Inter
+        code: JetBrains Mono
     palette:
     - scheme: default
+      primary: custom
+      accent: custom
       toggle:
         icon: material/toggle-switch-off-outline
         name: Switch to dark mode
     - scheme: slate
+      primary: custom
+      accent: custom
       toggle:
         icon: material/toggle-switch
         name: Switch to light mode
+    features:
+        - navigation.tabs
+        - navigation.top
+        - toc.integrate
+        - content.code.copy
 
 nav:
     - Home: index.md
@@ -30,10 +44,21 @@ markdown_extensions:
     - pymdownx.details
     - pymdownx.snippets:
         base_path: docs
+    - pymdownx.highlight:
+        anchor_linenums: true
+    - pymdownx.inlinehilite
     - admonition
     - toc:
         permalink: "¤"
         toc_depth: 4
+    - md_in_html
+    - attr_list
+    - pymdownx.emoji:
+        emoji_index: !!python/name:material.extensions.emoji.twemoji
+        emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+extra_css:
+    - stylesheets/extra.css
 
 # This section tells the browser to load MathJax and your custom config
 extra_javascript:
