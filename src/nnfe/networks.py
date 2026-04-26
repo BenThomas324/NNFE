@@ -194,6 +194,115 @@ class DNN(eqx.Module, strict=True):
             x = eqx.filter_vmap(lambda a, b: a(b))(self.final_activation, x)
         return x
 
+class LowRankDNN(eqx.Module, strict=True):
+    """Feed-forward DNN whose output layer is replaced by a low-rank factorisation.
+
+    The final dense ``Linear(prev, out_size)`` is replaced by two matrices:
+
+    - ``U``: shape ``(prev, rank)``  — projects the last hidden state down to rank ``r``
+    - ``V``: shape ``(out_size, rank)`` — lifts back to the output space
+
+    The output is ``V @ (U.T @ x_hidden)`` which is equivalent to a linear map
+    with weight matrix ``V @ U.T`` of rank at most ``r``.
+
+    Attributes:
+        in_size: Input feature dimension.
+        out_size: Output feature dimension.
+        hidden_layers: Tuple of hidden layer widths.
+        rank: Rank ``r`` of the factorised output layer.
+        activation: Activation applied after each hidden layer. Defaults to ReLU.
+        final_activation: Activation applied element-wise to the output. Defaults
+            to the identity.
+        use_bias: Whether hidden layers include a bias. Defaults to ``True``.
+    """
+
+    layers: tuple[eqx.nn.Linear, ...]
+    U: Array
+    V: Array
+    activation: Callable
+    final_activation: Callable
+    use_bias: bool = eqx.field(static=True)
+    in_size: Union[int, Literal["scalar"]] = eqx.field(static=True)
+    out_size: Union[int, Literal["scalar"]] = eqx.field(static=True)
+    hidden_layers: tuple[Union[int, Literal["scalar"]], ...]
+    rank: int = eqx.field(static=True)
+
+    def __init__(
+        self,
+        in_size: Union[int, Literal["scalar"]],
+        out_size: Union[int, Literal["scalar"]],
+        hidden_layers: tuple[Union[int, Literal["scalar"]], ...],
+        rank: int,
+        activation: Callable = jax.nn.relu,
+        final_activation: Callable = identity,
+        use_bias: bool = True,
+        dtype=None,
+        *,
+        key: PRNGKeyArray,
+    ):
+        dtype = jax.numpy.float64 if dtype is None else dtype
+        keys = jrandom.split(key, len(hidden_layers) + 2)  # +2 for U and V
+
+        layers = []
+        if len(hidden_layers) == 0:
+            prev = in_size
+        else:
+            layers.append(
+                eqx.nn.Linear(in_size, hidden_layers[0], use_bias, dtype=dtype, key=keys[0])
+            )
+            for i in range(len(hidden_layers) - 1):
+                layers.append(
+                    eqx.nn.Linear(
+                        hidden_layers[i], hidden_layers[i + 1], use_bias, dtype=dtype, key=keys[i + 1]
+                    )
+                )
+            prev = hidden_layers[-1]
+
+        # Low-rank output: U (prev x rank), V (out_size x rank)
+        # Initialise with Glorot-style scaling so V @ U.T has similar variance
+        # to a standard Linear initialisation.
+        scale = jax.numpy.sqrt(2.0 / (prev + out_size))
+        self.U = jrandom.normal(keys[-2], (prev, rank), dtype=dtype) * scale
+        self.V = jrandom.normal(keys[-1], (out_size, rank), dtype=dtype) * scale
+
+        self.layers = tuple(layers)
+        self.in_size = in_size
+        self.out_size = out_size
+        self.hidden_layers = hidden_layers
+        self.rank = rank
+        self.activation = eqx.filter_vmap(activation)
+        if out_size == "scalar":
+            self.final_activation = final_activation
+        else:
+            self.final_activation = eqx.filter_vmap(
+                lambda: final_activation, axis_size=out_size
+            )()
+        self.use_bias = use_bias
+
+    @jax.named_scope("nnfe.LowRankDNN")
+    def __call__(self, x: Array, *, key: Optional[PRNGKeyArray] = None) -> Array:
+        """**Arguments:**
+
+        - `x`: A JAX array with shape `(in_size,)`.
+        - `key`: Ignored; provided for compatibility with the rest of the Equinox API.
+
+        **Returns:**
+
+        A JAX array with shape `(out_size,)`.
+        """
+        for layer in self.layers:
+            x = layer(x)
+            x = self.activation(x)
+        # Low-rank output: h = U.T @ x  (rank,),  out = V @ h  (out_size,)
+        h = self.U.T @ x
+        x = self.V @ h
+        if self.out_size == "scalar":
+            x = self.final_activation(x)
+        else:
+            x = eqx.filter_vmap(lambda a, b: a(b))(self.final_activation, x)
+        return x
+
+
 class ResNet(eqx.Module, strict=True):
     """Residual network (ResNet) with element-wise skip connections.
 
